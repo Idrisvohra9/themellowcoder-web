@@ -1,6 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import Logo from "./components/Logo";
+import clickSound from "../static/Other/mixkit-arcade-game-jump-coin-216.wav";
+import starFallSound from "../static/Other/stars-falling.mp3";
+import CookieConsent from "./components/CookieConsent";
+import { getCookie } from "../tools/cookies";
+
 export default function Layout() {
   const sidebar = useRef();
   const navbar = useRef();
@@ -45,9 +50,11 @@ export default function Layout() {
     }
     prevScrollpos = currentScrollPos;
   };
-  
+
   function startFallingStars() {
     if (starFall === 0) {
+      const starSound = new Audio(starFallSound);
+      starSound.play();
       starfall.current.className = starfall.current.className.replace(
         " off",
         ""
@@ -59,6 +66,8 @@ export default function Layout() {
   }
   function slideBar() {
     i++;
+    const click = new Audio(clickSound);
+    click.play();
     let id = null;
     if (i % 2 === 0) {
       pos = 0;
@@ -124,18 +133,12 @@ export default function Layout() {
             />
           </svg>
         </button>
-        <NavLink
-          to="/discuss"
-          className={`tab ${({ isActive }) => (isActive ? "Active" : "")}`}
-        >
+        <NavLink to="/discuss" className="tab">
           Discuss
           <div className="highlight"></div>
         </NavLink>
-        <NavLink
-          to="/shortBlogs"
-          className={`tab ${({ isActive }) => (isActive ? "Active" : "")}`}
-        >
-          Short Blogs
+        <NavLink to="/stories" className="tab">
+          Stories
           <div className="highlight"></div>
         </NavLink>
         <svg
@@ -152,7 +155,7 @@ export default function Layout() {
         <ul>
           <li className="nav-item dropdown">
             <div
-              className="nav-link dropdown-toggle"
+              className="nav-link dropdown-toggle tab"
               role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
@@ -161,31 +164,31 @@ export default function Layout() {
             </div>
             <ul className="dropdown-menu">
               <li>
-                <a className="dropdown-item" href="#">
+                <NavLink to="/OctoAI" className="dropdown-item">
                   Octo The AI
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
+                <NavLink to="/Img2Webp" className="dropdown-item">
                   Image 2 Webp
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
+                <NavLink to="/PlanCode" className="dropdown-item">
                   Plan Code
-                </a>
+                </NavLink>
               </li>
             </ul>
           </li>
         </ul>
-
-        <NavLink
-          to="/profile"
-          className={`tab ${({ isActive }) => (isActive ? "Active" : "")}`}
-        >
-          Profile
-          <div className="highlight"></div>
-        </NavLink>
+        {getCookie("username") ? (
+          <NavLink to="/profile" className="tab">
+            Profile
+            <div className="highlight"></div>
+          </NavLink>
+        ) : (
+          <button className="btn btn-primary">Login</button>
+        )}
       </nav>
       <div className="side-frames-y" id="sidebar" ref={sidebar}>
         <div className="side-btns">
@@ -205,7 +208,7 @@ export default function Layout() {
             <span className="internal-txt">Explore</span>
           </NavLink>
 
-          <a href="/Games" target="_top" className="mainlinks">
+          <NavLink to="/Games" className="mainlinks">
             <svg className="btns" width="24" height="24" fill="none">
               <path
                 d="M15.47 11.293a1 1 0 10-1.415 1.414 1 1 0 001.415-1.414zM16.177 9.172a1 1 0 111.414 1.414 1 1 0 01-1.414-1.414zM19.712 11.293a1 1 0 10-1.414 1.414 1 1 0 001.414-1.414zM16.177 13.414a1 1 0 111.414 1.415 1 1 0 01-1.414-1.415zM6 13H4v-2h2V9h2v2h2v2H8v2H6v-2z"
@@ -228,14 +231,8 @@ export default function Layout() {
             </svg>
 
             <span className="internal-txt">Games</span>
-          </a>
-
-          <NavLink
-            to="/mellowtunes"
-            target="_top"
-            className="mainlinks"
-            id="uploadCodes"
-          >
+          </NavLink>
+          <NavLink to="/mellowtunes" className="mainlinks">
             <svg
               width="800"
               height="800"
@@ -263,7 +260,7 @@ export default function Layout() {
             </svg>
             <span className="internal-txt">Mellow Tunes</span>
           </NavLink>
-          <a href="/Bookmarks/" className="mainlinks">
+          <NavLink to="/IqTest" className="mainlinks">
             <svg
               width="800"
               height="800"
@@ -282,9 +279,9 @@ export default function Layout() {
             </svg>
 
             <span className="internal-txt">IQ Test</span>
-          </a>
+          </NavLink>
 
-          <a href="/Themes/" className="mainlinks">
+          <NavLink to="/Themes" className="mainlinks">
             <svg viewBox="0 0 370.589 370.589">
               <path d="M5.806 224.753c-7.741 7.741-7.741 20.291.002 28.034l10.114 10.114 24.18-9.46-9.112 24.529 50.811 50.812 39.014-22.66-19.858 41.815 16.843 16.844c7.743 7.743 20.293 7.743 28.034.002l91.812-91.812-140.028-140.03-91.812 91.812zM358.83 11.841l-.082-.083c-9.66-9.66-21.981-13.478-35.631-11.043-27.59 4.924-56.519 34.861-77.384 80.087-5.788 12.546-13.997 19.607-25.101 21.588-21.311 3.803-48.293-11.741-64.344-27.792a8.61 8.61 0 00-12.176.001l-16.685 16.686 24.651 24.651a8.197 8.197 0 010 11.594 8.197 8.197 0 01-11.594 0l-24.651-24.651-6.178 6.178a8.61 8.61 0 00-.002 12.178l139.703 139.703c3.361 3.361 8.812 3.36 12.177-.002l34.458-34.458a8.613 8.613 0 00.001-12.177c-16.051-16.051-31.595-43.034-27.792-64.344 1.98-11.103 9.042-19.312 21.588-25.1 45.226-20.865 75.163-49.793 80.087-77.383 2.434-13.652-1.385-25.973-11.045-35.633zm-15.774 36.905c-5.857 5.857-15.354 5.857-21.213 0-5.856-5.858-5.856-15.355 0-21.213 5.858-5.858 15.355-5.858 21.213 0 5.858 5.858 5.858 15.355 0 21.213z" />
             </svg>
@@ -297,8 +294,8 @@ export default function Layout() {
             </svg>
 
             <span className="internal-txt">Themes</span>
-          </a>
-          <a href="/Themes/" target="_top" className="mainlinks" id="themes">
+          </NavLink>
+          <NavLink to="/PsychExperiments" className="mainlinks">
             <svg
               height="800"
               width="800"
@@ -336,7 +333,7 @@ export default function Layout() {
             </svg>
 
             <span className="internal-txt">Psych Experiments</span>
-          </a>
+          </NavLink>
         </div>
       </div>
       <button className="scroll-to-top" ref={toTop}>
@@ -350,6 +347,7 @@ export default function Layout() {
           <path d="M508.827 350.027L263.493 104.373a10.955 10.955 0 00-15.147 0L3.12 350.027a10.623 10.623 0 000 15.04l42.24 42.347a10.955 10.955 0 0015.147 0L255.92 211.68l195.52 195.733a10.623 10.623 0 0015.04 0l42.347-42.347c4.053-4.159 4.053-10.879 0-15.039zM459.013 384.8l-195.52-195.733a10.623 10.623 0 00-15.04 0L52.933 384.8l-27.2-27.307L255.92 126.987l230.293 230.507-27.2 27.306z" />
         </svg>
       </button>
+      <CookieConsent />
       <Outlet />
     </>
   );

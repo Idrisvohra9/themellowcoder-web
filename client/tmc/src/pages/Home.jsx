@@ -1,19 +1,25 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Footer from "./components/Footer";
 
 export default function Home() {
   return (
     <div className="mainContent">
-      <div className="d-flex justify-content-center mt-5 flex-column align-items-center">
+      <div className="d-flex justify-content-center mt-5 flex-column align-items-center mb-5">
         <h1>themellowcoder or The Mellow Coder</h1>
         <b className="w-75 text-center">
-          It is a multi-functional website for developers world-wide with many
-          free tools and features that focus on fun with productivity.
+          Is a multi-functional website for developers world-wide with many free
+          tools and features that focus on fun with productivity.
+        </b>
+        <b className="w-75 text-center mt-5">
+          <h3>Below are some of the functionality it offers:</h3>
         </b>
       </div>
       <div className="d-flex justify-content-between align-items-center p-5 jumbotron">
         <div className="d-flex align-items-start flex-column w-75">
-          <h1>Connect With people</h1>
+          <Link to="/discuss" className="link">
+            <h1>Connect With people</h1>
+          </Link>
           <b>
             Share your projects, doubts, or just use the platform to help others
             and connect with others.
@@ -26,7 +32,7 @@ export default function Home() {
         <div>
           <svg width="800" height="800" viewBox="0 0 64 64" aria-hidden="true">
             <path
-              fill="crimson"
+              fill="#d8d4cf"
               d="M49.725 16.293c-.027.27-.043.578-.05.912l-3.834 1.831c-.537-.088-3.2.067-7.172-1.893-1.007-.497-1.991-.761-2.936-.761a5.41 5.41 0 00-2.459.595c-1.003-.217-2.448-.773-3.293-.771-1.912.01-6.259 1.567-7.463 1.7-1.178.129-2.391.453-3.612.969-2.219-.646-5.001-1.701-6.491-2.284L2 9v24.41l7.654 3.642c.111-.13.238-.33.376-.578l.237.11c.116.3.244.599.384.896-.84 1.414-.94 3.007-.269 4.392.575 1.185 1.646 2.017 2.839 2.25.065.738.313 1.452.731 2.071.75 1.107 1.942 1.768 3.191 1.768.113 0 .226-.005.338-.018.178.481.439.929.778 1.317.754.867 1.81 1.364 2.896 1.364.08 0 .158-.002.237-.008.138.524.373 1.02.701 1.462.755 1.02 1.92 1.627 3.118 1.627.744 0 1.455-.228 2.082-.655 1.212.778 2.266 1.325 3.201 1.661.469.191.957.289 1.455.289 1.178 0 2.321-.55 3.137-1.512.303-.358.549-.758.729-1.186a3.78 3.78 0 001.087.162c1.252 0 2.439-.613 3.26-1.685a4.715 4.715 0 00.83-1.711c.086.006.171.009.256.009 1.447 0 2.832-.849 3.611-2.216a4.735 4.735 0 00.629-2.336c1.43-.213 2.689-1.23 3.302-2.713.604-1.461.44-3.073-.403-4.417l3.895-2.195c.1.342.198.657.293.913L62 31.098V10.642l-12.275 5.651m-.001 3.037c.062 1.082.175 2.305.321 3.582-.8-1.344-1.81-1.957-3.064-2.262l2.743-1.32m-5.228 23.756c-2.148-.739-6.619-5.995-6.619-5.995h.088c.455-.032 1.438-.511 2.541-.282-1.732-1.488-3.637-.229-4.934-1 .301.965 1.748 1.269 2.119 1.281l4.284 4.982c1.94 2.255.589 5.045-1.356 5.489-1.305-.635-4.99-5.018-4.99-5.018.126-.023.873-.257 1.634-.157-1.757-1.314-3.749-.174-4.931-.999.67 1.655 2.877 1.231 3.108 1.191l2.292 2.926c1.834 2.34.393 5.043-1.555 5.409-1.727-.607-2.848-2.767-2.848-2.767.174-.028.756-.287 1.584-.167-1.473-1.291-3.188-.12-4.219-.855.637 1.388 2.225 1.072 2.314 1.062 1.588 2.501-.059 5.109-2.027 5.187h-.002l-.002.001c-1.182-.205-2.42-1.15-3.818-2.12.48-.532.904-1.467.904-1.467 1.404-2.542-.418-4.79-2.299-4.597 1.526.417 2.67 2.365 1.479 4.528l-.523.88c-.568 1.035-1.455 1.66-2.107 1.583-1.004-.122-2.419-1.588-1.824-3.656.23-.21 2.448-3.603 2.448-3.603 1.525-2.456-.187-4.807-2.073-4.727 1.502.507 2.555 2.521 1.26 4.611l-1.803 2.811c-.615.994-1.411 1.557-2.17 1.453-1.178-.16-2.004-1.597-1.815-3.08-.01.009 1.298-1.454 1.298-1.454 1.738-2.271.25-4.807-1.633-4.94 1.447.674 2.309 2.798.832 4.731l-.638.782c-.7.918-1.543 1.385-2.281 1.201-1.288-.323-1.958-2.733-1.349-3.39.479-.517 1.824-2.154 1.824-2.154 1.737-2.272.251-4.807-1.634-4.942 1.448.676 2.31 2.8.833 4.734l-.638.78c-.704.926-1.55 1.391-2.293 1.202-1.548-.392-2.321-2.782-.84-4.722 0 0-.503-1.598-.73-2.281l-.746-.346c1.749-4.075 4.391-13.069 4.513-16.057 1.288.459 4.688 1.437 5.049 1.439l-.002.002c3.66-1.15 7.496-1.023 9.246-1.699.567-.216 1.695-.23 2.891.454-.747.655-1.453 1.435-2.186 2.162-1.752 1.739-8.266 4.451-7.01 7.303 1.084 2.461 4.137 4.979 9.258 1.026l2.88-.396 4.479 2.21 5.74 5.895c2.047 2.098.888 4.946-1.003 5.556m1.44-6.495c-.658-1.23-2.709-3.247-4.645-4.896l-.012-.012c.893.036 1.83-1.402 3.041-1.513-.846-.646-2.248.1-2.685.218-2.409.648-6.153-2.383-6.153-2.383l-3.582.516s-4.26 5.199-7.849.916c-1.949-2.326 5.114-5.364 6.854-7.093 2.229-2.215 4.215-4.925 7.882-3.079 3.046 1.536 4.246 1.441 8.332 2.152 1.218.213 2.062.771 2.967 1.86.426 3.584 1.115 7.559 1.776 10.325-.341.287-3.264 2.253-5.926 2.989"
             />
           </svg>
@@ -47,9 +53,11 @@ export default function Home() {
           </svg>
         </div>
         <div className="d-flex align-items-start flex-column w-75">
-          <h1>Become a creator of short blogs</h1>
+          <Link to="/stories" className="link">
+            <h1>Become a creator of TMC Stories!</h1>
+          </Link>
           <b>
-            Short blogs are basically quick informative text with a supportive
+            TMC Stories are basically quick informative text with a supportive
             image that expires after 48 hours.
           </b>
           <b>
@@ -60,19 +68,16 @@ export default function Home() {
       </div>
       <div className="d-flex justify-content-between align-items-center p-5 jumbotron">
         <div className="d-flex align-items-start flex-column w-75">
-          <h1>Meet Octo the AI</h1>
+          <Link to="/OctoAI" className="link">
+            <h1>Meet Octo the AI</h1>
+          </Link>
           <b>
             Octo the AI is your virtual assitant that has a huge brain, simple
             answers and soulless stare.
           </b>
         </div>
         <div>
-          <svg
-            width="800"
-            height="800"
-            viewBox="0 0 36 36"
-            aria-hidden="true"
-          >
+          <svg width="800" height="800" viewBox="0 0 36 36" aria-hidden="true">
             <path
               fill="#553788"
               d="M10 12c3 5 0 10.692-3 9.692s-4 2-1 3 9.465-.465 13-4c1-1 2-1 2-1L10 12z"
@@ -115,7 +120,9 @@ export default function Home() {
           </svg>
         </div>
         <div className="d-flex align-items-start flex-column w-75">
-          <h1>Listen to mellow tunes while browsing the internet.</h1>
+          <Link to="/mellowtunes" className="link">
+            <h1>Listen to mellow tunes while browsing the internet.</h1>
+          </Link>
           <b>
             Our music selection updates almost daily and is focused on improving
             your productivity.
@@ -125,7 +132,9 @@ export default function Home() {
       <div className="d-flex justify-content-between align-items-center p-5 jumbotron">
         <div className="d-flex align-items-start flex-column w-75">
           <h1>Our Popular must have tools</h1>
-          <h2>Image 2 Webp Converter</h2>
+          <Link to="/Img2Webp" className="link mt-2">
+            <h2>Image 2 Webp Converter</h2>
+          </Link>
           <b>
             WebP is a modern image format that provides superior lossless and
             lossy compression for images on the web. Using WebP, webmasters and
@@ -133,7 +142,9 @@ export default function Home() {
             faster. WebP lossless images are 26% smaller in size compared to
             PNGs.
           </b>
-          <h2 className="mt-2">Plan Code</h2>
+          <Link to="/PlanCode" className="link mt-2">
+            <h2>Plan Code</h2>
+          </Link>
           <b>
             A simple visual planning (Algorithm) for your upcoming projects.
           </b>
@@ -175,7 +186,9 @@ export default function Home() {
           </svg>
         </div>
         <div className="d-flex align-items-start flex-column w-75">
-          <h1>Find fun new profiles and create one yourself!.</h1>
+          <Link to="/explore" className="link">
+            <h1>Find fun new profiles and create one yourself!.</h1>
+          </Link>
           <b>
             Unlock full potential of the site by creating a proile and joining
             the community also sign up for that.
@@ -184,7 +197,9 @@ export default function Home() {
       </div>
       <div className="d-flex justify-content-between align-items-center p-5 jumbotron">
         <div className="d-flex align-items-start flex-column w-75">
-          <h1>Change the appearance of the website, Try out new themes.</h1>
+          <Link to="/Themes" className="link">
+            <h1>Change the appearance of the website, Try out new themes.</h1>
+          </Link>
           <b>
             We have many themes for you to choose according to your preferences.
           </b>
@@ -192,7 +207,7 @@ export default function Home() {
         <div>
           <svg viewBox="0 0 370.589 370.589">
             <path
-              fill="#6e046f"
+              fill="#a313a8"
               d="M5.806 224.753c-7.741 7.741-7.741 20.291.002 28.034l10.114 10.114 24.18-9.46-9.112 24.529 50.811 50.812 39.014-22.66-19.858 41.815 16.843 16.844c7.743 7.743 20.293 7.743 28.034.002l91.812-91.812-140.028-140.03-91.812 91.812zM358.83 11.841l-.082-.083c-9.66-9.66-21.981-13.478-35.631-11.043-27.59 4.924-56.519 34.861-77.384 80.087-5.788 12.546-13.997 19.607-25.101 21.588-21.311 3.803-48.293-11.741-64.344-27.792a8.61 8.61 0 00-12.176.001l-16.685 16.686 24.651 24.651a8.197 8.197 0 010 11.594 8.197 8.197 0 01-11.594 0l-24.651-24.651-6.178 6.178a8.61 8.61 0 00-.002 12.178l139.703 139.703c3.361 3.361 8.812 3.36 12.177-.002l34.458-34.458a8.613 8.613 0 00.001-12.177c-16.051-16.051-31.595-43.034-27.792-64.344 1.98-11.103 9.042-19.312 21.588-25.1 45.226-20.865 75.163-49.793 80.087-77.383 2.434-13.652-1.385-25.973-11.045-35.633zm-15.774 36.905c-5.857 5.857-15.354 5.857-21.213 0-5.856-5.858-5.856-15.355 0-21.213 5.858-5.858 15.355-5.858 21.213 0 5.858 5.858 5.858 15.355 0 21.213z"
             />
           </svg>
@@ -220,16 +235,23 @@ export default function Home() {
         </div>
         <div className="d-flex align-items-center flex-column justify-content-center">
           <h1>Play Games and test your IQ!</h1>
-          <h2>Try out Games.</h2>
+          <Link to="/Games" className="link">
+            <h2>Try out Games</h2>
+          </Link>
           <b>They improve your focus and reflexes.</b>
-          <h2>IQ Tester</h2>
-          <b>Test your IQ by answering series of questions. Choose a category and begin.</b>
+          <Link to="/IqTest" className="link mt-3">
+            <h2>IQ Tester</h2>
+          </Link>
+          <b>
+            Test your IQ by answering series of questions. Choose a category and
+            begin.
+          </b>
         </div>
       </div>
       <div className="jumbotron d-flex justify-content-center align-items-center">
         <h1>Stay connected, many more to come.</h1>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

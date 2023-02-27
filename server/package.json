@@ -5,7 +5,7 @@
   "main": "main.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon start.js"
+    "start": "nodemon main.js"
   },
   "author": "Idris Vohra",
   "license": "MIT",
