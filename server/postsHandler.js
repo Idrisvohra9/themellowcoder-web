@@ -1,7 +1,14 @@
-import postModel from "../models/postModel.js"
+import express from "express";
+import postModel from "./models/postModel.js"
 
-// This takes time hence we make it asynchronous function
-export const getPost = async (req, res) => {
+const router = express.Router();
+
+router.get('/', getPost);
+router.post("/create", createPost);
+
+
+//$ Controllers:
+const getPost = async (req, res) => {
     try {
         const posts = await postModel.find();
 
@@ -25,3 +32,4 @@ export const createPost = async (req, res) => {
         res.status(409).json({ message: error.message })
     }
 }
+export default router;

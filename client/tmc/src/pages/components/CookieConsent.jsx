@@ -5,9 +5,11 @@ export default function CookieConsent() {
   const toast = useRef();
   function cookieAccepted(){
     toast.current.className = toast.current.className.replace(" show", "");
+    setCookie("cookie-consent","true");
   }
   function cookieDeclined(){
     toast.current.className = toast.current.className.replace(" show","");
+    setCookie("cookie-consent","false");
   }
   return (
     <div

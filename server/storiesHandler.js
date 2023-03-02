@@ -1,7 +1,13 @@
-import storyModel from "../models/storyModel.js"
+import express from "express";
+import storyModel from "./models/storyModel.js"
+const router = express.Router();
 
+router.get('/', getStory);
+router.post("/create", createStory);
+
+// $Controllers:
 // This takes time hence we make it asynchronous function
-export const getPost = async (req, res) => {
+export const getStory = async (req, res) => {
     try {
         const stories = await storyModel.find();
 
@@ -13,15 +19,16 @@ export const getPost = async (req, res) => {
     }
 }
 
-export const createPost = async (req, res) => {
+export const createStory = async (req, res) => {
     const body = req.body;
-    const newPost = new storyModel()
+    const newStory = new storyModel()
     try {
-        await newPost.save();
+        await newStory.save();
         // Successful creation:
-        res.status(201).json(newPost);
+        res.status(201).json(newStory);
     } catch (error) {
         // Unsuccessful creation"
         res.status(409).json({ message: error.message })
     }
 }
+export default router;

@@ -1,4 +1,10 @@
-import userModel from "../models/userModel.js"
+import express from "express";
+import userModel from "./models/userModel.js"
+
+const router = express.Router();
+
+router.get('/', getUser);
+router.post("/create", createUser);
 
 // This takes time hence we make it asynchronous function
 export const getUser = async (req, res) => {
@@ -25,3 +31,4 @@ export const createUser = async (req, res) => {
         res.status(409).json({ message: error.message })
     }
 }
+export default router;

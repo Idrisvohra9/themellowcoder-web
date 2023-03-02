@@ -5,7 +5,7 @@ import clickSound from "../static/Other/mixkit-arcade-game-jump-coin-216.wav";
 import starFallSound from "../static/Other/stars-falling.mp3";
 import CookieConsent from "./components/CookieConsent";
 import { getCookie } from "../tools/cookies";
-
+import LoginModal from "./components/Login";
 export default function Layout() {
   const sidebar = useRef();
   const navbar = useRef();
@@ -39,7 +39,15 @@ export default function Layout() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
   }
-
+  function showCookieConsent() {
+    // Checks for the user consent and does'nt ask again.
+    if (getCookie("cookie-consent") === "false") {
+      return <CookieConsent />;
+    } else if (getCookie("cookie-consent") === "true") {
+      // console.log("Ok");
+      return "";
+    }
+  }
   var prevScrollpos = window.pageYOffset;
   window.onscroll = function () {
     var currentScrollPos = window.pageYOffset;
@@ -100,7 +108,7 @@ export default function Layout() {
   return (
     <>
       {!online ? <div className="status">You are currently offline</div> : ""}
-      <nav className="navbar side-frames-h" ref={navbar}>
+      <nav className="navbar" ref={navbar}>
         <section className="starfall off" ref={starfall}>
           <span className="stars"></span>
           <span className="stars"></span>
@@ -187,10 +195,10 @@ export default function Layout() {
             <div className="highlight"></div>
           </NavLink>
         ) : (
-          <button className="btn btn-primary">Login</button>
+          <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginReg">Login</button>
         )}
       </nav>
-      <div className="side-frames-y" id="sidebar" ref={sidebar}>
+      <div className="sidebar" id="sidebar" ref={sidebar}>
         <div className="side-btns">
           <NavLink to="/explore" className="mainlinks">
             <svg fill="#fff" className="btns" viewBox="0 0 52.966 52.966">
@@ -347,7 +355,8 @@ export default function Layout() {
           <path d="M508.827 350.027L263.493 104.373a10.955 10.955 0 00-15.147 0L3.12 350.027a10.623 10.623 0 000 15.04l42.24 42.347a10.955 10.955 0 0015.147 0L255.92 211.68l195.52 195.733a10.623 10.623 0 0015.04 0l42.347-42.347c4.053-4.159 4.053-10.879 0-15.039zM459.013 384.8l-195.52-195.733a10.623 10.623 0 00-15.04 0L52.933 384.8l-27.2-27.307L255.92 126.987l230.293 230.507-27.2 27.306z" />
         </svg>
       </button>
-      <CookieConsent />
+      {showCookieConsent()}
+      <LoginModal/>
       <Outlet />
     </>
   );

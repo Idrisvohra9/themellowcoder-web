@@ -148,22 +148,22 @@ body ::selection {
 
 
 /* Index contents: */
-.side-frames-h ul {
+.navbar ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.side-frames-h .dropdown {
+.navbar .dropdown {
   position: relative;
 }
 
-.side-frames-h .dropdown-menu {
+.navbar .dropdown-menu {
   margin-top: 0;
   left: -33px;
 }
 
-.side-frames-h .tab {
+.navbar .tab {
   text-decoration: none;
   position: relative;
   color: var(--textClr);
@@ -179,33 +179,33 @@ body ::selection {
   align-items: center;
 }
 
-.side-frames-h .tab:hover {
+.navbar .tab:hover {
   color: #414141;
 }
 
-.side-frames-h .tab.active {
+.navbar .tab.active {
   color: var(--secondaryClr);
 }
 
-.side-frames-h .tab.active .highlight {
+.navbar .tab.active .highlight {
   background-color: var(--secondaryClr);
 }
 
-.side-frames-h .dropdown-menu {
+.navbar .dropdown-menu {
   border-radius: 10px;
   overflow: hidden;
   background-color: var(--primaryClr);
 }
 
-.side-frames-h .dropdown-menu .dropdown-item {
+.navbar .dropdown-menu .dropdown-item {
   color: var(--textClr);
 }
 
-.side-frames-h .dropdown-menu .dropdown-item:hover {
+.navbar .dropdown-menu .dropdown-item:hover {
   background-color: #414141;
 }
 
-.side-frames-h .highlight {
+.navbar .highlight {
   position: absolute;
   bottom: 0;
   left: 0px;
@@ -214,7 +214,7 @@ body ::selection {
   border-radius: 5px 5px 0 0;
 }
 
-.side-frames-h {
+.navbar {
   position: sticky;
   background-repeat: no-repeat;
   background-image: url("../Images/blob2.svg");
@@ -234,7 +234,7 @@ body ::selection {
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.456);
 }
 
-.side-frames-y {
+.sidebar {
   background-color: var(--primaryClr);
   background-image: url("../Images/blob3.svg");
   background-repeat: no-repeat;
@@ -723,7 +723,12 @@ svg.arrow {
 .side-btns a:hover svg.arrow {
   display: block;
 }
-
+.gradient-bg{
+  background-image: linear-gradient(220deg, var(--primaryClr), var(--secondaryClr));
+  height: 100%;
+  width: 100%;
+  padding-bottom: 30px;
+}
 .loginReg {
   display: flex;
   justify-content: center;
@@ -732,14 +737,13 @@ svg.arrow {
   background-color: var(--primaryClr);
   color: var(--secondaryClr);
 }
-
+.loginReg .modal-body{
+  width: 100%;
+  height: 100%;
+}
 .modal-content {
   background-color: var(--primaryClr) !important;
   color: var(--secondaryClr) !important;
-}
-
-.loginReg .modal-content {
-  padding: 20px;
 }
 
 .loginReg a {
@@ -748,30 +752,30 @@ svg.arrow {
 
 .modal-content .inputCont {
   padding: 0 0 0 42px;
-  width: 80%;
-  margin: 10px 0 5px 0;
-  line-height: 36px;
+  width: 70%;
+  margin: 10px 0 10px 0;
+  /* line-height: 36px; */
   font-size: 24px;
-  font-family: "Satisfy";
-  color: var(--textClr);
+  font-family: "Nunito";
+  color: var(--primaryClr);
   outline: none;
   border-radius: 5px;
-  border: 1px solid white;
-  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid #414141;
+  background-color: var(--textClr);
 }
 
 .modal-content #email {
   background-image: url("../Images/email-svgrepo-com.svg");
   background-repeat: no-repeat;
   background-size: 25px;
-  background-position: 6% 50%;
+  background-position: 2% 50%;
 }
 
 .modal-content #password {
   background-image: url("../Images/password-svgrepo-com.svg");
   background-repeat: no-repeat;
   background-size: 25px;
-  background-position: 6% 50%;
+  background-position: 2% 50%;
 }
 
 .modal-content table {
@@ -788,7 +792,7 @@ svg.arrow {
   color: var(--textClr);
   background-color: darkmagenta;
   border: none;
-  width: 90%;
+  width: 50%;
   cursor: pointer;
   border-radius: 5px;
   margin: 4px 2px 4px 2px;
@@ -1386,12 +1390,12 @@ header {
     font-size: 38px;
   }
 
-  .side-frames-h {
+  .navbar {
     width: 100%;
     height: 50%;
   }
 
-  .side-frames-y {
+  .sidebar {
     width: 7%;
     height: 100%;
     justify-content: space-evenly;
@@ -1468,12 +1472,12 @@ header {
     font-size: 28px;
   }
 
-  .side-frames-h {
+  .navbar {
     width: 100%;
     height: 10%;
   }
 
-  .side-frames-y {
+  .sidebar {
     width: 18%;
     height: 100%;
     justify-content: space-evenly;
@@ -1556,45 +1560,6 @@ header {
   .input::placeholder {
     color: #9e9ea7;
   }
-
-  .dropdownSel .filterby,
-  .dropdownSel .topic {
-    font-size: 14px;
-  }
-
-  .dropdownSel {
-    justify-content: center;
-  }
-
-  .dropdownSel .dropdown,
-  .dropdownSel .dropdown2 {
-    font-size: 12px;
-  }
-
-  .SB {
-    font-size: 10px;
-  }
-
-  .socials {
-    line-height: 30px;
-    font-size: 18px;
-    width: fit-content;
-  }
-
-  .socials #SArrow {
-    width: 20px;
-    height: 20px;
-  }
-
-  .Sicons {
-    width: 25px;
-    height: 25px;
-  }
-
-  .inAbout #Contact td {
-    font-size: 12px;
-  }
-
   .loginReg .modal-content {
     height: fit-content;
     width: 70%;
@@ -1641,12 +1606,12 @@ header {
     font-size: 24px;
   }
 
-  .side-frames-h {
+  .navbar {
     width: 100%;
     height: 10%;
   }
 
-  .side-frames-y {
+  .sidebar {
     width: 20%;
     height: 100%;
     justify-content: space-evenly;
@@ -1732,45 +1697,6 @@ header {
   .input::placeholder {
     color: #9e9ea7;
   }
-
-  .dropdownSel .filterby,
-  .dropdownSel .topic {
-    font-size: 14px;
-  }
-
-  .dropdownSel {
-    justify-content: center;
-  }
-
-  .dropdownSel .dropdown,
-  .dropdownSel .dropdown2 {
-    font-size: 12px;
-  }
-
-  .SB {
-    font-size: 10px;
-  }
-
-  .socials {
-    line-height: 30px;
-    font-size: 18px;
-    width: fit-content;
-  }
-
-  .socials #SArrow {
-    width: 20px;
-    height: 20px;
-  }
-
-  .Sicons {
-    width: 25px;
-    height: 25px;
-  }
-
-  .inAbout #Contact td {
-    font-size: 12px;
-  }
-
   .loginReg .modal-content {
     height: fit-content;
     width: 70%;
@@ -1816,12 +1742,12 @@ header {
     font-size: 20px;
   }
 
-  .side-frames-h {
+  .navbar {
     width: 100%;
     height: 10%;
   }
 
-  .side-frames-y {
+  .sidebar {
     width: 25%;
     height: 100%;
     justify-content: space-evenly;
@@ -1917,54 +1843,8 @@ header {
   .input::placeholder {
     color: #9e9ea7;
   }
-
-  .dropdownSel .filterby,
-  .dropdownSel .topic {
-    font-size: 14px;
-
-  }
-
-  .dropdownSel {
-    justify-content: center;
-  }
-
-  .dropdownSel .dropdown,
-  .dropdownSel .dropdown2 {
-    font-size: 12px;
-  }
-
-  .SB {
-    font-size: 10px;
-    width: fit-content;
-    text-align: center;
-    width: 50%;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .socials {
-    line-height: 30px;
-    font-size: 18px;
-    width: fit-content;
-  }
-
-  .socials #SArrow {
-    width: 20px;
-    height: 20px;
-  }
-
-  .Sicons {
-    width: 25px;
-    height: 25px;
-  }
-
-  .inAbout #Contact td {
-    font-size: 12px;
-  }
-
   .loginReg .modal-content {
     height: fit-content;
-    width: 70%;
     margin: auto;
     left: 15%;
   }

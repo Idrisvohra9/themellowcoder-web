@@ -2,11 +2,16 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
-import postRoutes from "./routes/posts.js"
+import postRoutes from "./postsHandler.js"
+import userRoutes from "./usersHandler.js"
+import storyRoutes from "./storiesHandler.js"
 const app = express();
 
 // Now the routes for post will be get at /post url
 app.use("/posts", postRoutes);
+app.use("/users", userRoutes);
+app.use("/stories", storyRoutes);
+
 app.use(bodyParser.json({
     limit: "30mb",
     extended: true
