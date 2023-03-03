@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Footer from "./components/Footer";
-
+import useLoader from "../Hooks/useLoader";
 export default function Home() {
+  useLoader();
   return (
     <div className="mainContent">
       <div className="d-flex justify-content-center mt-5 flex-column align-items-center mb-5">

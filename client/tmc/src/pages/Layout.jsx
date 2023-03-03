@@ -6,6 +6,7 @@ import starFallSound from "../static/Other/stars-falling.mp3";
 import CookieConsent from "./components/CookieConsent";
 import { getCookie } from "../tools/cookies";
 import LoginModal from "./components/Login";
+
 export default function Layout() {
   const sidebar = useRef();
   const navbar = useRef();
@@ -15,7 +16,7 @@ export default function Layout() {
   let pos = -116;
   var i = 0;
   let toTop = useRef();
-
+  
   function scrollFunction() {
     if (
       document.body.scrollTop > 20 ||
@@ -29,7 +30,6 @@ export default function Layout() {
   window.onload = function () {
     toTop.current.style.display = "none";
     toTop.current.onclick = topFunction;
-    document.body.appendChild(toTop.current);
     window.onscroll = function () {
       scrollFunction();
     };
@@ -59,17 +59,15 @@ export default function Layout() {
     prevScrollpos = currentScrollPos;
   };
 
-  function startFallingStars() {
+  function startFallingStars(e) {
     if (starFall === 0) {
       const starSound = new Audio(starFallSound);
       starSound.play();
-      starfall.current.className = starfall.current.className.replace(
-        " off",
-        ""
-      );
+      starfall.current.classList.remove("off")
       setStarFall(1);
     } else {
-      starfall.current.className += " off";
+      e.stopPropagation();
+      starfall.current.classLits.add("off");
     }
   }
   function slideBar() {
@@ -152,7 +150,7 @@ export default function Layout() {
         <svg
           viewBox="0 0 64 64"
           className="falling-star"
-          onClick={() => startFallingStars()}
+          onClick={(e) => startFallingStars(e)}
         >
           <title>Start Star fall</title>
           <path
