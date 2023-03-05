@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 // Schema is a rule for every columns of post that is going to be stored i mongodb as documents
-const postSchema = mongoose.Schema({
+const userSchema = mongoose.Schema({
     username: String,
     email: String,
     password: String,
@@ -31,6 +31,6 @@ const postSchema = mongoose.Schema({
     friends:[String]
 });
 
-const postModel = mongoose.model("PostModel", postSchema);
+const userModel = mongoose.model("userModel", userSchema);
 
-export default postModel;
+export default userModel;

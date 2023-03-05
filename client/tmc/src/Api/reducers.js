@@ -1,8 +1,5 @@
 import { combineReducers } from "redux";
 
-export default combineReducers({
-
-});
 // What is redux?
 // Redux is used to maintain and update data across your applications for multiple components to share, all while remaining independent of the components.
 
@@ -13,16 +10,16 @@ export default combineReducers({
 const userReducer = (users = [], action) => {
     switch (action.type) {
         case "CREATE":
-            return users;
+            return action.payload;
 
         case "FETCH_ALL":
-            return users;
+            return action.payload;
 
         case "FETCH_SPECIFIC":
-            return users;
+            return action.payload;
 
         case "DELETE_SPECIFIC":
-            return users;
+            return action.payload;
 
         default:
             return users;
@@ -33,16 +30,16 @@ const userReducer = (users = [], action) => {
 const postReducer = (posts = [], action) => {
     switch (action.type) {
         case "CREATE":
-            return posts;
+            return action.payload;
 
         case "FETCH_ALL":
-            return posts;
+            return action.payload;
 
         case "FETCH_SPECIFIC":
-            return posts;
+            return action.payload;
 
         case "DELETE_SPECIFIC":
-            return posts;
+            return action.payload;
 
         default:
             return posts;
@@ -69,3 +66,7 @@ const storyReducer = (stories = [], action) => {
 
     }
 }
+
+export default combineReducers({
+    userReducer, postReducer, storyReducer
+});

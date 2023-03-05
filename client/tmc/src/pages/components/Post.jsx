@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function post({title, }) {
+export default function post({title, username}) {
   return (
     <div className="card" style="width: 18rem;">
       <div className="card-body">

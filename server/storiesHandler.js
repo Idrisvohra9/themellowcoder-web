@@ -2,9 +2,6 @@ import express from "express";
 import storyModel from "./models/storyModel.js"
 const router = express.Router();
 
-router.get('/', getStory);
-router.post("/create", createStory);
-
 // $Controllers:
 // This takes time hence we make it asynchronous function
 export const getStory = async (req, res) => {
@@ -31,4 +28,7 @@ export const createStory = async (req, res) => {
         res.status(409).json({ message: error.message })
     }
 }
+router.get('/', getStory);
+router.post("/create", createStory);
+
 export default router;

@@ -10,14 +10,13 @@ export default function useLoader() {
         const loader = document.querySelector(".loader-container");
         if (isLoading !== true) {
             loader.classList.add("stop");
-            console.log("Loading stopped.");
         }
     }, [isLoading])
     useEffect(() => {
-        setInterval(() => {
-            stopLoading();
+        // setInterval(() => {
+        stopLoading();
 
-        }, 1000);
+        // }, 1000);
 
     }, [stopLoading])
 }

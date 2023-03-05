@@ -3,9 +3,6 @@ import postModel from "./models/postModel.js"
 
 const router = express.Router();
 
-router.get('/', getPost);
-router.post("/create", createPost);
-
 
 //$ Controllers:
 const getPost = async (req, res) => {
@@ -32,4 +29,7 @@ export const createPost = async (req, res) => {
         res.status(409).json({ message: error.message })
     }
 }
+router.get('/', getPost);
+router.post("/create", createPost);
+
 export default router;

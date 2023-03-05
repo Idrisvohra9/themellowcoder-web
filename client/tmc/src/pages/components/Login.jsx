@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   return (
@@ -7,7 +8,7 @@ export default function Login() {
         <div className="modal-dialog modal-dialog-centered modal-lg">
           <div className="modal-content loginReg">
             <div className="modal-header">
-              <h3 className="modal-title">Log-in/ Welcome back!</h3>
+              <h3 className="modal-title">Welcome back!</h3>
               <button
                 type="button"
                 className="btn-close btn-close-white"
@@ -62,12 +63,12 @@ export default function Login() {
                   Remember Me
                 </label>
               </div>
-              <a
-                href="/Forgot-Password"
+              <Link
+                to="/Forgot-Password"
                 style={{ color: "white", fontSize: "18px" }}
               >
                 Forgot your password?
-              </a>
+              </Link>
               <input
                 type="submit"
                 value="Log-in"
@@ -75,9 +76,9 @@ export default function Login() {
                 id="submitBtn"
               />
               New to TMC?
-              <a href="/Sign-up" className="inputBtns btn-primary">
+              <Link to="/Sign-up" className="inputBtns btn-primary">
                 Sign-up!
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -122,7 +123,7 @@ export default function Login() {
               ></button>
             </div>
             <div className="modal-body">
-              It seems you've not logged in yet. <a href="">Login/Register</a>
+              It seems you've not logged in yet. <Link to="">Login/Register</Link>
             </div>
             <div className="modal-footer">
               <button

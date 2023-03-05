@@ -13,3 +13,25 @@ export const getUsers = () => async (dispatch) => {
         console.log(error.message);
     }
 }
+
+export const getPosts = () => async (dispatch) => {
+    try {
+        // Getting the response object from the api which has the key data (object) and that is users
+        const { data } = await api.fetchPosts();
+        dispatch({ type: 'FETCH_ALL', payload: data});
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+export const getStories = () => async (dispatch) => {
+    try {
+        // Getting the response object from the api which has the key data (object) and that is users
+        const { data } = await api.fetchStories();
+        dispatch({ type: 'FETCH_ALL', payload: data});
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}

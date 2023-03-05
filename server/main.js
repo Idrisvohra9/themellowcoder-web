@@ -7,11 +7,6 @@ import userRoutes from "./usersHandler.js"
 import storyRoutes from "./storiesHandler.js"
 const app = express();
 
-// Now the routes for post will be get at /post url
-app.use("/posts", postRoutes);
-app.use("/users", userRoutes);
-app.use("/stories", storyRoutes);
-
 app.use(bodyParser.json({
     limit: "30mb",
     extended: true
@@ -23,6 +18,11 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(cors());
+
+// Now the routes for post will be get at /post url
+app.use("/posts", postRoutes);
+app.use("/users", userRoutes);
+app.use("/stories", storyRoutes);
 
 
 const CONNECTION_URL = "mongodb+srv://IdrisAdmin:IdrisVohra987@clustertmc.fltfidg.mongodb.net/?retryWrites=true&w=majority";
