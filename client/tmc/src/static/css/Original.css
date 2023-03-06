@@ -753,14 +753,12 @@ th {
 
 .input {
   width: 100%;
-  height: 40px;
-  line-height: 40px;
   padding: 0 1rem;
   border: 2px solid transparent;
   border-radius: 8px;
   outline: none;
   background-color: var(--primaryClr);
-  color: #0d0c22;
+  color: var(--textClr);
   transition: .3s ease;
 }
 
@@ -880,7 +878,14 @@ form .required::after {
   align-self: end;
   font-size: 40px;
 }
-
+/* .input-group{
+  border-radius: 20px;
+  overflow: hidden;
+} */
+.input-group-text{
+  background-color: var(--primaryClr);
+  color: var(--textClr);
+}
 .loginReg .modal-body {
   width: 100%;
   height: 100%;

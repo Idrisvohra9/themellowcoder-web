@@ -14,6 +14,17 @@ export const getUsers = () => async (dispatch) => {
     }
 }
 
+export const createUser = (post) => async (dispatch) => {
+    try {
+        // Getting the response object from the api which has the key data (object) and that is users
+        const { data } = await api.addUser(post);
+        dispatch({ type: 'CREATE', payload: data});
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 export const getPosts = () => async (dispatch) => {
     try {
         // Getting the response object from the api which has the key data (object) and that is users

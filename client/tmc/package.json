@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@reduxjs/toolkit": "^1.9.3",
+    "react-file-base64": "^1.0.3",
     "react-redux": "^8.0.5"
   }
 }
