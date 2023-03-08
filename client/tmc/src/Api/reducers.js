@@ -10,7 +10,7 @@ import { combineReducers } from "redux";
 const userReducer = (users = [], action) => {
     switch (action.type) {
         case "CREATE":
-            return action.payload;
+            return [...users, action.payload];
 
         case "FETCH_ALL":
             return action.payload;

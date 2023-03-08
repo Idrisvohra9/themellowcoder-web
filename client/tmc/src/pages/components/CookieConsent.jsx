@@ -6,6 +6,7 @@ export default function CookieConsent() {
   function cookieAccepted(){
     toast.current.className = toast.current.className.replace(" show", "");
     setCookie("cookie-consent","true");
+    window.location.reload(false);
   }
   function cookieDeclined(){
     toast.current.className = toast.current.className.replace(" show","");

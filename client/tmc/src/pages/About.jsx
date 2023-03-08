@@ -1,7 +1,10 @@
 import React from "react";
 import Footer from "./components/Footer";
 import octo from "./components/Images/Icon3.png";
+import useLoader from "../Hooks/useLoader";
+
 export default function About() {
+  useLoader();
   return (
     <div className="mainContent inAbout">
       <div id="octo">

@@ -29,7 +29,9 @@ export const createPost = async (req, res) => {
         res.status(409).json({ message: error.message })
     }
 }
+// If the method is get the router will point to the post path which is by default '/'
 router.get('/', getPost);
+// And if the method is post it will point to the post path which is by default '/create' hence resulting in creating a new post
 router.post("/create", createPost);
 
 export default router;

@@ -16,7 +16,7 @@ export default function Layout() {
   let pos = -116;
   var i = 0;
   let toTop = useRef();
-  
+
   function scrollFunction() {
     if (
       document.body.scrollTop > 20 ||
@@ -63,7 +63,7 @@ export default function Layout() {
     if (starFall === 0) {
       const starSound = new Audio(starFallSound);
       starSound.play();
-      starfall.current.classList.remove("off")
+      starfall.current.classList.remove("off");
       setStarFall(1);
     } else {
       e.stopPropagation();
@@ -189,11 +189,24 @@ export default function Layout() {
         </ul>
         {getCookie("username") ? (
           <NavLink to="/profile" className="tab">
-            Profile
+            <div className="d-flex">
+              {/* <img
+                src={getCookie("user-dp")}
+                alt="User dp"
+                className="dp"
+              /> */}
+              <div className="ms-1">{getCookie("username")}</div>
+            </div>
             <div className="highlight"></div>
           </NavLink>
         ) : (
-          <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginReg">Login</button>
+          <button
+            className="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#loginReg"
+          >
+            Login
+          </button>
         )}
       </nav>
       <div className="sidebar" id="sidebar" ref={sidebar}>
@@ -354,7 +367,7 @@ export default function Layout() {
         </svg>
       </button>
       {showCookieConsent()}
-      <LoginModal/>
+      <LoginModal />
       <Outlet />
     </>
   );

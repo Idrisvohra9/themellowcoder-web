@@ -9,7 +9,7 @@ import Explore from "./pages/Explore";
 import Profile from "./pages/Profile";
 import NoPage from "./pages/NoPage";
 import Home from "./pages/Home";
-import ShortBlog from "./pages/shortBlogs";
+import Stories from "./pages/Stories";
 import OctoAI from "./pages/OctoAI"
 import Games from "./pages/Games"
 import PsychExperiment from "./pages/PsychExperiments"
@@ -30,7 +30,7 @@ export default function App() {
           <Route path="mellowtunes" element={<MusicTab />} />
           <Route path="explore" element={<Explore />} />
           <Route path="profile" element={<Profile />} />
-          <Route path="stories" element={<ShortBlog />} />
+          <Route path="stories" element={<Stories />} />
           <Route path="sign-up" element={<SignUp />} />
           <Route path="Forgot-Password" element={<ForgotPass />} />
           <Route path="OctoAI" element={<OctoAI />} />

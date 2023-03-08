@@ -5,17 +5,16 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../Api/actions";
 import Footer from "./components/Footer";
-
-
+import { getCookie } from "../tools/cookies";
 export default function Discussion() {
   useLoader();
   // Whole global redux store:
-  
-  const dispatch = useDispatch({type: "FETCH_ALL"});
+
+  const dispatch = useDispatch({ type: "FETCH_ALL" });
   const posts = useSelector((store) => store.postReducer);
   console.log(posts);
   useEffect(() => {
-    dispatch(getPosts())// We go to the post reducer
+    dispatch(getPosts()); // We go to the post reducer
   }, [dispatch]);
   const showFilter = useRef();
   const filterBy = (e) => {
@@ -88,6 +87,29 @@ export default function Discussion() {
               </g>
             </g>
           </svg>
+        </div>
+        <div className="d-flex justify-content-end mt-3">
+          <div className="d-flex">
+            {getCookie("username") ? (
+              <Link to="/post" className="addPost">
+                <svg viewBox="0 0 24 24" fill="aliceblue">
+                  <g
+                    stroke="aliceblue"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M6 12h12M12 18V6" />
+                  </g>
+                </svg>
+                <span>
+                  Start a discussion
+                </span>
+              </Link>
+            ) : (
+              <div>Login to Post!</div>
+            )}
+          </div>
         </div>
         <hr />
         <div className="d-flex flex-row w-100 h-100">

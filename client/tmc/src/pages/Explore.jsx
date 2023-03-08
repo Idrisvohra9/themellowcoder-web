@@ -1,6 +1,7 @@
 import React from 'react'
-
+import useLoader from "../Hooks/useLoader"
 export default function Explore() {
+  useLoader();
   return (
     <div className="mainContent">
       <div className="container mt-4">

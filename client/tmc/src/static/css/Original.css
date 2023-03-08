@@ -113,7 +113,8 @@ h1 {
 }
 
 a {
-  color: var(--secondaryClr);
+  color: var(--textClr);
+  text-decoration: 2px solid var(--tertiaryClr) underline;
 }
 
 a:hover {
@@ -146,7 +147,9 @@ body ::selection {
   background-color: var(--secondaryClr);
 }
 
-
+.dark{
+  background-color:var(--primaryClr);
+}
 /* Index contents: */
 .navbar ul {
   list-style: none;
@@ -617,7 +620,7 @@ div.jumbotron:nth-child(9) {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #e7e7e7;
+  background: var(--primaryClr);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   overflow: hidden;
@@ -640,14 +643,14 @@ div.jumbotron:nth-child(9) {
   content: "";
   left: 0;
   justify-content: flex-end;
-  background-color: #4d60b6;
+  background-color: var(--secondaryClr);
 }
 
 .social-card::after {
   content: "";
   right: 0;
   justify-content: flex-start;
-  background-color: #4453a6;
+  background-color: var(--tertiaryClr);
 }
 
 .social-card:hover {
@@ -878,10 +881,19 @@ form .required::after {
   align-self: end;
   font-size: 40px;
 }
-/* .input-group{
-  border-radius: 20px;
+.input-group{
+  /* border-radius: 20px; */
   overflow: hidden;
-} */
+}
+.c-point{
+  cursor: pointer;
+}
+.dp{
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  border-radius: 50%;
+}
 .input-group-text{
   background-color: var(--primaryClr);
   color: var(--textClr);
@@ -1172,7 +1184,40 @@ header {
 .search-btn {
   height: 40px;
 }
+.addPost {
+  display: flex;
+  align-items: center;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 17px;
+  padding: 0.8em 1.3em 0.8em 0.9em;
+  text-decoration: none;
+  color: white;
+  background: #ad5389;
+  background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+  border: none;
+  letter-spacing: 0.05em;
+  border-radius: 16px;
+}
 
+.addPost svg {
+  margin-right: 3px;
+  transform: rotate(30deg);
+  transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.addPost span {
+  transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.addPost:hover svg {
+  transform: translateX(5px) rotate(90deg);
+}
+
+.addPost:hover span {
+  transform: translateX(7px);
+  color: var(--textClr);
+}
 /* Loader Animation css */
 #box-outer {
   width: 80px;

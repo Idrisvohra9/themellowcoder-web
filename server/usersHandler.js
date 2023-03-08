@@ -18,15 +18,15 @@ export const getUser = async (req, res) => {
 }
 
 export const createUser = async (req, res) => {
-    const body = req.body;
-    const newUser = new userModel()
+    const user = req.body;
+    const newUser = new userModel(user);
     try {
         await newUser.save();
         // Successful creation:
-        res.status(201).json(newUser);
+        res.status(200).json(newUser);
     } catch (error) {
         // Unsuccessful creation"
-        res.status(409).json({ message: error.message })
+        res.status(404).json({ message: error.message })
     }
 }
 router.get('/', getUser);
