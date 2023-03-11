@@ -4,5 +4,5 @@
 // learn more: https://github.com/testing-library/jest-dom
 // import '@testing-library/jest-dom';
 
-
-console.log(undefined ? true : false);
+console.log({}.greet = "Hello");
+// console.log(undefined ? true : false);

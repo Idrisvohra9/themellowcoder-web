@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no tests specified\" && exit 1",
+    "server": "npm start --prefix server",
+    "client": "npm start --prefix client/tmc",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  }
+}
