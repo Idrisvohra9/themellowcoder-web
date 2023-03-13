@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from "react";
 import Layout from "./pages/Layout";
-import "./static/css/Original.css";
+// import "./static/css/Original.css";
 import About from "./pages/About";
 import Discussion from "./pages/Discussion";
 import MusicTab from "./pages/MusicTab";
@@ -19,6 +19,11 @@ import Themes from "./pages/Themes"
 import Img2Webp from "./pages/Img2Webp"
 import SignUp from "./pages/SignUp"
 import ForgotPass from "./pages/ForgotPass"
+import { getCookie } from "./tools/cookies";
+import Topic from "./pages/Topic";
+import CreatePost from "./pages/CreatePost";
+require(`./static/css/${getCookie("active-theme")}.css`);
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -26,7 +31,12 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
-          <Route path="discuss" element={<Discussion />} />
+          <Route path="discuss" >
+            <Route index element={<Discussion />} />
+            <Route path="topic" element={<Topic />} />
+            {/* The above means a post full page */}
+            <Route path="create" element={<CreatePost />} />
+          </Route>
           <Route path="mellowtunes" element={<MusicTab />} />
           <Route path="explore" element={<Explore />} />
           <Route path="profile" element={<Profile />} />

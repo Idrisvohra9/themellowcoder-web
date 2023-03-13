@@ -6,7 +6,6 @@ import starFallSound from "../static/Other/stars-falling.mp3";
 import CookieConsent from "./components/CookieConsent";
 import { getCookie } from "../tools/cookies";
 import LoginModal from "./components/Login";
-
 export default function Layout() {
   const sidebar = useRef();
   const navbar = useRef();

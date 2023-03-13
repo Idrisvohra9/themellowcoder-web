@@ -1,43 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import useLoader from "../Hooks/useLoader";
-import Helmet from "react-helmet"
+import Helmet from "react-helmet";
+import { Configuration, OpenAIApi } from "openai";
+
 export default function OctoAI() {
   useLoader();
+  const configuration = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+  const openai = new OpenAIApi(configuration);
   const [prompt, setPrompt] = useState("");
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const input = useRef();
   const handleSend = async () => {
     setLoading(true);
+    console.log("Sent");
     try {
-      const response = await fetch("../Api/generate",{
-        method: "POST",
+      const completion = await openai.createCompletion({
+        model: "text-davinci-003",
+        prompt: prompt,
+        temperature: 0.5,
+        max_tokens: 100,
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.OPENAI_SECRET_KEY}`,
         },
-        body: JSON.stringify({ prompt: prompt }),
       });
-      console.log(response.body);
-      const data = await response.json();
-      if (response.status !== 200) {
-        throw data.error || new Error(`Request failed with status ${response.status}`);
-      }
+      setResult(completion.data.choices[0].text);
       setPrompt("");
-      setResult(data.result);
     } catch (error) {
       console.log(error.message);
     }
     setLoading(false);
   };
 
-  function inputFocus(e){
-    console.log(e.key);
-    if(e.key === ""){
-
+  function inputFocus(e) {
+    if (e.ctrlKey && e.key === "i") {
+      input.current.focus();
     }
   }
-  function enterSend(e){
-    if(e.key === "Enter"){
+  function enterSend(e) {
+    if (e.key === "Enter") {
       handleSend();
     }
   }
@@ -79,7 +83,7 @@ export default function OctoAI() {
             <h1 className="mt-4">Octo The AI</h1>
           </div>
         </div>
-        <div className="container bg-dark rounded-4 w-100 h-100 p-2">
+        <div className="container bg-dark rounded-4 w-100 p-2">
           <pre className="result">{result}</pre>
         </div>
         <div className="container d-flex prompt-field w-100 justify-content-center align-items-center">
@@ -90,8 +94,9 @@ export default function OctoAI() {
             value={prompt}
             onChange={(event) => setPrompt(event.target.value)}
             onKeyDown={enterSend}
+            ref={input}
           />
-          <button className="btn btn-primary ms-2" onClick={() => handleSend()}>
+          <button className="btn btn-primary ms-2" onClick={handleSend}>
             <svg viewBox="0 0 24 24" fill="none">
               <g
                 stroke="#292D32"

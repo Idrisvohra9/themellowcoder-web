@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../Api/actions";
 import Footer from "./components/Footer";
 import { getCookie } from "../tools/cookies";
+import PostLinks from "./components/PostLinks";
 export default function Discussion() {
   useLoader();
   // Whole global redux store:
@@ -22,9 +23,9 @@ export default function Discussion() {
     filterBtns = Array.from(filterBtns);
 
     filterBtns.forEach((elem) => {
-      elem.classNameList.remove("active");
+      elem.classList.remove("active");
     });
-    e.target.classNameList.add("active");
+    e.target.classList.add("active");
     showFilter.current.innerHTML = e.target.innerHTML;
   };
 
@@ -91,7 +92,7 @@ export default function Discussion() {
         <div className="d-flex justify-content-end mt-3">
           <div className="d-flex">
             {getCookie("username") ? (
-              <Link to="/post" className="addPost">
+              <Link to="/discuss/create" className="addPost">
                 <svg viewBox="0 0 24 24" fill="aliceblue">
                   <g
                     stroke="aliceblue"
@@ -102,9 +103,7 @@ export default function Discussion() {
                     <path d="M6 12h12M12 18V6" />
                   </g>
                 </svg>
-                <span>
-                  Start a discussion
-                </span>
+                <span>Start a discussion</span>
               </Link>
             ) : (
               <div>Login to Post!</div>
@@ -114,22 +113,20 @@ export default function Discussion() {
         <hr />
         <div className="d-flex flex-row w-100 h-100">
           <div className="posts-area pe-3">
-            <div className="card post-link text-light">
-              <div className="card-body">
-                <h5 className="card-title">Post title</h5>
-                <h6 className="card-subtitle mb-2 text-muted">Username</h6>
-                <p className="card-text">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </p>
-                <div className="d-flex justify-content-between align-items-center">
-                  <Link to="" className="card-link">
-                    Open Post
-                  </Link>
-                  <span className="text-muted">date</span>
+            {!posts.length ? (
+              <div className="post-loader">
+                <div className="wrapper">
+                  <div className="circle"></div>
+                  <div className="line-1"></div>
+                  <div className="line-2"></div>
+                  <div className="line-3"></div>
+                  <div className="line-4"></div>
                 </div>
               </div>
-            </div>
+            ) : (
+              posts.map((post) => <PostLinks {...post} key={post._id} />)
+            )}
+            <PostLinks/>
           </div>
           <div className="ads"></div>
         </div>

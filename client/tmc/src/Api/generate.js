@@ -4,7 +4,7 @@ const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
-
+// openai.
 export default async function (req, res) {
   if (!configuration.apiKey) {
     res.status(500).json({
@@ -16,9 +16,10 @@ export default async function (req, res) {
   }
 
   try {
+    const prompt = req.body.prompt || "";
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: req.body.prompt,
+      prompt: prompt,
       temperature: 0.2,
     });
     res.status(200).json({ result: completion.data.choices[0].text });
