@@ -9,7 +9,7 @@ export default function About() {
     <div className="mainContent inAbout">
       <div id="octo">
         <header>
-          <div className="container">
+          <div className="logo-container">
             <img src={octo} alt="Old Logo RIP" className="logo-octo" />
           </div>
         </header>

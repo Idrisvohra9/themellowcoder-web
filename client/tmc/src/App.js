@@ -22,6 +22,8 @@ import ForgotPass from "./pages/ForgotPass"
 import { getCookie } from "./tools/cookies";
 import Topic from "./pages/Topic";
 import CreatePost from "./pages/CreatePost";
+import CreateStory from "./pages/CreateStory";
+import "./static/css/Responsive.css";
 require(`./static/css/${getCookie("active-theme")}.css`);
 
 export default function App() {
@@ -40,7 +42,11 @@ export default function App() {
           <Route path="mellowtunes" element={<MusicTab />} />
           <Route path="explore" element={<Explore />} />
           <Route path="profile" element={<Profile />} />
-          <Route path="stories" element={<Stories />} />
+          <Route path="stories" >
+            <Route index element={<Stories />} />
+            <Route path="create" element={<CreateStory />} />
+
+          </Route>
           <Route path="sign-up" element={<SignUp />} />
           <Route path="Forgot-Password" element={<ForgotPass />} />
           <Route path="OctoAI" element={<OctoAI />} />

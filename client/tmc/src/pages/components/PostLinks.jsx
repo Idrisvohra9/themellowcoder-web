@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function PostLink({ title, postBody, tags=["Python"], username, date, postLink }) {
+function PostLink({ title, postBody, tags=["Python","C#"], username, date, postLink }) {
   return (
     <div className="card post-link text-light">
       <div className="card-body">
@@ -9,7 +9,7 @@ function PostLink({ title, postBody, tags=["Python"], username, date, postLink }
           <h5 className="card-title">{title}</h5>
         </Link>
         <h6 className="card-subtitle mb-2 text-muted">{username}</h6>
-        <div className="d-flex justify-content-start tags">
+        <div className="d-flex justify-content-start">
           {tags.map((tag) => (
             <span className="tag">{tag}</span>
           ))}
