@@ -10,8 +10,8 @@ function PostLink({ title, postBody, tags=["Python","C#"], username, date, postL
         </Link>
         <h6 className="card-subtitle mb-2 text-muted">{username}</h6>
         <div className="d-flex justify-content-start">
-          {tags.map((tag) => (
-            <span className="tag">{tag}</span>
+          {tags.map((tag, id) => (
+            <span className="tag" key={id}>{tag}</span>
           ))}
         </div>
         <p className="card-text">{postBody}</p>

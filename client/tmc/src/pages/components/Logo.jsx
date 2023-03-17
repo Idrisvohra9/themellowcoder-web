@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 export default function Logo() {
   return (
-    <NavLink to="/" className="logo">
+    <NavLink to="/" className="logo navbar-brand">
       <img src={logo} alt="logo" />
       <div className="d-flex justify-content-center flex-column">
         <div className="title">themellowcoder</div>

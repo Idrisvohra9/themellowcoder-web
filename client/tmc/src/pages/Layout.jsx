@@ -58,15 +58,15 @@ export default function Layout() {
     prevScrollpos = currentScrollPos;
   };
 
-  function startFallingStars(e) {
-    if (starFall === 0) {
-      const starSound = new Audio(starFallSound);
+  function startFallingStars() {
+    const starSound = new Audio(starFallSound);
+    if (document.body.contains(document.querySelector(".starfall.off"))) {
       starSound.play();
       starfall.current.classList.remove("off");
       setStarFall(1);
     } else {
-      e.stopPropagation();
-      starfall.current.classLits.add("off");
+      starfall.current.classList.add("off");
+      starSound.pause();
     }
   }
   function slideBar() {
@@ -105,109 +105,135 @@ export default function Layout() {
   return (
     <>
       {!online ? <div className="status">You are currently offline</div> : ""}
-      <nav className="navbar" ref={navbar}>
-        <section className="starfall off" ref={starfall}>
-          <span className="stars"></span>
-          <span className="stars"></span>
-          <span className="stars"></span>
-          <span className="stars"></span>
-          <span className="stars"></span>
-          <span className="stars"></span>
-          <span className="stars"></span>
-          <span className="stars"></span>
-          <span className="stars"></span>
-          <span className="stars"></span>
-        </section>
-        <Logo />
-        <button className="sidebarIcon" onClick={() => slideBar()}>
-          <svg width="800" height="800" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M21.97 15V9c0-5-2-7-7-7h-6c-5 0-7 2-7 7v6c0 5 2 7 7 7h6c5 0 7-2 7-7z"
-              stroke="#292D32"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              opacity=".4"
-              d="M7.97 2v20M14.97 9.44L12.41 12l2.56 2.56"
-              stroke="#292D32"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-        <NavLink to="/discuss" className="tab">
-          Discuss
-          <div className="highlight"></div>
-        </NavLink>
-        <NavLink to="/stories" className="tab">
-          Stories
-          <div className="highlight"></div>
-        </NavLink>
-        <svg
-          viewBox="0 0 64 64"
-          className="falling-star"
-          onClick={(e) => startFallingStars(e)}
-        >
-          <title>Start Star fall</title>
-          <path
-            d="M58 25.72c-.38-.06-4.91 4.22-8.19 8a261.43 261.43 0 01-18.53 18.44c-5.16 4.4-8.28 4.5-11.63 3.9s-7.43-3-10.43-7.72S7 38.13 7.75 35.78a28.69 28.69 0 017.12-11.06c3.91-3.56 17.19-16 17.31-16.34S31.42 6.89 31 7.16C28.18 8.94 11.59 25.34 9.59 28.09a24.43 24.43 0 00-4.44 12.63c-.25 5.22 2 9 5.35 12.75s8.28 4.53 12.18 4.59 9.16-4.06 13.07-7.87S58.68 27.13 58.84 27s-.44-1.22-.84-1.28zM27.9 23c.07.28.5 1 .88.94S47.06 7.41 47.12 7.16s-.47-1.28-.94-1.22S27.78 22.43 27.9 23zm8.16 1.69c0 .22.56.93.91 1s18.5-16.75 18.59-17-.56-1.19-.94-1.13-18.52 16.79-18.56 17.1zm1.12 11.47c.19 0 15.66-14.75 15.88-15.13s-.69-1.28-.91-1.34-15.89 14.83-15.93 15.25.78 1.19.96 1.19zm-26.09-1.41c-.28.19-.59 1.56-.84 3.38s.4 6.21 4.4 10.06 12.16 4.19 12.57 4.09.34-1.31.21-1.5-.81-.34-1.84-.44-5.5-.5-10.53-4.93A9.19 9.19 0 0112.62 35c.1-.37-1.36-.37-1.53-.25zm25.44 9.31c.37-.53-2.91-8.25-3-8.47s3.66-5.84 3-6.53-8-.9-8.41-.93-5.09-5-5.81-4.5-1.91 7-2.06 7.37-5.64 4.67-5.91 5.09c-.65 1 .5 1.22 1.31 1.35s4.79.28 5 .4.81 5.75.93 7.38 1.2 1.41 1.42 1.28 4.78-3.87 5.09-4.12 8.06 2.21 8.44 1.68zm-8.88-3.43c-.56.15-3.84 3.53-4.09 3.34s-.75-6.63-1-7a1.63 1.63 0 00-1.37-.69c-.66-.06-3.91-.28-4.07-.62s4.88-3.85 4.91-4 .81-5.71 1.28-5.75 3.97 4 4.59 4.09 6.82 0 6.69.38-2.75 4.87-2.84 5.28 2.37 6.37 2.18 6.5-5.71-1.69-6.28-1.53zm-4-12.32a23 23 0 00-.62 4c.06.29.59.19.87.13s.57-3.69.57-4-.58-.44-.79-.13zM30 35.47c.09 0 .15-.5.12-.78s-1.57-.79-1.78-.69-.15.78-.06.94a7.41 7.41 0 001.72.53zm.5 2.28c.25-.09 0-.66-.28-.94a6.22 6.22 0 00-2-.59c-.22 0-.22.81-.13.94a8.6 8.6 0 002.44.59zm-2.44.38c-.19 0-.09 1 .06 1.09a27.14 27.14 0 003 .87c.28 0 0-.65-.15-.84a12.18 12.18 0 00-2.88-1.12z"
-            fill="#d8d4cf"
-          />
-        </svg>
-        <ul>
-          <li className="nav-item dropdown">
-            <div
-              className="nav-link dropdown-toggle tab"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Handy Tools
-            </div>
-            <ul className="dropdown-menu">
-              <li>
-                <NavLink to="/OctoAI" className="dropdown-item">
-                  Octo The AI
+      <section className="starfall off" ref={starfall}>
+        <span className="stars"></span>
+        <span className="stars"></span>
+        <span className="stars"></span>
+        <span className="stars"></span>
+        <span className="stars"></span>
+        <span className="stars"></span>
+        <span className="stars"></span>
+        <span className="stars"></span>
+        <span className="stars"></span>
+        <span className="stars"></span>
+      </section>
+      <nav className="navbar navbar-expand-lg" ref={navbar}>
+        <div className="container-fluid d-flex">
+          <Logo />
+          <button
+            className="navbar-toggler align-self-center"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbar-tabs"
+            aria-controls="navbar-tabs"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <button className="sidebarIcon" onClick={() => slideBar()}>
+            <svg width="800" height="800" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M21.97 15V9c0-5-2-7-7-7h-6c-5 0-7 2-7 7v6c0 5 2 7 7 7h6c5 0 7-2 7-7z"
+                stroke="#292D32"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                opacity=".4"
+                d="M7.97 2v20M14.97 9.44L12.41 12l2.56 2.56"
+                stroke="#292D32"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+          <div className="collapse navbar-collapse" id="navbar-tabs">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-evenly w-100 align-items-center">
+              <li className="nav-item">
+                <NavLink to="/discuss" className="tab nav-link">
+                  Discuss
+                  <div className="highlight"></div>
                 </NavLink>
               </li>
-              <li>
-                <NavLink to="/Img2Webp" className="dropdown-item">
-                  Image 2 Webp
+              <li className="nav-item">
+                <NavLink to="/stories" className="tab nav-link">
+                  Stories
+                  <div className="highlight"></div>
                 </NavLink>
               </li>
-              <li>
-                <NavLink to="/PlanCode" className="dropdown-item">
-                  Plan Code
-                </NavLink>
+
+              <li className="nav-item">
+                <svg
+                  viewBox="0 0 64 64"
+                  className="falling-star"
+                  onClick={(e) => startFallingStars(e)}
+                >
+                  <title>Start Star fall</title>
+                  <path
+                    d="M58 25.72c-.38-.06-4.91 4.22-8.19 8a261.43 261.43 0 01-18.53 18.44c-5.16 4.4-8.28 4.5-11.63 3.9s-7.43-3-10.43-7.72S7 38.13 7.75 35.78a28.69 28.69 0 017.12-11.06c3.91-3.56 17.19-16 17.31-16.34S31.42 6.89 31 7.16C28.18 8.94 11.59 25.34 9.59 28.09a24.43 24.43 0 00-4.44 12.63c-.25 5.22 2 9 5.35 12.75s8.28 4.53 12.18 4.59 9.16-4.06 13.07-7.87S58.68 27.13 58.84 27s-.44-1.22-.84-1.28zM27.9 23c.07.28.5 1 .88.94S47.06 7.41 47.12 7.16s-.47-1.28-.94-1.22S27.78 22.43 27.9 23zm8.16 1.69c0 .22.56.93.91 1s18.5-16.75 18.59-17-.56-1.19-.94-1.13-18.52 16.79-18.56 17.1zm1.12 11.47c.19 0 15.66-14.75 15.88-15.13s-.69-1.28-.91-1.34-15.89 14.83-15.93 15.25.78 1.19.96 1.19zm-26.09-1.41c-.28.19-.59 1.56-.84 3.38s.4 6.21 4.4 10.06 12.16 4.19 12.57 4.09.34-1.31.21-1.5-.81-.34-1.84-.44-5.5-.5-10.53-4.93A9.19 9.19 0 0112.62 35c.1-.37-1.36-.37-1.53-.25zm25.44 9.31c.37-.53-2.91-8.25-3-8.47s3.66-5.84 3-6.53-8-.9-8.41-.93-5.09-5-5.81-4.5-1.91 7-2.06 7.37-5.64 4.67-5.91 5.09c-.65 1 .5 1.22 1.31 1.35s4.79.28 5 .4.81 5.75.93 7.38 1.2 1.41 1.42 1.28 4.78-3.87 5.09-4.12 8.06 2.21 8.44 1.68zm-8.88-3.43c-.56.15-3.84 3.53-4.09 3.34s-.75-6.63-1-7a1.63 1.63 0 00-1.37-.69c-.66-.06-3.91-.28-4.07-.62s4.88-3.85 4.91-4 .81-5.71 1.28-5.75 3.97 4 4.59 4.09 6.82 0 6.69.38-2.75 4.87-2.84 5.28 2.37 6.37 2.18 6.5-5.71-1.69-6.28-1.53zm-4-12.32a23 23 0 00-.62 4c.06.29.59.19.87.13s.57-3.69.57-4-.58-.44-.79-.13zM30 35.47c.09 0 .15-.5.12-.78s-1.57-.79-1.78-.69-.15.78-.06.94a7.41 7.41 0 001.72.53zm.5 2.28c.25-.09 0-.66-.28-.94a6.22 6.22 0 00-2-.59c-.22 0-.22.81-.13.94a8.6 8.6 0 002.44.59zm-2.44.38c-.19 0-.09 1 .06 1.09a27.14 27.14 0 003 .87c.28 0 0-.65-.15-.84a12.18 12.18 0 00-2.88-1.12z"
+                    fill="#d8d4cf"
+                  />
+                </svg>
               </li>
-            </ul>
-          </li>
-        </ul>
-        {getCookie("username") ? (
-          <NavLink to="/profile" className="tab">
-            <div className="d-flex">
-              {/* <img
+
+              <ul>
+                <li className="nav-item dropdown">
+                  <div
+                    className="nav-link dropdown-toggle tab"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Handy Tools
+                  </div>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <NavLink to="/OctoAI" className="dropdown-item">
+                        Octo The AI
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink to="/Img2Webp" className="dropdown-item">
+                        Image 2 Webp
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink to="/PlanCode" className="dropdown-item">
+                        Plan Code
+                      </NavLink>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              {getCookie("username") ? (
+                <NavLink to="/profile" className="tab">
+                  <div className="d-flex">
+                    {/* <img
                 src={getCookie("user-dp")}
                 alt="User dp"
                 className="dp"
               /> */}
-              <div className="ms-1">{getCookie("username")}</div>
-            </div>
-            <div className="highlight"></div>
-          </NavLink>
-        ) : (
-          <button
-            className="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#loginReg"
-          >
-            Login
-          </button>
-        )}
+                    <div className="ms-1">{getCookie("username")}</div>
+                  </div>
+                  <div className="highlight"></div>
+                </NavLink>
+              ) : (
+                <button
+                  className="btn btn-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#loginReg"
+                >
+                  Login
+                </button>
+              )}
+            </ul>
+          </div>
+        </div>
       </nav>
+
       <div className="sidebar" id="sidebar" ref={sidebar}>
         <div className="side-btns">
           <NavLink to="/explore" className="mainlinks">

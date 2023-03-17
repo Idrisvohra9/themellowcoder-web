@@ -36,15 +36,6 @@ export default function Discussion() {
           <h1>
             Discuss <span ref={showFilter}>All</span>
           </h1>
-
-          <div className="input-group align-self-center ms-auto w-25 flex-nowrap">
-            <input
-              type="text"
-              placeholder="Search for a topic"
-              className="input"
-            />
-            <span className="input-group-text search-btn">🔍</span>
-          </div>
         </div>
         <div className="d-flex align-items-center">
           <div className="me-2">Filter By</div>
@@ -89,7 +80,15 @@ export default function Discussion() {
             </g>
           </svg>
         </div>
-        <div className="d-flex justify-content-end mt-3">
+        <div className="d-flex justify-content-between mt-3 align-items-center">
+          <div className="input-group w-50 flex-nowrap">
+            <input
+              type="text"
+              placeholder="Search for a topic"
+              className="input"
+            />
+            <span className="input-group-text search-btn">🔍</span>
+          </div>
           <div className="d-flex">
             {getCookie("username") ? (
               <Link to="/discuss/create" className="addPost">
@@ -126,7 +125,7 @@ export default function Discussion() {
             ) : (
               posts.map((post) => <PostLinks {...post} key={post._id} />)
             )}
-            <PostLinks/>
+            <PostLinks />
           </div>
           <div className="ads"></div>
         </div>
