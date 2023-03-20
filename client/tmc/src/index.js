@@ -16,7 +16,7 @@ if (getCookie("cookie-consent") === "") {
 if(getCookie("active-theme") === "") {
   setCookie("active-theme","Original")
 }
-console.log(process.env.REACT_APP_GREET);
+// console.log(process.env.REACT_APP_GREET);
 const store = createStore(reducers, compose(applyMiddleware(thunk)))
 root.render(
     <Provider store={store}>

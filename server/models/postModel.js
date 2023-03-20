@@ -6,7 +6,6 @@ const postSchema = mongoose.Schema({
     body: String,
     postedBy: String,
     tags: [String],
-    selectedFile: String,
     likeCount: {
         type: Number,
         default: 0,
@@ -19,7 +18,15 @@ const postSchema = mongoose.Schema({
         type: Date,
         default: new Date()
     },
-    slug: String
+    slug: String,
+    isReply: {
+        type: Boolean,
+        default: false
+    },
+    replyId:{
+        type: String,
+        default:""
+    }
 });
 
 const postModel = mongoose.model("PostModel", postSchema);

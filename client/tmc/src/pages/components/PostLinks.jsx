@@ -9,7 +9,7 @@ function PostLink({ title, postBody, tags=["Python","C#"], username, date, postL
           <h5 className="card-title">{title}</h5>
         </Link>
         <h6 className="card-subtitle mb-2 text-muted">{username}</h6>
-        <div className="d-flex justify-content-start">
+        <div className="d-flex justify-content-start mb-2">
           {tags.map((tag, id) => (
             <span className="tag" key={id}>{tag}</span>
           ))}
@@ -31,6 +31,7 @@ PostLink.defaultProps = {
     "Some quick example text to build on the card title and make up the bulk of the card's content.",
   postLink: "/link/to/post",
 };
+
 // PostLink.
 export default function PostLinks({ filteredList }) {
   return (

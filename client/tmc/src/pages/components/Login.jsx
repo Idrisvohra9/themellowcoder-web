@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Login() {
+  const [getData, setData] = useState({
+    username: "",
+    pass: "",
+  });
+  function logIn(e) {
+    e.preventDefault();
+    
+    console.log(getData);
+  }
   return (
     <div>
       <div className="modal" id="loginReg">
@@ -15,71 +24,72 @@ export default function Login() {
                 data-bs-dismiss="modal"
               ></button>
             </div>
-            <div className="modal-body">
-              <table>
-                <tbody>
-                  <tr>
-                    <td colSpan="2">
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        className="inputCont"
-                        placeholder="Username"
-                        required
-                      />
-                    </td>
-                  </tr>
+            <form onSubmit={logIn}>
+              <div className="modal-body">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td colSpan="2">
+                        <input
+                          type="text"
+                          className="inputCont"
+                          placeholder="Username"
+                          value={getData.username}
+                          onChange={(e) =>
+                            setData({ ...getData, username: e.target.value })
+                          }
+                          required
+                        />
+                      </td>
+                    </tr>
 
-                  <tr>
-                    <td colSpan="2">
-                      <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        className="inputCont"
-                        placeholder="Password"
-                        required
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div className="modal-footer">
-              <div>
-                <input
-                  className="form-check-input text-bg-dark me-2"
-                  type="checkbox"
-                  id="rememberMe"
-                  name="rememberMe"
-                  required
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="rememberMe"
-                  style={{ fontSize: "16px", fontWeight: "bold" }}
-                >
-                  Remember Me
-                </label>
+                    <tr>
+                      <td colSpan="2">
+                        <input
+                          type="password"
+                          className="inputCont"
+                          placeholder="Password"
+                          required
+                          value={getData.pass}
+                          onChange={(e) =>
+                            setData({ ...getData, pass: e.target.value })
+                          }
+                        />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <Link
-                to="/Forgot-Password"
-                style={{ color: "white", fontSize: "18px" }}
-              >
-                Forgot your password?
-              </Link>
-              <input
-                type="submit"
-                value="Log-in"
-                className="inputBtns btn-primary"
-                id="submitBtn"
-              />
-              New to TMC?
-              <Link to="/Sign-up" className="inputBtns btn-primary">
-                Sign-up!
-              </Link>
-            </div>
+              <div className="modal-footer">
+                <div>
+                  <input
+                    className="form-check-input text-bg-dark me-2"
+                    type="checkbox"
+                    id="rememberMe"
+                    name="rememberMe"
+                    defaultChecked
+                  />
+                  <label
+                    className="form-check-label"
+                    htmlFor="rememberMe"
+                    style={{ fontSize: "16px", fontWeight: "bold" }}
+                  >
+                    Remember Me
+                  </label>
+                </div>
+                <Link
+                  to="/Forgot-Password"
+                  style={{ color: "white", fontSize: "18px" }}
+                >
+                  Forgot your password?
+                </Link>
+                <button className="inputBtns btn-primary" type="submit">Log-in</button>
+                New to TMC?
+                <Link to="/Sign-up" className="inputBtns btn-primary">
+                  Sign-up!
+                </Link>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -123,7 +133,8 @@ export default function Login() {
               ></button>
             </div>
             <div className="modal-body">
-              It seems you've not logged in yet. <Link to="">Login/Register</Link>
+              It seems you've not logged in yet.{" "}
+              <Link to="">Login/Register</Link>
             </div>
             <div className="modal-footer">
               <button

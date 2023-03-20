@@ -234,14 +234,23 @@ export default function MusicTab() {
         allLiTag[j].classList.add("playing");
         audioTag.innerText = "Playing";
       }
-
     }
+    
   }, [musicIndex, ulTag]);
-
+  
   useEffect(() => {
     loadMusic(musicIndex);
     ulTag = document.querySelector("ul.musicList");
     playingSong();
+    window.onload = 
+    window.addEventListener("keypress",(e)=>{
+      // console.log(e.key);
+      if(e.key === " "){
+        console.log("Music started");
+        playPauseBtn.current.click();
+      }
+    })
+    document.querySelector(".scroll-to-top").innerHTML = "";
   }, [loadMusic, musicIndex, playingSong]);
 
   return (

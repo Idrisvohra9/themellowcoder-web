@@ -25,10 +25,22 @@ app.use("/users", userRoutes);
 app.use("/stories", storyRoutes);
 
 
-const CONNECTION_URL = "mongodb+srv://IdrisAdmin:IdrisVohra987@clustertmc.fltfidg.mongodb.net/?retryWrites=true&w=majority";
+const url = "mongodb+srv://IdrisAdmin:IdrisVohra987@clustertmc.fltfidg.mongodb.net/?retryWrites=true&w=majority";
 
 const PORT = process.env.PORT || 5000;
-
-mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => app.listen(PORT, () => console.log('listening on port:', "http://localhost:5000/")))
-    .catch((err) => console.error(err));
+const connectionParams = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}
+mongoose.set("strictQuery", true);
+mongoose.connect(url, connectionParams)
+    .then(() => {
+        console.log('Connected to the database. Server running on http://localhost:5000')
+    })
+    .catch((err) => {
+        console.error(`Error connecting to the database. n${err}`);
+    })
+// mongoose.d
+// console.log(mongoose.modelNames());
+// console.log(mongoose.ConnectionStates);
+// console.log(mongoose.Document);

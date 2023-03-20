@@ -23,6 +23,8 @@ import { getCookie } from "./tools/cookies";
 import Topic from "./pages/Topic";
 import CreatePost from "./pages/CreatePost";
 import CreateStory from "./pages/CreateStory";
+import Admin from "./pages/Admin";
+import AdminPanel from "./pages/AdminPanel";
 import "./static/css/Responsive.css";
 require(`./static/css/${getCookie("active-theme")}.css`);
 
@@ -45,7 +47,6 @@ export default function App() {
           <Route path="stories" >
             <Route index element={<Stories />} />
             <Route path="create" element={<CreateStory />} />
-
           </Route>
           <Route path="sign-up" element={<SignUp />} />
           <Route path="Forgot-Password" element={<ForgotPass />} />
@@ -56,6 +57,10 @@ export default function App() {
           <Route path="PlanCode" element={<PlanCode />} />
           <Route path="IqTest" element={<IqTest />} />
           <Route path="Themes" element={<Themes />} />
+          <Route path="admin">
+            <Route index element={<Admin/>}/>
+            <Route path="panel" element={<AdminPanel/>}/>
+          </Route>
         </Route>
         <Route path="*" element={<NoPage />} />
       </Routes>

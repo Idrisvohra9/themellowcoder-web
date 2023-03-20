@@ -3,8 +3,8 @@ import useLoader from "../Hooks/useLoader";
 import FileBase from "react-file-base64";
 import { useDispatch } from "react-redux";
 import { createUser } from "../Api/actions";
-import { setCookie } from "../tools/cookies"
-
+import { setCookie } from "../tools/cookies";
+import Footer from "./components/Footer";
 export default function SignUp() {
   useLoader();
   const username = useRef();
@@ -26,10 +26,6 @@ export default function SignUp() {
     dp: "",
   });
 
-  const createProfileFields = document.querySelectorAll(".create-profile");
-  Array.from(createProfileFields).forEach((element) => {
-    element.setAttribute("disabled", true);
-  });
   // First it validates username and pass:
   const validate = (e) => {
     const userRegex = /[A-Za-z]+[A-Za-z0-9_]/i;
@@ -134,7 +130,7 @@ export default function SignUp() {
       } else {
         dispatch(createUser(userData));
         setCookie("username", userData.username);
-        setCookie("user-dp", userData.dp);
+        window.history.back();
       }
     }
   };
@@ -147,7 +143,7 @@ export default function SignUp() {
               <div className="d-flex justify-content-center flex-column">
                 <h1>Sign-up, and join the community!</h1>
                 <p>We are glad to have you here!</p>
-                <form action="" className="mt-3 needs-validation">
+                <form className="mt-3 needs-validation" onSubmit={handleSubmit}>
                   <div className="input-group required mb-3">
                     <span className="input-group-text">@</span>
                     <input
@@ -254,23 +250,26 @@ export default function SignUp() {
                       defaultChecked
                     />
                   </div>
-                  <div className="mb-3 bg-dark rounded-2 p-2 required">
-                    <label
-                      className="form-label me-3"
-                      htmlFor="inputGroupFile01"
-                    >
-                      Display Picture - Recomended size (512 x 512)px
-                    </label>
-                    <FileBase
-                      type="file"
-                      multiple={false}
-                      className="form-control"
-                      id="inputGroupFile01"
-                      name="dp"
-                      onDone={({ base64 }) =>
-                        setUserData({ ...userData, dp: base64 })
-                      }
-                    />
+                  <div className="mb-3 required">
+                    <div className="file-input">
+                      <div className="file-input-title">Display Picture</div>
+                      <div className="file-input-paragraph">
+                        Recomended size (512 x 512)px
+                      </div>
+                      <div className="drop-container">
+                        <div className="drop-title">Drop An Image</div>
+                        or
+                        <FileBase
+                          type="file"
+                          multiple={false}
+                          className="form-control"
+                          name="dp"
+                          onDone={({ base64 }) =>
+                            setUserData({ ...userData, dp: base64 })
+                          }
+                        />
+                      </div>
+                    </div>
                   </div>
                   <div className="form-floating text-dark mb-3 required">
                     <textarea
@@ -291,7 +290,6 @@ export default function SignUp() {
                       type="submit"
                       value="Sign in"
                       className="btn btn-primary"
-                      onClick={handleSubmit}
                     />
                     <span className="ms-2 text-danger" ref={place}></span>
                   </div>
@@ -389,6 +387,7 @@ export default function SignUp() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

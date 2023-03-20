@@ -7,7 +7,7 @@ const router = express.Router();
 //$ Controllers:
 const getPost = async (req, res) => {
     try {
-        const posts = await postModel.find();
+        const posts = await postModel.find().sort({_id: -1}).limit(10);
 
         // A message to the user that everthing went right and return the json containing all the posts data
 
