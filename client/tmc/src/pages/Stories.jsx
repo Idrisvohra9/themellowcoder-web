@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import useLoader from "../Hooks/useLoader";
+import Footer from "./components/Footer";
+
 export default function ShortBlogs() {
   useLoader();
   return (
@@ -226,6 +228,7 @@ export default function ShortBlogs() {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 }

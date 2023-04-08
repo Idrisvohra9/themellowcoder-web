@@ -3,7 +3,10 @@ import useLoader from "../Hooks/useLoader";
 import FileBase from "react-file-base64";
 import { useDispatch } from "react-redux";
 import { createUser } from "../Api/actions";
+import TagsInput from "react-tagsinput";
 import { setCookie } from "../tools/cookies";
+import { Link } from "react-router-dom";
+import {sendOTP} from "../tools/sendEmail"
 import Footer from "./components/Footer";
 export default function SignUp() {
   useLoader();
@@ -11,8 +14,6 @@ export default function SignUp() {
   const pass = useRef();
   const re_pass = useRef();
   const email = useRef();
-  const tags = [];
-  const select = useRef();
   const desc = useRef();
   const place = useRef();
   const dispatch = useDispatch();
@@ -25,17 +26,22 @@ export default function SignUp() {
     tags: [],
     dp: "",
   });
+  // Declaring initial field validtators variables to be invalid
+  const [validUname, setValidUname] = useState(false);
+  const [validEmail, setValidEmail] = useState(false);
+  const [validPass, setValidPass] = useState(false);
 
   // First it validates username and pass:
   const validate = (e) => {
     const userRegex = /[A-Za-z]+[A-Za-z0-9_]/i;
     const passRegex =
-      /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{9}$/;
+      /^(?=.*[A-Z])(?=.*[@!#$%^&*()<>?/|}{~:`,./:;'" +=])(?=.*[0-9])(?=.*[a-z]).{9}$/;
     const specialChars = /[@!#$%^&*()<>?/|}{~:`,./:;'" +=]/;
 
     if (e.target.name === "username") {
       const valid = e.target.parentNode.children[2];
       const invalid = e.target.parentNode.children[3];
+
       // Checks if the username length is more than 3
       if (e.target.value.length < 3) {
         valid.style.display = "none";
@@ -48,36 +54,55 @@ export default function SignUp() {
             valid.style.display = "none";
             invalid.style.display = "block";
           } else {
+            // Checks if the username contains reseved keywords
             if (
-              e.target.value.indexOf("OP") !== -1 ||
-              e.target.value.indexOf("Admin") !== -1 ||
-              e.target.value.indexOf("Super") !== -1
+              e.target.value.match(/op/gi) != null ||
+              e.target.value.match(/admin/gi) != null ||
+              e.target.value.match(/super/gi) != null
             ) {
               valid.style.display = "none";
               invalid.style.display = "block";
             } else {
+              // Checks if the username already exists if it does it says to pick another username
+              setUserData({
+                ...userData,
+                username: e.target.value,
+                joinDate: new Date().toDateString(),
+              });
               invalid.style.display = "none";
               valid.style.display = "block";
+              setValidUname(true);
             }
           }
         }
       }
+
+      // Checks if the target event is either pass field or re_pass field
     } else if (["pass", "re_pass"].includes(e.target.name)) {
+      // Valid message Element
       const valid = re_pass.current.parentNode.children[3];
+      // Invalid message Element
       const invalid = re_pass.current.parentNode.children[4];
+      // Should be equal to 9 digits
       if (e.target.value.length < 9) {
         invalid.style.display = "block";
         valid.style.display = "none";
+        // If proper length check if the password passes the regexp test
       } else {
         if (RegExp(passRegex).test(e.target.value)) {
+          // If it passes the regexp test check if both the fields have same value:
           if (pass.current.value === re_pass.current.value) {
             invalid.style.display = "none";
             valid.style.display = "block";
+            setValidPass(true);
+            setUserData({ ...userData, password: e.target.value });
           }
         }
       }
+      // To Check if the email already exists if it does tell to login instead
     } else if (e.target.name === "email") {
-    } else if (e.target.name === "desc") {
+      setValidEmail(true);
+      setUserData({ ...userData, email: e.target.value });
     }
   };
 
@@ -92,46 +117,21 @@ export default function SignUp() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    let options = select.current && select.current.options;
-    let opt;
-    if (
-      username.current.value === "" &&
-      pass.current.value === "" &&
-      email.current.value === "" &&
-      desc.current.value === "" &&
-      select.current.value === ""
-    ) {
-      place.current.innerHTML = "Form fields are empty!";
+    // If anything is invalid
+    if (validEmail === false || validUname === false || validPass === false) {
+      console.log(`
+      Valid username :${validUname}\n
+      Valid Email : ${validEmail}\n
+      Valid Password : ${validPass}
+      `);
+      place.current.innerHTML = "Invalid Sign up";
     } else {
-      for (var i = 0; i < options.length; i++) {
-        opt = options[i];
-
-        if (opt.selected) {
-          tags.push(opt.value || opt.text);
-        }
-      }
-      let base64 = userData.dp;
-
-      setUserData({
-        username: username.current.value,
-        email: email.current.value,
-        password: pass.current.value,
-        desc: desc.current.value,
-        joinDate: new Date().toDateString(),
-        tags: tags,
-        dp: base64,
-      });
-      if (
-        userData.username === "" &&
-        userData.password === "" &&
-        userData.email === ""
-      ) {
-        place.current.innerHTML = "Click again for good luck!";
-      } else {
-        dispatch(createUser(userData));
-        setCookie("username", userData.username);
-        window.history.back();
-      }
+      //   dispatch(createUser(userData));
+      //   setCookie("username", userData.username);
+      //   window.history.back();
+      // Send otp to the email for confirmation
+      let otp = sendOTP(userData.email);
+      console.log(userData);
     }
   };
   return (
@@ -144,7 +144,7 @@ export default function SignUp() {
                 <h1>Sign-up, and join the community!</h1>
                 <p>We are glad to have you here!</p>
                 <form className="mt-3 needs-validation" onSubmit={handleSubmit}>
-                  <div className="input-group required mb-3">
+                  <div className="input-group mb-3">
                     <span className="input-group-text">@</span>
                     <input
                       type="text"
@@ -152,6 +152,7 @@ export default function SignUp() {
                       placeholder="Username"
                       aria-label="Username"
                       name="username"
+                      maxLength={14}
                       required
                       ref={username}
                       onChange={validate}
@@ -159,12 +160,14 @@ export default function SignUp() {
                     <div className="valid-feedback">It suits you!</div>
                     <div className="invalid-feedback">
                       The username must be more than 2 characters long, it
-                      Should follow the variable declaration rules of python.
-                      Examples of good usernames: (" Idris_vohra, idris_987,
-                      idris987, idris ")
+                      Should follow the variable declaration rules of python and
+                      there should be no{" "}
+                      <a href="/about#reserved-keywords">reserved keywords</a>{" "}
+                      used. Examples of good usernames: (Idris_vohra, idris_987,
+                      idris987, idris)
                     </div>
                   </div>
-                  <div className="input-group required mb-3">
+                  <div className="input-group mb-3">
                     <span className="input-group-text">Email</span>
                     <input
                       type="email"
@@ -180,7 +183,7 @@ export default function SignUp() {
                   <div className="invalid-feedback">
                     The email already exists consider login.
                   </div>
-                  <div className="input-group required mb-3">
+                  <div className="input-group mb-3">
                     <span className="input-group-text">Password</span>
                     <input
                       type="password"
@@ -200,7 +203,7 @@ export default function SignUp() {
                       👁️
                     </span>
                   </div>
-                  <div className="input-group required mb-3">
+                  <div className="input-group mb-3">
                     <span className="input-group-text">Retype Password</span>
                     <input
                       type="password"
@@ -221,26 +224,25 @@ export default function SignUp() {
                     </span>
                     <div className="valid-feedback">Good Password</div>
                     <div className="invalid-feedback">
-                      The password must be 9 digits long and complex and should
-                      match the above password.
+                      The password must be 9 digits long and complex (i.e.
+                      Should contain uppercase and lowercase letters, numbers
+                      and special characters) and should match the above
+                      password.
                     </div>
                   </div>
-                  <select
-                    className="form-select mb-3 required input"
-                    aria-label="Default select example"
-                    multiple
-                    name="tags"
-                    required
-                    ref={select}
-                  >
-                    <option disabled value="Select Multiple">
-                      What describes you the best? (Select Multiple)
-                    </option>
-                    <option value="Explorer">Just an explorer</option>
-                    <option value="Programmer">A Programmer</option>
-                    <option value="Student">A Student</option>
-                    <option value="Teacher">A Teacher</option>
-                  </select>
+                  <div className="required mb-3 tags">
+                    <label className="input-group-text">
+                      Type three keywords that may describe you (Enter to
+                      separate)
+                    </label>
+                    <TagsInput
+                      value={userData.tags}
+                      onChange={(tags) => {
+                        setUserData({ ...userData, tags: tags });
+                      }}
+                      className="input form-control"
+                    />
+                  </div>
                   <div className="mb-3 form-check">
                     <label htmlFor="remeber-me">Remember me</label>
                     <input
@@ -250,7 +252,7 @@ export default function SignUp() {
                       defaultChecked
                     />
                   </div>
-                  <div className="mb-3 required">
+                  <div className="mb-3">
                     <div className="file-input">
                       <div className="file-input-title">Display Picture</div>
                       <div className="file-input-paragraph">
@@ -261,6 +263,7 @@ export default function SignUp() {
                         or
                         <FileBase
                           type="file"
+                          required
                           multiple={false}
                           className="form-control"
                           name="dp"
@@ -271,19 +274,42 @@ export default function SignUp() {
                       </div>
                     </div>
                   </div>
-                  <div className="form-floating text-dark mb-3 required">
+                  <div className="input-group text-dark mb-3">
+                    <label
+                      htmlFor="describe-you"
+                      className="input-group-text w-25"
+                    >
+                      Describe yourself:
+                    </label>
                     <textarea
                       className="form-control input"
-                      placeholder="Description"
-                      id="floatingTextarea"
+                      placeholder="Description (250 words)"
+                      id="describe-you"
                       name="desc"
-                      ref={desc}
                       required
-                      maxLength="200"
+                      maxLength={250}
+                      minLength={30}
+                      value={userData.desc}
+                      onChange={(e) => {
+                        setUserData({ ...userData, desc: e.target.value });
+                        let progressbar =
+                          e.target.parentElement.children[2].children[0];
+                        progressbar.style.width =
+                          e.target.value.length / 2.5 + "%";
+                        // console.log(e.target.parentElement.children[2].children);
+                      }}
+                      ref={desc}
                     ></textarea>
-                    <label htmlFor="floatingTextarea" className="text-info">
-                      Describe yourself (200 words):
-                    </label>
+                    <div
+                      className="progress mt-2 bg-dark"
+                      style={{ height: "6px", width: "100%" }}
+                    >
+                      <div
+                        className="progress-bar bg-danger"
+                        role="progressbar"
+                        style={{ width: "0%" }}
+                      ></div>
+                    </div>
                   </div>
                   <div className="bg-dark d-flex justify-content-between align-items-center mb-3 p-3 rounded-2">
                     <input
@@ -294,6 +320,27 @@ export default function SignUp() {
                     <span className="ms-2 text-danger" ref={place}></span>
                   </div>
                 </form>
+                <div className="modal fade" id="oopsie-modal">
+                  <div className="modal-dialog modal-dialog-centered modal-sm">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h4 className="modal-title">Email confirmation</h4>
+                      </div>
+                      <div className="modal-body">
+                        <Link to="">Change email</Link>
+                      </div>
+                      <div className="modal-footer">
+                        <button
+                          type="button"
+                          className="btn btn-danger"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="w-50">

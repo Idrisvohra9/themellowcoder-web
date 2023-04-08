@@ -4,5 +4,11 @@
 // learn more: https://github.com/testing-library/jest-dom
 // import '@testing-library/jest-dom';
 
-console.log({}.greet = "Hello");
+// console.log({}.greet = "Hello");
 // console.log(undefined ? true : false);
+invalidU = true;
+invalidP = true;
+
+if (invalidU || invalidP === false) {
+    console.log("yes");
+}

@@ -1,5 +1,5 @@
 // Create cookie
-export function setCookie(cname, cvalue, exdays) {
+function setCookie(cname, cvalue, exdays) {
     const d = new Date();
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
     let expires = "expires="+ d.toUTCString();
@@ -7,7 +7,7 @@ export function setCookie(cname, cvalue, exdays) {
 }
 
 // Delete cookie
-export function deleteCookie(cname) {
+function deleteCookie(cname) {
     const d = new Date();
     d.setTime(d.getTime() + (24*60*60*1000));
     let expires = "expires="+ d.toUTCString();
@@ -15,7 +15,7 @@ export function deleteCookie(cname) {
 }
 
 // Read cookie
-export function getCookie(cname) {
+function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
     let ca = decodedCookie.split(';');
@@ -29,4 +29,15 @@ export function getCookie(cname) {
         }
     }
     return "";
+}
+
+// module.exports = {
+//     setCookie,
+//     getCookie,
+//     deleteCookie
+// }
+
+// export {getCookie, setCookie, deleteCookie}
+module.exports = {
+    getCookie, setCookie, deleteCookie
 }

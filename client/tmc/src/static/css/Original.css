@@ -117,15 +117,6 @@ h1 {
   font-family: "Satisfy";
 }
 
-a {
-  color: var(--textClr);
-  text-decoration: 2px solid var(--tertiaryClr) underline;
-}
-
-a:hover {
-  color: var(--secondaryClr);
-}
-
 svg {
   /* fill: var(--textClr); */
   width: 25px;
@@ -221,7 +212,9 @@ body ::selection {
   height: 3px;
   border-radius: 5px 5px 0 0;
 }
-
+.navbar a{
+  background-color: transparent !important;
+}
 .navbar {
   position: sticky;
   background-repeat: no-repeat;
@@ -877,14 +870,6 @@ svg.arrow {
   color: var(--secondaryClr);
 }
 
-form .required::after {
-  content: "*";
-  color: crimson;
-  display: block;
-  padding: 5px;
-  align-self: end;
-  font-size: 40px;
-}
 
 .input-group {
   overflow: hidden;
@@ -902,8 +887,12 @@ form .required::after {
 }
 
 .input-group-text {
+  white-space: normal !important;
   background-color: var(--primaryClr);
   color: var(--textClr);
+}
+.tags .input{
+  height: 70px;
 }
 .file-input {
   background-color: var(--primaryClr);
@@ -952,7 +941,27 @@ form .required::after {
 .drop-container:hover .drop-title {
   color: #222;
 }
+.invalid-feedback{
+  background-color: var(--primaryClr);
+  font-weight: bold;
+  padding: 1rem;
+  border-radius: 10px;
+}
+.invalid-feedback a {
+  color: var(--textClr);
+  text-decoration: none;
+  background-color: #a313a8ba;
+}
 
+.invalid-feedback a:hover {
+  color: var(--textClr);
+  background-color: #a313a8;
+}
+.valid-feedback::after{
+  content: "✅";
+  display: inline;
+  margin-left: 2px;
+}
 .drop-title {
   color: #444;
   font-size: 20px;

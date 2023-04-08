@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, compose, createStore } from 'redux'
 import thunk from "redux-thunk"
 import reducers from "./Api/reducers.js"
-
+// resolve
 const root = createRoot(document.getElementById('root'));
 if (getCookie("cookie-consent") === "") {
   setCookie("cookie-consent", "false");

@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "concurrently": "^7.6.0"
+    "concurrently": "^7.6.0",
+    "stream-browserify": "^3.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no tests specified\" && exit 1",

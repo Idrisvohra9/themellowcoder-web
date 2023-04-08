@@ -3,13 +3,13 @@ import Logo from "./Logo";
 import { Link } from "react-router-dom";
 export default function Footer() {
   return (
-    <footer className="py-4 py-md-5 mt-5">
+    <footer className="py-4 py-md-5">
       <div className="container">
         <div className="row">
           <div className="col-lg-3 mb-3">
             <Logo />
             <div>
-              Designed an built by all the love in the world by our team.
+              Designed and built by all the love in the world by our team.
             </div>
             <div className="mt-3 social-card w-100">
               <span>Socials</span>
