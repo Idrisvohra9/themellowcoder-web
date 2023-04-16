@@ -12,7 +12,7 @@ export default function Login() {
     console.log(getData);
   }
   return (
-    <div>
+    <>
       <div className="modal" id="loginReg">
         <div className="modal-dialog modal-dialog-centered modal-lg">
           <div className="modal-content loginReg">
@@ -148,6 +148,6 @@ export default function Login() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

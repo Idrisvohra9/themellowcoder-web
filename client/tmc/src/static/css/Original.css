@@ -9,6 +9,7 @@
   --tertiaryClr: #6e046f;
   --textClr: #d8d4cf;
   --lightestPink: #E5B8F4;
+  --postBg: rgba(33, 37, 41, 0.72);
 }
 
 #root {
@@ -201,7 +202,7 @@ body ::selection {
 }
 
 .navbar .dropdown-menu .dropdown-item:hover {
-  background-color: #414141;
+  background-color: #414141 !important;
 }
 
 .navbar .highlight {
@@ -507,6 +508,9 @@ span.stars:nth-child(10) {
   background-color: #414141;
 }
 
+a:hover{
+  color: var(--secondaryClr);
+}
 a.link {
   display: flex;
   align-items: center;
@@ -990,6 +994,66 @@ input[type="file"]::file-selector-button {
   cursor: pointer;
   transition: background .2s ease-in-out;
 }
+.otc {
+	position: relative;
+	width: 320px;
+	margin: 0 auto;
+}
+
+.otc div {
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+
+.otc div {
+	display: flex;
+	align-items: center;
+}
+
+.otc div {
+	margin: 0 auto 1em;
+	color: #5555FF;
+}
+
+input[type="number"] {
+	width: .82em;
+	line-height: 1;
+	margin: .1em;
+	padding: 5px;
+	font-size: 2.65em;
+	text-align: center;
+	appearance: textfield;
+	-webkit-appearance: textfield;
+	border: 2px solid var(--secondaryClr);
+	color: var(--primaryClr);
+	border-radius: 4px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* 2 group of 3 items */
+input[type="number"]:nth-child(n+4) {
+	order: 2;
+}
+
+.otc label {
+	border: 0 !important;
+	clip: rect(1px, 1px, 1px, 1px) !important;
+	-webkit-clip-path: inset(50%) !important;
+	clip-path: inset(50%) !important;
+	height: 1px !important;
+	margin: -1px !important;
+	overflow: hidden !important;
+	padding: 0 !important;
+	position: absolute !important;
+	width: 1px !important;
+	white-space: nowrap !important;
+}
 
 input[type="file"]::file-selector-button:hover {
   background: #0d45a5;
@@ -1176,8 +1240,9 @@ header {
 }
 
 .post-link {
-  background-color: rgba(33, 37, 41, 0.72);
+  background-color: var(--postBg);
   backdrop-filter: blur(5px) saturate(1);
+  margin-bottom: 1rem;
 }
 
 .ads {
@@ -1231,7 +1296,7 @@ header {
   margin-bottom: 10px;
   border-radius: 20px;
   padding: 15px;
-  background-color: rgba(33, 37, 41, 0.72);
+  background-color: var(--postBg);
   backdrop-filter: blur(5px) saturate(1);
   overflow: hidden;
 }
@@ -1310,7 +1375,28 @@ header {
     transform: translateX(100%);
   }
 }
+/* Individual Post Tab */
 
+.post-topic{
+  background-color: var(--postBg);
+  backdrop-filter: blur(5px) saturate(1);
+
+}
+.post-topic h1 {
+  font-family: "Nunito";
+  display: inline-block;
+  border-bottom: 2px solid var(--textClr);
+}
+.post-topic .group{
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items:center;
+}
+
+.post-topic .group .count{
+  font-size: .8rem;
+}
 /* Admin Pages CSS */
 .login-box {
   /* margin-top: 100px; */
@@ -1628,13 +1714,12 @@ header {
 a.card-link {
   text-decoration: none;
   color: var(--textClr);
-  font-weight: bolder;
+  font-weight: bold;
   transition: all 0.2s;
 }
 
 a.card-link:hover {
-  color: var(--primaryClr);
-
+  filter: contrast(50); 
 }
 .PostLinks .card .tag{
   background-color:#0f0c297c;

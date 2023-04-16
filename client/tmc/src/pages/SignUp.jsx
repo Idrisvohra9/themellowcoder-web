@@ -1,12 +1,13 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import useLoader from "../Hooks/useLoader";
 import FileBase from "react-file-base64";
-import { useDispatch } from "react-redux";
-import { createUser } from "../Api/actions";
+// import { useDispatch } from "react-redux";
+// import { createUser } from "../Api/actions";
 import TagsInput from "react-tagsinput";
-import { setCookie } from "../tools/cookies";
+// import { setCookie } from "../tools/cookies";
+import sendOtp from "../Hooks/useSendOtp";
 import { Link } from "react-router-dom";
-import {sendOTP} from "../tools/sendEmail"
+// import {sendOTP} from "../tools/sendEmail"
 import Footer from "./components/Footer";
 export default function SignUp() {
   useLoader();
@@ -16,7 +17,7 @@ export default function SignUp() {
   const email = useRef();
   const desc = useRef();
   const place = useRef();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [userData, setUserData] = useState({
     username: "",
     email: "",
@@ -26,6 +27,7 @@ export default function SignUp() {
     tags: [],
     dp: "",
   });
+  const [otp, setOtp] = useState();
   // Declaring initial field validtators variables to be invalid
   const [validUname, setValidUname] = useState(false);
   const [validEmail, setValidEmail] = useState(false);
@@ -129,11 +131,106 @@ export default function SignUp() {
       //   dispatch(createUser(userData));
       //   setCookie("username", userData.username);
       //   window.history.back();
-      // Send otp to the email for confirmation
-      let otp = sendOTP(userData.email);
+      // Send otp to the email htmlFor confirmation
+      // let otp = sendOTP(userData.email);
+      const otp = sendOtp(userData.email);
+      console.log("Otp", otp);
+      document.querySelector(".trigger-otp").click();
       console.log(userData);
     }
   };
+  function registerUser() {
+    let OtpFields = document.querySelectorAll('input[type="number"]');
+    let enteredOtp = "";
+    OtpFields = [...OtpFields];
+    OtpFields.forEach((field) => {
+      enteredOtp += field.value;
+    });
+    console.log(enteredOtp);
+  }
+  useEffect(() => {
+    let in1 = document.getElementById("otc-1"),
+      ins = document.querySelectorAll('input[type="number"]'),
+      splitNumber = function (e) {
+        let data = e.data || e.target.value; // Chrome doesn't get the e.data, it's always empty, fallback to value then.
+        if (!data) return; // Shouldn't happen, just in case.
+        if (data.length === 1) return; // Here is a normal behavior, not a paste action.
+
+        popuNext(e.target, data);
+        //for (i = 0; i < data.length; i++ ) { ins[i].value = data[i]; }
+      },
+      popuNext = function (el, data) {
+        el.value = data[0]; // Apply first item to first input
+        data = data.substring(1); // remove the first char.
+        if (el.nextElementSibling && data.length) {
+          // Do the same with the next element and next data
+          popuNext(el.nextElementSibling, data);
+        }
+      };
+
+    ins.forEach(function (input) {
+      /**
+       * Control on keyup to catch what the user intent to do.
+       * I could have check for numeric key only here, but I didn't.
+       */
+      input.addEventListener("keyup", function (e) {
+        // Break if Shift, Tab, CMD, Option, Control.
+        if (
+          e.keyCode === 16 ||
+          e.keyCode === 9 ||
+          e.keyCode === 224 ||
+          e.keyCode === 18 ||
+          e.keyCode === 17
+        ) {
+          return;
+        }
+
+        // On Backspace or left arrow, go to the previous field.
+        if (
+          (e.keyCode === 8 || e.keyCode === 37) &&
+          this.previousElementSibling &&
+          this.previousElementSibling.tagName === "INPUT"
+        ) {
+          this.previousElementSibling.select();
+        } else if (e.keyCode !== 8 && this.nextElementSibling) {
+          this.nextElementSibling.select();
+        }
+
+        // If the target is populated to quickly, value length can be > 1
+        if (e.target.value.length > 1) {
+          splitNumber(e);
+        }
+      });
+
+      /**
+       * Better control on Focus
+       * - don't allow focus on other field if the first one is empty
+       * - don't allow focus on field if the previous one if empty (debatable)
+       * - get the focus on the first empty field
+       */
+      input.addEventListener("focus", function (e) {
+        // If the focus element is the first one, do nothing
+        if (this === in1) return;
+
+        // If value of input 1 is empty, focus it.
+        if (in1.value === "") {
+          in1.focus();
+        }
+
+        // If value of a previous input is empty, focus it.
+        // To remove if you don't wanna force user respecting the fields order.
+        if (this.previousElementSibling.value === "") {
+          this.previousElementSibling.focus();
+        }
+      });
+    });
+
+    /**
+     * Handle copy/paste of a big number.
+     * It catches the value pasted on the first field and spread it into the inputs.
+     */
+    in1.addEventListener("input", splitNumber);
+  });
   return (
     <div className="mainContent">
       <div className="gradient-bg">
@@ -320,22 +417,126 @@ export default function SignUp() {
                     <span className="ms-2 text-danger" ref={place}></span>
                   </div>
                 </form>
-                <div className="modal fade" id="oopsie-modal">
-                  <div className="modal-dialog modal-dialog-centered modal-sm">
+                {/* Otp model trigger button */}
+                <button
+                  class="trigger-otp d-none"
+                  data-bs-toggle="modal"
+                  data-bs-target="#otp-confirm"
+                ></button>
+                <div
+                  className="modal"
+                  id="otp-confirm"
+                  tabIndex="-1"
+                  data-bs-keyboard="false"
+                >
+                  <div className="modal-dialog modal-dialog-centered modal-md">
                     <div className="modal-content">
                       <div className="modal-header">
                         <h4 className="modal-title">Email confirmation</h4>
                       </div>
                       <div className="modal-body">
-                        <Link to="">Change email</Link>
+                        <p>
+                          We just sent an email to <b>{userData.email}</b> to
+                          confirm your account creation please enter the OTP.
+                        </p>
+                        <form className="otc" name="one-time-code" action="#">
+                          <div>
+                            <label htmlFor="otc-1">Number 1</label>
+                            <label htmlFor="otc-2">Number 2</label>
+                            <label htmlFor="otc-3">Number 3</label>
+                            <label htmlFor="otc-4">Number 4</label>
+                            <label htmlFor="otc-5">Number 5</label>
+                            <label htmlFor="otc-6">Number 6</label>
+
+                            <div>
+                              <input
+                                type="number"
+                                pattern="[0-9]*"
+                                defaultValue=""
+                                inputtype="numeric"
+                                autoComplete="one-time-code"
+                                id="otc-1"
+                                required
+                              />
+
+                              <input
+                                type="number"
+                                pattern="[0-9]*"
+                                min="0"
+                                max="9"
+                                maxLength="1"
+                                defaultValue=""
+                                inputtype="numeric"
+                                id="otc-2"
+                                required
+                              />
+                              <input
+                                type="number"
+                                pattern="[0-9]*"
+                                min="0"
+                                max="9"
+                                maxLength="1"
+                                defaultValue=""
+                                inputtype="numeric"
+                                id="otc-3"
+                                required
+                              />
+                              <input
+                                type="number"
+                                pattern="[0-9]*"
+                                min="0"
+                                max="9"
+                                maxLength="1"
+                                defaultValue=""
+                                inputtype="numeric"
+                                id="otc-4"
+                                required
+                              />
+                              <input
+                                type="number"
+                                pattern="[0-9]*"
+                                min="0"
+                                max="9"
+                                maxLength="1"
+                                defaultValue=""
+                                inputtype="numeric"
+                                id="otc-5"
+                                required
+                              />
+                              <input
+                                type="number"
+                                pattern="[0-9]*"
+                                min="0"
+                                max="9"
+                                maxLength="1"
+                                defaultValue=""
+                                inputtype="numeric"
+                                id="otc-6"
+                                required
+                              />
+                            </div>
+                          </div>
+                        </form>
+                        <div className="d-flex justify-content-evenly align-items-center">
+                          <button
+                            className="btn btn-primary"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            Change email
+                          </button>
+                          <Link to="" className="btn btn-primary">
+                            Resend Email
+                          </Link>
+                        </div>
                       </div>
                       <div className="modal-footer">
                         <button
                           type="button"
-                          className="btn btn-danger"
-                          data-bs-dismiss="modal"
+                          className="btn btn-success"
+                          onClick={() => registerUser()}
                         >
-                          Close
+                          Confirm
                         </button>
                       </div>
                     </div>
@@ -378,8 +579,8 @@ export default function SignUp() {
                       <div className="carousel-caption d-none d-md-block">
                         <h5>First slide label</h5>
                         <p>
-                          Some representative placeholder content for the first
-                          slide.
+                          Some representative placeholder content htmlFor the
+                          first slide.
                         </p>
                       </div>
                     </div>
@@ -388,8 +589,8 @@ export default function SignUp() {
                       <div className="carousel-caption d-none d-md-block">
                         <h5>Second slide label</h5>
                         <p>
-                          Some representative placeholder content for the second
-                          slide.
+                          Some representative placeholder content htmlFor the
+                          second slide.
                         </p>
                       </div>
                     </div>
@@ -398,8 +599,8 @@ export default function SignUp() {
                       <div className="carousel-caption d-none d-md-block">
                         <h5>Third slide label</h5>
                         <p>
-                          Some representative placeholder content for the third
-                          slide.
+                          Some representative placeholder content htmlFor the
+                          third slide.
                         </p>
                       </div>
                     </div>

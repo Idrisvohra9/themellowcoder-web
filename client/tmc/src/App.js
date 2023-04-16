@@ -26,6 +26,9 @@ import CreateStory from "./pages/CreateStory";
 import Admin from "./pages/Admin";
 import AdminPanel from "./pages/AdminPanel";
 import "./static/css/Responsive.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.min.js";
+// console.log(process.env.REACT_APP_GREET);
 require(`./static/css/${getCookie("active-theme")}.css`);
 
 export default function App() {
