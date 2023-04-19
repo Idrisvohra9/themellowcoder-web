@@ -213,9 +213,11 @@ body ::selection {
   height: 3px;
   border-radius: 5px 5px 0 0;
 }
-.navbar a{
+
+.navbar a {
   background-color: transparent !important;
 }
+
 .navbar {
   position: sticky;
   background-repeat: no-repeat;
@@ -508,9 +510,10 @@ span.stars:nth-child(10) {
   background-color: #414141;
 }
 
-a:hover{
+a:hover {
   color: var(--secondaryClr);
 }
+
 a.link {
   display: flex;
   align-items: center;
@@ -895,9 +898,11 @@ svg.arrow {
   background-color: var(--primaryClr);
   color: var(--textClr);
 }
-.tags .input{
+
+.tags .input {
   height: 70px;
 }
+
 .file-input {
   background-color: var(--primaryClr);
   border: 1px solid rgb(159, 159, 160);
@@ -945,12 +950,14 @@ svg.arrow {
 .drop-container:hover .drop-title {
   color: #222;
 }
-.invalid-feedback{
+
+.invalid-feedback {
   background-color: var(--primaryClr);
   font-weight: bold;
   padding: 1rem;
   border-radius: 10px;
 }
+
 .invalid-feedback a {
   color: var(--textClr);
   text-decoration: none;
@@ -961,11 +968,13 @@ svg.arrow {
   color: var(--textClr);
   background-color: #a313a8;
 }
-.valid-feedback::after{
+
+.valid-feedback::after {
   content: "✅";
   display: inline;
   margin-left: 2px;
 }
+
 .drop-title {
   color: #444;
   font-size: 20px;
@@ -994,40 +1003,41 @@ input[type="file"]::file-selector-button {
   cursor: pointer;
   transition: background .2s ease-in-out;
 }
+
 .otc {
-	position: relative;
-	width: 320px;
-	margin: 0 auto;
+  position: relative;
+  width: 320px;
+  margin: 0 auto;
 }
 
 .otc div {
-	border: 0;
-	padding: 0;
-	margin: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .otc div {
-	display: flex;
-	align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .otc div {
-	margin: 0 auto 1em;
-	color: #5555FF;
+  margin: 0 auto 1em;
+  color: #5555FF;
 }
 
 input[type="number"] {
-	width: .82em;
-	line-height: 1;
-	margin: .1em;
-	padding: 5px;
-	font-size: 2.65em;
-	text-align: center;
-	appearance: textfield;
-	-webkit-appearance: textfield;
-	border: 2px solid var(--secondaryClr);
-	color: var(--primaryClr);
-	border-radius: 4px;
+  width: .82em;
+  line-height: 1;
+  margin: .1em;
+  padding: 5px;
+  font-size: 2.65em;
+  text-align: center;
+  appearance: textfield;
+  -webkit-appearance: textfield;
+  border: 2px solid var(--secondaryClr);
+  color: var(--primaryClr);
+  border-radius: 4px;
 }
 
 input::-webkit-outer-spin-button,
@@ -1038,26 +1048,27 @@ input::-webkit-inner-spin-button {
 
 /* 2 group of 3 items */
 input[type="number"]:nth-child(n+4) {
-	order: 2;
+  order: 2;
 }
 
 .otc label {
-	border: 0 !important;
-	clip: rect(1px, 1px, 1px, 1px) !important;
-	-webkit-clip-path: inset(50%) !important;
-	clip-path: inset(50%) !important;
-	height: 1px !important;
-	margin: -1px !important;
-	overflow: hidden !important;
-	padding: 0 !important;
-	position: absolute !important;
-	width: 1px !important;
-	white-space: nowrap !important;
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important;
 }
 
 input[type="file"]::file-selector-button:hover {
   background: #0d45a5;
 }
+
 .loginReg form {
   width: 100%;
   height: 100%;
@@ -1375,28 +1386,123 @@ header {
     transform: translateX(100%);
   }
 }
+
 /* Individual Post Tab */
 
-.post-topic{
+.post-topic {
   background-color: var(--postBg);
   backdrop-filter: blur(5px) saturate(1);
-
 }
+
 .post-topic h1 {
   font-family: "Nunito";
   display: inline-block;
   border-bottom: 2px solid var(--textClr);
 }
-.post-topic .group{
+
+.post-topic .group {
   display: flex;
   flex-direction: column;
-  justify-content:center;
-  align-items:center;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 5px;
 }
 
-.post-topic .group .count{
+@keyframes beatingHeart {
+  0% {
+    transform: scale(1);
+  }
+
+  15% {
+    transform: scale(1.15);
+  }
+
+  30% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(1.15);
+  }
+
+  60% {
+    transform: scale(1);
+  }
+}
+
+.post-topic .group:hover i {
+  animation: beatingHeart 1.2s infinite;
+}
+.bi-heart-fill.active{
+  color: crimson;
+}
+.bi-heartbreak-fill.active{
+  color: var(--primaryClr);
+}
+.post-topic .box {
+  border: 2px solid var(--primaryClr);
+  background-color: var(--postBg);
+  display: flex;
+  flex-direction: column;
+  padding: .5rem;
+  white-space: nowrap;
+  font-size: 16px;
+  border-radius: .2rem;
+}
+
+.post-topic .group .count {
   font-size: .8rem;
 }
+
+.reply-form {
+  /* --width-of-input: 200px;
+  --border-height: 1px;
+  --border-before-color: rgba(221, 221, 221, 0.39);
+  --border-after-color: #5891ff;
+  --input-hovered-color: #4985e01f; */
+  position: relative;
+  width: 50%;
+}
+
+/* styling of Input */
+.reply-input {
+  color: #fff;
+  font-size: 0.9rem;
+  background-color: transparent;
+  width: 100%;
+  box-sizing: border-box;
+  padding-inline: 0.5em;
+  padding-block: 0.7em;
+  border: none;
+  border-bottom: 1px solid var(--primaryClr);
+}
+
+/* styling of animated border */
+.input-border {
+  position: absolute;
+  background: var(--secondaryClr);
+  width: 0%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  transition: 0.3s;
+}
+
+/* Hover on Input */
+.reply-input:hover {
+  background: var(--postBg);
+}
+
+.reply-input:focus {
+  outline: none;
+}
+
+/* here is code of animated border */
+.reply-input:focus~.input-border {
+  width: 100%;
+}
+
 /* Admin Pages CSS */
 .login-box {
   /* margin-top: 100px; */
@@ -1719,21 +1825,23 @@ a.card-link {
 }
 
 a.card-link:hover {
-  filter: contrast(50); 
+  filter: contrast(50);
 }
-.PostLinks .card .tag{
-  background-color:#0f0c297c;
+
+.post-tag {
+  background-color: #0f0c297c;
   text-transform: capitalize;
   cursor: pointer;
   border-radius: 10%;
   padding: 0 .2% 0 .2%;
   width: 4rem;
-  font-size:16px;
+  font-size: 16px;
   text-align: center;
   margin-right: 2%;
   transition: all 0.3s;
 }
-.PostLinks .card .tag:hover{
+
+.post-tag:hover {
   background-color: #203239;
 }
 
@@ -1813,11 +1921,6 @@ a.card-link:hover {
   border: none;
 }
 
-.post .post-body {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
 
 .post .pOpts {
   display: flex;

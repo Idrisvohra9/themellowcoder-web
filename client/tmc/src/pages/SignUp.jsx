@@ -1,13 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import useLoader from "../Hooks/useLoader";
 import FileBase from "react-file-base64";
-// import { useDispatch } from "react-redux";
-// import { createUser } from "../Api/actions";
+import { useDispatch } from "react-redux";
+import { createUser } from "../Api/actions";
 import TagsInput from "react-tagsinput";
-// import { setCookie } from "../tools/cookies";
-import sendOtp from "../Hooks/useSendOtp";
+import { setCookie } from "../tools/cookies";
+import { sendOtp, welcomeMail } from "../tools/Email";
 import { Link } from "react-router-dom";
-// import {sendOTP} from "../tools/sendEmail"
 import Footer from "./components/Footer";
 export default function SignUp() {
   useLoader();
@@ -17,7 +16,7 @@ export default function SignUp() {
   const email = useRef();
   const desc = useRef();
   const place = useRef();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [userData, setUserData] = useState({
     username: "",
     email: "",
@@ -27,7 +26,7 @@ export default function SignUp() {
     tags: [],
     dp: "",
   });
-  const [otp, setOtp] = useState();
+  let otp;
   // Declaring initial field validtators variables to be invalid
   const [validUname, setValidUname] = useState(false);
   const [validEmail, setValidEmail] = useState(false);
@@ -38,7 +37,7 @@ export default function SignUp() {
     const userRegex = /[A-Za-z]+[A-Za-z0-9_]/i;
     const passRegex =
       /^(?=.*[A-Z])(?=.*[@!#$%^&*()<>?/|}{~:`,./:;'" +=])(?=.*[0-9])(?=.*[a-z]).{9}$/;
-    const specialChars = /[@!#$%^&*()<>?/|}{~:`,./:;'" +=]/;
+    const specialChars = /[@!#$%^&*()<>?/|}{~:`,./:;'" +=-]/;
 
     if (e.target.name === "username") {
       const valid = e.target.parentNode.children[2];
@@ -117,7 +116,7 @@ export default function SignUp() {
       target.type = "password";
     }
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // If anything is invalid
     if (validEmail === false || validUname === false || validPass === false) {
@@ -126,17 +125,14 @@ export default function SignUp() {
       Valid Email : ${validEmail}\n
       Valid Password : ${validPass}
       `);
-      place.current.innerHTML = "Invalid Sign up";
+      place.current.innerHTML = "Invalid Sign up (Please refer to the warnings..)";
+    } if (userData.tags.length < 3) {
+      place.current.innerHTML = "Tags are less";
     } else {
-      //   dispatch(createUser(userData));
-      //   setCookie("username", userData.username);
-      //   window.history.back();
-      // Send otp to the email htmlFor confirmation
-      // let otp = sendOTP(userData.email);
-      const otp = sendOtp(userData.email);
-      console.log("Otp", otp);
+      // Send otp to the email for confirmation
+      otp = await sendOtp(userData.email);
+
       document.querySelector(".trigger-otp").click();
-      console.log(userData);
     }
   };
   function registerUser() {
@@ -146,7 +142,15 @@ export default function SignUp() {
     OtpFields.forEach((field) => {
       enteredOtp += field.value;
     });
-    console.log(enteredOtp);
+    enteredOtp = Number(enteredOtp);
+    if (enteredOtp === otp) {
+      dispatch(createUser(userData));
+      setCookie("username", userData.username);
+      welcomeMail(userData.email, userData.username);
+      window.history.back();
+    } else {
+      // Remains
+    }
   }
   useEffect(() => {
     let in1 = document.getElementById("otc-1"),
@@ -336,8 +340,13 @@ export default function SignUp() {
                       value={userData.tags}
                       onChange={(tags) => {
                         setUserData({ ...userData, tags: tags });
+                        // validate(event)
                       }}
+                      onlyUnique={true}
+                      maxTags={4}
                       className="input form-control"
+                      addOnBlur={true}
+                      addOnPaste={true}
                     />
                   </div>
                   <div className="mb-3 form-check">
@@ -419,7 +428,7 @@ export default function SignUp() {
                 </form>
                 {/* Otp model trigger button */}
                 <button
-                  class="trigger-otp d-none"
+                  className="trigger-otp d-none"
                   data-bs-toggle="modal"
                   data-bs-target="#otp-confirm"
                 ></button>

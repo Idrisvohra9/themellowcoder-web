@@ -11,7 +11,7 @@ function PostLink({ title, postBody, tags=["Python","C#"], username, date, postL
         <h6 className="card-subtitle mb-2 text-muted">{username}</h6>
         <div className="d-flex justify-content-start mb-2">
           {tags.map((tag, id) => (
-            <span className="tag" key={id}>{tag}</span>
+            <span className="post-tag" key={id}>{tag}</span>
           ))}
         </div>
         <p className="card-text">{postBody}</p>
@@ -29,7 +29,7 @@ PostLink.defaultProps = {
   date: "date",
   postBody:
     "Some quick example text to build on the card title and make up the bulk of the card's content.",
-  postLink: "/link/to/post",
+  postLink: "discuss/topic",
 };
 
 // PostLink.

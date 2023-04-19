@@ -249,7 +249,7 @@ export default function MusicTab() {
         console.log("Music started");
         playPauseBtn.current.click();
       }
-    })
+    });
     document.querySelector(".scroll-to-top").innerHTML = "";
   }, [loadMusic, musicIndex, playingSong]);
 

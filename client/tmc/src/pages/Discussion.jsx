@@ -13,10 +13,11 @@ export default function Discussion() {
 
   const dispatch = useDispatch({ type: "FETCH_ALL" });
   const posts = useSelector((store) => store.postReducer);
-  console.log(posts);
   useEffect(() => {
     dispatch(getPosts()); // We go to the post reducer
+    console.log(posts);
   }, [dispatch]);
+
   const showFilter = useRef();
   const filterBy = (e) => {
     let filterBtns = document.getElementsByClassName(e.target.className);

@@ -1,10 +1,11 @@
 import express from "express";
 import storyModel from "./models/storyModel.js"
+import mongoose from "mongoose";
 const router = express.Router();
 
 // $Controllers:
 // This takes time hence we make it asynchronous function
-export const getStory = async (req, res) => {
+export const getAllStories = async (req, res) => {
     try {
         const stories = await storyModel.find();
 
@@ -28,7 +29,19 @@ export const createStory = async (req, res) => {
         res.status(409).json({ message: error.message })
     }
 }
-router.get('/', getStory);
-router.post("/create", createStory);
 
+const updateStory = async (req, res) => {
+    const { id: _id } = req.params;
+    const story = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
+        return res.status(404).send("No story with that id.")
+    }
+    const patchedStory = await storyModel.findByIdAndUpdate(_id, story, { new: true });
+    res.json(patchedStory);
+}
+router.get('/', getAllStories);
+router.post("/", createStory);
+router.patch("/:id", updateStory);
+router.delete()
 export default router;

@@ -11,6 +11,7 @@ const root = createRoot(document.getElementById('root'));
 if (getCookie("cookie-consent") === "") {
   setCookie("cookie-consent", "false");
 }
+// setCookie("username","");
 if (getCookie("active-theme") === "") {
   setCookie("active-theme", "Original")
 }

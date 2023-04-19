@@ -24,10 +24,6 @@ const userSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    friendsCount:{
-        type: Number,
-        default: 0
-    },
     friends:[String]
 });
 
