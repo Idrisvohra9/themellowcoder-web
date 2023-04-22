@@ -1,43 +1,46 @@
 import React, { useState, useRef, useEffect } from "react";
 import useLoader from "../Hooks/useLoader";
 import { getCookie, setCookie } from "../tools/cookies";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 export default function Admin() {
   useLoader();
   const [adminData, setAdminData] = useState({
     username: "",
     password: "",
   });
-  const redirect = useRef();
-  // setCookie("isAdmin", "");
+  const redirect = useNavigate();
 
-  function validateAdmin() {
+  function validateAdmin(e) {
+    e.preventDefault();
     if (
       adminData.username === "IdrisAdmin" &&
       adminData.password === "AdminIam987"
     ) {
-      setCookie("isAdmin", "true");
-      redirect.current.click();
+      setCookie("isAdmin", adminData.username);
+      // console.log("Redirect");
+      redirect(`/admin/panel/${adminData.username}`)
     }
   }
   useEffect(() => {
-    // If the user is found to be admin he will be redirected to the panel page.
-    if (getCookie("isAdmin") === "true") {
-      redirect.current.click();
+    console.log(getCookie("isAdmin"));
+    // If the user is found to be admin he will be auto redirected to the admin panel.
+    if (getCookie("isAdmin") === "IdrisAdmin") {
+      redirect(`/admin/panel/${getCookie("isAdmin")}`);
     }
   }, []);
   return (
     <div className="gradient-bg" style={{ height: "85vh" }}>
       <div className="d-flex justify-content-center align-items-center w-100 h-100">
-        <div class="login-box">
+        <div className="login-box">
           <form onSubmit={validateAdmin}>
               <div className="d-flex justify-content-center align-items-center mb-2">
                 <h4>Admin Login</h4>
               </div>
-            <div class="user-box">
+            <div className="user-box">
               <input
                 type="text"
                 required
+                maxLength={14}
                 value={adminData.username}
                 onChange={(e) => {
                   setAdminData({ ...adminData, username: e.target.value });
@@ -45,10 +48,11 @@ export default function Admin() {
               />
               <label>Username</label>
             </div>
-            <div class="user-box">
+            <div className="user-box">
               <input
                 type="password"
                 required
+                maxLength={15}
                 value={adminData.password}
                 onChange={(e) => {
                   setAdminData({ ...adminData, password: e.target.value });
@@ -58,12 +62,11 @@ export default function Admin() {
             </div>
             <center>
               <button type="submit">
-                SEND
+                Send
                 <span></span>
               </button>
             </center>
           </form>
-          <Link to="/admin/panel" ref={redirect} />
         </div>
       </div>
     </div>

@@ -18,14 +18,14 @@ const postSchema = mongoose.Schema({
         type: Date,
         default: new Date()
     },
-    slug: String,
+    slug: { type: String, unique: true },
     isReply: {
         type: Boolean,
         default: false
     },
-    replyId:{
+    replyId: {
         type: String,
-        default:""
+        default: ""
     }
 });
 

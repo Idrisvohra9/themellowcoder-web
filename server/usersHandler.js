@@ -19,10 +19,10 @@ export const getAllUsers = async (req, res) => {
 
 // Fetches a specific userDetails according to username:
 export const getUser = async (req, res) => {
-    const username = req.body;
+    const { username } = req.params;
     try {
-        const user = await userModel.findOne({ username: username});
-
+        const user = await userModel.findOne({ username });
+        // console.log(user);
         res.status(200).json(user);
     } catch (error) {
         res.status(404).json({ message: error.message })
@@ -31,9 +31,9 @@ export const getUser = async (req, res) => {
 
 export const createUser = async (req, res) => {
     const user = req.body;
-    const newUser = new userModel(user);
+    // const newUser = new userModel(user);
     try {
-        await newUser.save();
+        await userModel.create(user);
         // Successful creation:
         res.status(200).json(newUser);
     } catch (error) {
@@ -41,9 +41,28 @@ export const createUser = async (req, res) => {
         res.status(404).json({ message: error.message })
     }
 }
+const login = async (req, res) => {
+    const { username, pass } = req.body;
+    try {
+        const user = await userModel.findOne({ username });
+        let result = false;
+        if (user !== null) {
 
+            if (user.password === pass) {
+                result = true;
+            }
+        }
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
+const updateUser = async (req, res) => {
+
+}
 router.get('/', getAllUsers);
-router.get('/specific', getUser);
+router.post('/login', login);
+router.get('/:username', getUser);
 router.post("/create", createUser);
 router.patch('/:username', updateUser);
 export default router;

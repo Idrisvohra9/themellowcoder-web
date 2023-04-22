@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
     res.send("Hello");
     console.log("Hello!");
 })
-const url = "mongodb+srv://IdrisAdmin:IdrisVohra987@clustertmc.fltfidg.mongodb.net/?retryWrites=true&w=majority";
+const url = process.env.MONGOOSE_CONNECTION_STRING;
 
 // const PORT = process.env.PORT || 5000;
 const connectionParams = {

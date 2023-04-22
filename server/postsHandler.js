@@ -45,10 +45,15 @@ const updatePost = async (req, res) => {
     const {slug} = req.params;
     const {post} = req.body;
 }
+
+const deletePost = async (req, res) => {
+
+}
 // If the method is get the router will point to the post path which is by default '/'
-router.get('/', getAllPosts);
-router.get('/specific', getPost);
-router.post("/", createPost);
-router.patch('/:slug', updatePost);
+router.get('/', getAllPosts);// Fetch all
+router.get('/:slug', getPost);// Get single
+router.post("/", createPost);// Create new
+router.patch('/:slug', updatePost);// Update
+router.delete('/:slug', deletePost);// Delete
 
 export default router;

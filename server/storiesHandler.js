@@ -19,7 +19,7 @@ export const getAllStories = async (req, res) => {
 
 export const createStory = async (req, res) => {
     const body = req.body;
-    const newStory = new storyModel()
+    const newStory = new storyModel();
     try {
         await newStory.save();
         // Successful creation:
@@ -40,8 +40,11 @@ const updateStory = async (req, res) => {
     const patchedStory = await storyModel.findByIdAndUpdate(_id, story, { new: true });
     res.json(patchedStory);
 }
+const deleteStory = async (req, res) => {
+
+}
 router.get('/', getAllStories);
 router.post("/", createStory);
 router.patch("/:id", updateStory);
-router.delete()
+router.delete("/:id", deleteStory);
 export default router;

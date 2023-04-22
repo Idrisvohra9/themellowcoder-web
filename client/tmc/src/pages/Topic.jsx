@@ -1,7 +1,7 @@
 import React from "react";
 import useLoader from "../Hooks/useLoader";
 import Footer from "./components/Footer";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 export default function Topic({
   title,
   postedBy,
@@ -11,24 +11,24 @@ export default function Topic({
   likeCount,
   dislikeCount,
 }) {
+  const {slug} = useParams();
   useLoader();
   function like_dislike(e) {
     let targetGroup = e.target;
     let icon, targetValue, count;
     let oppoElement;
     // If the target element is the children of group then set the target element to group
-    if (targetGroup.className != "group") {
+    if (targetGroup.className !== "group") {
       targetGroup = targetGroup.parentNode;
     }
 
-    icon = targetGroup.children[0];
-    targetValue = targetGroup.children[1];
+    icon = targetGroup.children[1];
+    targetValue = targetGroup.children[2];
     count = Number(targetValue.innerHTML);
 
     icon.classList.toggle("active");
     // If the target element is like then:
     if (targetGroup.className.includes("Like")) {
-
       // Logic for checking if the dislike button has already been clicked before:
       let isDislikeActive = false;
       oppoElement = document.querySelector(".bi-heartbreak-fill.active");
@@ -37,14 +37,14 @@ export default function Topic({
       }
 
       // What to do if dislike is active:
-      if(isDislikeActive){
+      if (isDislikeActive) {
         // Get the current dislike value:
-        let oppoTargetValue = oppoElement.parentNode.children[1];
+        let oppoTargetValue = oppoElement.parentNode.children[2];
         // And decrement it's count
         count = Number(oppoTargetValue.innerHTML);
         count--;
 
-        // And remove the active class from it's icon:
+        // And remove the active className from it's icon:
         oppoElement.classList.remove("active");
         oppoTargetValue.innerHTML = count;
       }
@@ -65,14 +65,14 @@ export default function Topic({
         isLikeActive = true;
       }
       // What to do if dislike is active:
-      if(isLikeActive){
+      if (isLikeActive) {
         // Get the current dislike value:
-        let oppoTargetValue = oppoElement.parentNode.children[1];
+        let oppoTargetValue = oppoElement.parentNode.children[2];
         // And decrement it's count
         count = Number(oppoTargetValue.innerHTML);
         count--;
 
-        // And remove the active class from it's icon:
+        // And remove the active className from it's icon:
         oppoElement.classList.remove("active");
         oppoTargetValue.innerHTML = count;
       }
@@ -98,17 +98,46 @@ export default function Topic({
               {/* Side Buttons  */}
               <div className="d-flex flex-column me-4">
                 <div className="group Like" onClick={like_dislike}>
+                  <span className="tooltiptext">Like</span>
                   <i className="bi bi-heart-fill"></i>
                   <div className="count">{likeCount}</div>
                 </div>
                 <div className="group Dislike" onClick={like_dislike}>
+                  <span className="tooltiptext">Disike</span>
                   <i className="bi bi-heartbreak-fill"></i>
                   <div className="count">{dislikeCount}</div>
                 </div>
                 <div className="group">
-                  <i className="bi bi-three-dots"></i>
+                  <span className="tooltiptext">More Options</span>
+                  <i
+                    className="bi bi-three-dots dropend"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  ></i>
+                  <ul className="dropdown-menu dropdown-menu">
+                    <span className="d-flex justify-content-center">
+                      More Options
+                    </span>
+                    <li>
+                      <a className="dropdown-item" href="#">
+                        Share
+                      </a>
+                    </li>
+                    <li>
+                      <a className="dropdown-item" href="#">
+                        Edit
+                      </a>
+                    </li>
+                    <li>
+                      <a className="dropdown-item" href="#">
+                        Delete
+                      </a>
+                    </li>
+                  </ul>
                 </div>
                 <div className="group">
+                  <span className="tooltiptext">Reply</span>
+
                   <i className="bi bi-reply"></i>
                 </div>
               </div>

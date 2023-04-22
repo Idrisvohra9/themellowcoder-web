@@ -1,17 +1,22 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import Logo from "./components/Logo";
 import clickSound from "../static/Other/mixkit-arcade-game-jump-coin-216.wav";
 import starFallSound from "../static/Other/stars-falling.mp3";
 import CookieConsent from "./components/CookieConsent";
 import { getCookie } from "../tools/cookies";
-import LoginModal from "./components/Login";
+import LoginModal from "./components/Modals";
+import axios from "axios";
+import { UserContext } from "../UserContext";
+
 export default function Layout() {
+  // const dispatch = useDispatch({type: "FETCH_SPECIFIC"});
+  // const activeUser = useSelector((store)=> store.userReducer);
+  const {setUserData, userData} = useContext(UserContext);
   const sidebar = useRef();
   const navbar = useRef();
   const starfall = useRef();
-  const [starFall, setStarFall] = useState(0);
-  const [online, setOnline] = useState(true);
+  const [online, setOnline] = useState(navigator.onLine);
   let pos = -116;
   var i = 0;
   let toTop = useRef();
@@ -63,7 +68,6 @@ export default function Layout() {
     if (document.body.contains(document.querySelector(".starfall.off"))) {
       starSound.play();
       starfall.current.classList.remove("off");
-      setStarFall(1);
     } else {
       starfall.current.classList.add("off");
       starSound.pause();
@@ -97,10 +101,23 @@ export default function Layout() {
       }
     }
   }
+  function handleOnlineStatusChange() {
+    setOnline(navigator.onLine);
+  }
   useEffect(() => {
-    setTimeout(() => {
-      navigator.onLine ? setOnline(true) : setOnline(false);
-    }, 1000);
+    if (getCookie("username") !== "") {
+      axios
+        .get(`http://localhost:5000/users/${getCookie("username")}`)
+        .then((response) => setUserData(response.data))
+        .catch((error) => console.log(error));
+    }
+    window.addEventListener("online", handleOnlineStatusChange);
+    window.addEventListener("offline", handleOnlineStatusChange);
+
+    return () => {
+      window.removeEventListener("online", handleOnlineStatusChange);
+      window.removeEventListener("offline", handleOnlineStatusChange);
+    };
   }, []);
   return (
     <>
@@ -129,7 +146,10 @@ export default function Layout() {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span className="navbar-toggler-icon" style={{filter: "invert(100)"}}></span>
+            <span
+              className="navbar-toggler-icon"
+              style={{ filter: "invert(100)" }}
+            ></span>
           </button>
           <button className="sidebarIcon" onClick={() => slideBar()}>
             <svg width="800" height="800" viewBox="0 0 24 24" fill="none">
@@ -209,13 +229,18 @@ export default function Layout() {
                 </li>
               </ul>
               {getCookie("username") ? (
-                <NavLink to="/profile" className="tab">
-                  <div className="d-flex">
-                    {/* <img
-                src={getCookie("user-dp")}
-                alt="User dp"
-                className="dp"
-              /> */}
+                <NavLink
+                  to={`/profile/${getCookie("username")}`}
+                  className="tab"
+                >
+                  <div className="d-flex align-items-center justify-content-between">
+                    {userData.dp && (
+                      <img
+                        src={userData.dp}
+                        alt={`@${userData.username}`}
+                        className="dp"
+                      />
+                    )}
                     <div className="ms-1">{getCookie("username")}</div>
                   </div>
                   <div className="highlight"></div>

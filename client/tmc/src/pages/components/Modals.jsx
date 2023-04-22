@@ -1,23 +1,64 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { setCookie } from "../../tools/cookies";
+import axios from "axios";
 
 export default function Login() {
   const [getData, setData] = useState({
     username: "",
     pass: "",
   });
-  function logIn(e) {
+  async function logIn(e) {
     e.preventDefault();
-    
-    console.log(getData);
+    const existingUser = await axios.post(
+      "http://localhost:5000/users/login",
+      getData
+    );
+    // This returns true if the user already exists in db and false else wise.
+    let userExist = existingUser.data;
+    if (userExist) {
+      setCookie("username", getData.username);
+      window.location.reload();
+    } else {
+      document.querySelector(".toast.text-bg-danger").classList.add("show");
+    }
+  }
+  function hide_show() {
+    const pass = document.getElementById("pass");
+    console.log(pass.type);
+    if (pass.type === "password") {
+      pass.type = "text";
+    } else {
+      pass.type = "password";
+    }
   }
   return (
     <>
+      <div
+        className="toast align-items-center text-bg-danger border-0"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div className="d-flex">
+          <div className="toast-body">Invalid Login Credentials!</div>
+          <button
+            type="button"
+            className="btn-close btn-close-white me-2 m-auto"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+      </div>
+      {/* Login Modal */}
       <div className="modal" id="loginReg">
         <div className="modal-dialog modal-dialog-centered modal-lg">
           <div className="modal-content loginReg">
             <div className="modal-header">
-              <h3 className="modal-title">Welcome back!</h3>
+              <div>
+                <h3 className="modal-title">Login!</h3>
+                <h4 className="text-muted">Welcome Back💝</h4>
+              </div>
               <button
                 type="button"
                 className="btn-close btn-close-white"
@@ -34,6 +75,7 @@ export default function Login() {
                           type="text"
                           className="inputCont"
                           placeholder="Username"
+                          maxLength={14}
                           value={getData.username}
                           onChange={(e) =>
                             setData({ ...getData, username: e.target.value })
@@ -48,13 +90,26 @@ export default function Login() {
                         <input
                           type="password"
                           className="inputCont"
+                          id="pass"
                           placeholder="Password"
+                          maxLength={9}
                           required
                           value={getData.pass}
                           onChange={(e) =>
                             setData({ ...getData, pass: e.target.value })
                           }
                         />
+                        <br />
+                        <label
+                          style={{ fontSize: "16px", fontWeight: "bold" }}
+                          onClick={() => hide_show()}
+                        >
+                          <input
+                            className="form-check-input text-bg-dark me-2 align-self-end"
+                            type="checkbox"
+                          />
+                          Show Password
+                        </label>
                       </td>
                     </tr>
                   </tbody>
@@ -83,7 +138,9 @@ export default function Login() {
                 >
                   Forgot your password?
                 </Link>
-                <button className="inputBtns btn-primary" type="submit">Log-in</button>
+                <button className="inputBtns btn-primary" type="submit">
+                  Log-in
+                </button>
                 New to TMC?
                 <Link to="/Sign-up" className="inputBtns btn-primary">
                   Sign-up!
@@ -93,34 +150,7 @@ export default function Login() {
           </div>
         </div>
       </div>
-
-      <div className="modal fade" id="tagsWindow">
-        <div className="modal-dialog modal-sm modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h4 className="modal-title">Tags</h4>
-              <button
-                type="button"
-                className="btn-close btn-close-white"
-                data-bs-dismiss="modal"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <div id="tags-show"></div>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-dark"
-                data-bs-dismiss="modal"
-              >
-                Okay
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      {/* OOPSIE Modal */}
       <div className="modal fade" id="oopsie-modal">
         <div className="modal-dialog modal-dialog-centered modal-sm">
           <div className="modal-content">
@@ -133,8 +163,9 @@ export default function Login() {
               ></button>
             </div>
             <div className="modal-body">
-              It seems you've not logged in yet.{" "}
-              <Link to="">Login/Register</Link>
+              <p>It seems you've not logged in yet. </p>
+              <p>You need to login or sign up to do dat..</p>
+              <Link to="/sign-up">Login/Register</Link>
             </div>
             <div className="modal-footer">
               <button
@@ -148,6 +179,13 @@ export default function Login() {
           </div>
         </div>
       </div>
+
+      <button
+        className="d-none"
+        id="trigger-oopsie"
+        data-bs-toggle="modal"
+        data-bs-target="#oopsie-modal"
+      ></button>
     </>
   );
 }

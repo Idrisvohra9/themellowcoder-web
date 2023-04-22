@@ -24,7 +24,7 @@ export default function OctoAI() {
         max_tokens: 100,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.OPENAI_SECRET_KEY}`,
+          Authorization: `Bearer ${process.env.REACT_APP_OPENAI_SECRET_KEY}`,
         },
       });
       setResult(completion.data.choices[0].text);

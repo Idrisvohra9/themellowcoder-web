@@ -191,17 +191,21 @@ body ::selection {
   background-color: var(--secondaryClr);
 }
 
-.navbar .dropdown-menu {
+.dropdown-menu {
   border-radius: 10px;
   overflow: hidden;
   background-color: var(--primaryClr);
 }
 
-.navbar .dropdown-menu .dropdown-item {
+.dropdown-menu .dropdown-item {
   color: var(--textClr);
 }
 
-.navbar .dropdown-menu .dropdown-item:hover {
+.dropdown-menu span {
+  color: var(--darkwhite);
+}
+
+.dropdown-menu .dropdown-item:hover {
   background-color: #414141 !important;
 }
 
@@ -877,6 +881,16 @@ svg.arrow {
   color: var(--secondaryClr);
 }
 
+.toast {
+  position: absolute;
+  z-index: 1056;
+  bottom: 80px;
+  right: 20px;
+}
+
+.toast.show {
+  animation: beatingHeart 1.2s ease-out;
+}
 
 .input-group {
   overflow: hidden;
@@ -887,10 +901,10 @@ svg.arrow {
 }
 
 .dp {
-  width: 30px;
-  height: 30px;
-  object-fit: contain;
-  border-radius: 50%;
+  width: 24px;
+  aspect-ratio: auto 24 / 24;
+  height: 24px;
+  border-radius: 50% !important;
 }
 
 .input-group-text {
@@ -1076,6 +1090,7 @@ input[type="file"]::file-selector-button:hover {
 
 .loginReg .modal-body {
   width: 100%;
+  display: flex;
   height: 100%;
 }
 
@@ -1090,9 +1105,8 @@ input[type="file"]::file-selector-button:hover {
 
 .modal-content .inputCont {
   padding: 0 0 0 42px;
-  width: 70%;
+  width: 120%;
   margin: 10px 0 10px 0;
-  /* line-height: 36px; */
   font-size: 24px;
   font-family: "Nunito";
   color: var(--primaryClr);
@@ -1109,7 +1123,7 @@ input[type="file"]::file-selector-button:hover {
   background-position: 2% 50%;
 }
 
-.modal-content input[type="password"] {
+.modal-content input#pass {
   background-image: url("../Images/password-svgrepo-com.svg");
   background-repeat: no-repeat;
   background-size: 25px;
@@ -1119,7 +1133,10 @@ input[type="file"]::file-selector-button:hover {
 .modal-content table {
   width: 100%;
   height: 100%;
-  text-align: center;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex: 1 1;
 }
 
 .modal-content .inputBtns {
@@ -1403,6 +1420,7 @@ header {
 .post-topic .group {
   display: flex;
   flex-direction: column;
+  position: relative;
   justify-content: center;
   align-items: center;
   cursor: pointer;
@@ -1431,15 +1449,49 @@ header {
   }
 }
 
-.post-topic .group:hover i {
+.post-topic .group:hover i.bi-heart-fill,
+.post-topic .group:hover i.bi-heartbreak-fill {
   animation: beatingHeart 1.2s infinite;
 }
-.bi-heart-fill.active{
+
+.group .tooltiptext {
+  visibility: hidden;
+  width: 4em;
+  background-color: rgba(0, 0, 0, 0.350);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  font-size: .8em;
+  padding: 3px 0;
+  position: absolute;
+  z-index: 1;
+  top: 15%;
+  left: 110%;
+}
+
+.group .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent rgba(0, 0, 0, 0.350) transparent transparent;
+}
+
+.group:hover .tooltiptext {
+  visibility: visible;
+}
+
+.bi-heart-fill.active {
   color: crimson;
 }
-.bi-heartbreak-fill.active{
+
+.bi-heartbreak-fill.active {
   color: var(--primaryClr);
 }
+
 .post-topic .box {
   border: 2px solid var(--primaryClr);
   background-color: var(--postBg);
@@ -1599,8 +1651,9 @@ header {
   background: linear-gradient(90deg, transparent, var(--secondaryClr));
   animation: btn-anim1 2s linear infinite;
 }
-
-
+.table th{
+  text-transform: capitalize;
+}
 /* Loader Animation css */
 #box-outer {
   width: 80px;
@@ -1829,7 +1882,7 @@ a.card-link:hover {
 }
 
 .post-tag {
-  background-color: #0f0c297c;
+  background-color: #0f0c2963;
   text-transform: capitalize;
   cursor: pointer;
   border-radius: 10%;
@@ -1842,7 +1895,7 @@ a.card-link:hover {
 }
 
 .post-tag:hover {
-  background-color: #203239;
+  background-color: #20323981;
 }
 
 .PostLinks .card {
@@ -1996,10 +2049,6 @@ span .react-tagsinput-input {
   border: none !important;
 }
 
-.createPost .input span {
-  overflow: hidden;
-}
-
 .createPost label {
   position: relative;
   z-index: 2;
@@ -2026,7 +2075,15 @@ span .react-tagsinput-input {
   position: relative;
 
 }
-
+.quill.input{
+  padding: 5px !important;
+}
+.quill.input .ql-editor{
+  color: var(--textClr);
+}
+.quill.input .ql-editor:focus{
+  color: var(--primaryClr);
+}
 /* Explore tab CSS */
 .explore .input {
   height: 2rem;
@@ -2096,7 +2153,7 @@ span .react-tagsinput-input {
   padding-right: 0.7em;
 }
 
-.share-button .icon {
+.share-button .icons  {
   background: #fff;
   margin-right: 1em;
   height: 2.2em;
@@ -2116,7 +2173,7 @@ span .react-tagsinput-input {
   margin-left: 4px;
 }
 
-.share-button:hover .icon {
+.share-button:hover .icons {
   width: calc(100% - 0.6rem);
 }
 
@@ -2132,7 +2189,7 @@ span .react-tagsinput-input {
   display: none;
 }
 
-.share-button:hover .icon .icon-shere {
+.share-button:hover .icons .icon-shere {
   display: flex;
   justify-content: space-evenly;
 }
@@ -2197,6 +2254,7 @@ span .react-tagsinput-input {
 .header__wrapper .cols__container .left__col .about li {
   display: flex;
   flex-direction: column;
+  margin: .5rem;
   color: #e9b6ed;
   font-size: 0.9rem;
 }

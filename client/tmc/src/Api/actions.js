@@ -13,7 +13,16 @@ export const getUsers = () => async (dispatch) => {
         console.log(error.message);
     }
 }
+export const getUser = (username) => async (dispatch) => {
+    try {
+        // Getting the response object from the api which has the key data (object) and that is users
+        const { data } = await api.fetchSingleUser(username);
+        dispatch({ type: 'FETCH_SPECIFIC', payload: data});
 
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 export const createUser = (userData) => async (dispatch) => {
     try {
         // Getting the response object from the api which has the key data (object) and that is users

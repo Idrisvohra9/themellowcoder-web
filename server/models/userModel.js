@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 // Schema is a rule for every columns of post that is going to be stored i mongodb as documents
 const userSchema = mongoose.Schema({
-    username: String,
+    username: { type: String, unique: true },
     email: String,
     password: String,
     desc: String,
@@ -24,7 +24,7 @@ const userSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    friends:[String]
+    friends: [String]
 });
 
 const userModel = mongoose.model("userModel", userSchema);

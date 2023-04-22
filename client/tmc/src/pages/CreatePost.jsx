@@ -1,8 +1,10 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import useLoader from "../Hooks/useLoader";
 import TagsInput from "react-tagsinput";
 import { getCookie } from "../tools/cookies";
 import ScatterBlobs from "./components/Scattered-blobs";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 // import { useDispatch } from "react-redux";
 // import { createPost } from "../Api/actions";
 
@@ -16,9 +18,16 @@ export default function CreatePost() {
     tags: [],
     slug: "",
   });
-  function createSlug(title) {}
+  function createSlug(title) {
+    const regex = /[^a-zA-Z0-9_-]/g; // Replacing the special characters excluding hyphens and underscore with hyphens and
+    // Replace multiple consecutive hyphens with a single hyphen
+    const hyphenRegex = /-+/g;
+    const slug = title.replace(regex, "-").replace(hyphenRegex, "-");
+    return slug;
+  }
   function post(e) {
     e.preventDefault();
+    // setPostData({...postData, slug:createSlug(postData.title)});
     console.log(postData);
   }
   return (
@@ -39,7 +48,13 @@ export default function CreatePost() {
               name="title"
               maxLength={36}
               value={postData.title}
-              onChange={(e) => setPostData({ ...postData, title: e.target.value })}
+              onChange={(e) =>
+                setPostData({
+                  ...postData,
+                  title: e.target.value,
+                  slug: createSlug(e.target.value),
+                })
+              }
             />
           </div>
           <div className="mb-3">
@@ -60,37 +75,13 @@ export default function CreatePost() {
               data-bs-placement="top"
             >
               Body{" "}
-              <svg
-                viewBox="0 0 490 490"
-                fill="#d8d4cf"
-                onClick={() => {
-                  document
-                    .querySelector(".createPost label .tmc-tooltip")
-                    .classList.toggle("show");
-                }}
-              >
-                <path d="M245 490C109.9 490 0 380.1 0 245S109.9 0 245 0s245 109.9 245 245-109.9 245-245 245zm0-428C144.1 62 62 144.1 62 245s82.1 183 183 183 183-82.1 183-183S345.9 62 245 62z" />
-                <circle cx="241.3" cy="159.2" r="29.1" />
-                <path d="M285.1 359.9h-80.2V321h14.7v-66.2h-14.5v-38.9h65.3V321h14.7z" />
-              </svg>
-              <span className="bg-white text-dark rounded-2 ms-2 tmc-tooltip">
-                To know more about typing in markdown, see{" "}
-                <a href="" className="text-dark">
-                  Markdown typing
-                </a>
-                .
-              </span>
             </label>
-            <textarea
-              className="form-control input"
-              id="post-body"
-              rows="3"
-              placeholder="You can use markdown typing and also html elements for creating the post body."
-              value={postData.body}
-              onChange={(e) =>
-                setPostData({ ...postData, body: e.target.value })
+            <ReactQuill
+              className="input"
+              onChange={(newValue) =>
+                setPostData({ ...postData, body: newValue })
               }
-            ></textarea>
+            />
           </div>
           <button type="submit" className="btn btn-primary">
             Post
@@ -100,4 +91,3 @@ export default function CreatePost() {
     </div>
   );
 }
-
