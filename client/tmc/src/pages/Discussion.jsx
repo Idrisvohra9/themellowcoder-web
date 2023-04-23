@@ -1,21 +1,22 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect} from "react";
 import useLoader from "../Hooks/useLoader";
 import { Link } from "react-router-dom";
-// import post
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../Api/actions";
 import Footer from "./components/Footer";
 import { getCookie } from "../tools/cookies";
-import PostLinks from "./components/PostLinks";
+import {PostLink} from "./components/PostLinks";
+// import axios from "axios";
+
+
 export default function Discussion() {
   useLoader();
   // Whole global redux store:
-
+  // const [post, getPosts] = useState([]);
   const dispatch = useDispatch({ type: "FETCH_ALL" });
   const posts = useSelector((store) => store.postReducer);
   useEffect(() => {
     dispatch(getPosts()); // We go to the post reducer
-    console.log(posts);
   }, [dispatch]);
 
   const showFilter = useRef();
@@ -123,9 +124,8 @@ export default function Discussion() {
                 </div>
               </div>
             ) : (
-              posts.map((post) => <PostLinks {...post} key={post._id} />)
+              posts.map((post) => <PostLink {...post} key={post._id} />)
             )}
-            <PostLinks />
           </div>
           <div className="ads"></div>
         </div>

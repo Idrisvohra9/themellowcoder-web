@@ -6,7 +6,10 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, compose, createStore } from 'redux'
 import thunk from "redux-thunk"
 import reducers from "./Api/reducers.js"
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en.json'
 
+TimeAgo.addDefaultLocale(en)
 const root = createRoot(document.getElementById('root'));
 if (getCookie("cookie-consent") === "") {
   setCookie("cookie-consent", "false");

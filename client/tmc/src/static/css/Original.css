@@ -1507,29 +1507,6 @@ header {
   font-size: .8rem;
 }
 
-.reply-form {
-  /* --width-of-input: 200px;
-  --border-height: 1px;
-  --border-before-color: rgba(221, 221, 221, 0.39);
-  --border-after-color: #5891ff;
-  --input-hovered-color: #4985e01f; */
-  position: relative;
-  width: 50%;
-}
-
-/* styling of Input */
-.reply-input {
-  color: #fff;
-  font-size: 0.9rem;
-  background-color: transparent;
-  width: 100%;
-  box-sizing: border-box;
-  padding-inline: 0.5em;
-  padding-block: 0.7em;
-  border: none;
-  border-bottom: 1px solid var(--primaryClr);
-}
-
 /* styling of animated border */
 .input-border {
   position: absolute;
@@ -1885,9 +1862,9 @@ a.card-link:hover {
   background-color: #0f0c2963;
   text-transform: capitalize;
   cursor: pointer;
-  border-radius: 10%;
-  padding: 0 .2% 0 .2%;
-  width: 4rem;
+  border-radius: 15%;
+  padding:.2%;
+  /* width: 4rem; */
   font-size: 16px;
   text-align: center;
   margin-right: 2%;

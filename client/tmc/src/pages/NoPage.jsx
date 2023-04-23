@@ -1,6 +1,7 @@
 import React from 'react'
 import useLoader from '../Hooks/useLoader'
 import grumpy from "./components/Images/kraken.webp"
+
 export default function NoPage() {
   useLoader();
   return (

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 // Schema is a rule for every columns of post that is going to be stored i mongodb as documents
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
     username: { type: String, unique: true },
     email: String,
     password: String,
@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema({
     tags: [String],
     dp: {
         type: String,
-        default: null
+        default: ""
     },
     tmcPoints: {
         type: Number,

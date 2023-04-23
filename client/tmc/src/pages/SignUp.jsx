@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import useLoader from "../Hooks/useLoader";
-import FileBase from "react-file-base64";
 import { useDispatch } from "react-redux";
 import { createUser } from "../Api/actions";
 import TagsInput from "react-tagsinput";
@@ -367,16 +366,7 @@ export default function SignUp() {
                       <div className="drop-container">
                         <div className="drop-title">Drop An Image</div>
                         or
-                        <FileBase
-                          type="file"
-                          required
-                          multiple={false}
-                          className="form-control"
-                          name="dp"
-                          onDone={({ base64 }) =>
-                            setUserData({ ...userData, dp: base64 })
-                          }
-                        />
+                        <input type="file" />
                       </div>
                     </div>
                   </div>

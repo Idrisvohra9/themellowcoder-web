@@ -7,7 +7,7 @@ const router = express.Router();
 //$ Controllers:
 const getAllPosts = async (req, res) => {
     try {
-        const posts = await postModel.find({}).sort({_id: -1}).limit(10);
+        const posts = await postModel.find({}).sort({createdAt: -1}).limit(20).populate("postedBy", ["username"]);
 
         // A message to the user that everthing went right and return the json containing all the posts data
 
@@ -31,9 +31,9 @@ const getPost = async (req, res) => {
 
 export const createPost = async (req, res) => {
     const post = req.body;
-    const newPost = new postModel()
+    // const newPost = new postModel()
     try {
-        await newPost.save(post);
+        const newPost= await postModel.create(post);
         // Successful creation:
         res.status(201).json(newPost);
     } catch (error) {

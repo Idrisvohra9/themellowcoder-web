@@ -118,7 +118,7 @@ export default function Layout() {
       window.removeEventListener("online", handleOnlineStatusChange);
       window.removeEventListener("offline", handleOnlineStatusChange);
     };
-  }, []);
+  }, [setUserData]);
   return (
     <>
       {!online ? <div className="status">You are currently offline</div> : ""}
@@ -234,10 +234,10 @@ export default function Layout() {
                   className="tab"
                 >
                   <div className="d-flex align-items-center justify-content-between">
-                    {userData.dp && (
+                    {userData?.dp && (
                       <img
-                        src={userData.dp}
-                        alt={`@${userData.username}`}
+                        src={userData?.dp}
+                        alt={`@${userData?.username}`}
                         className="dp"
                       />
                     )}

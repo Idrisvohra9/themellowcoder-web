@@ -3,14 +3,36 @@ import useLoader from "../Hooks/useLoader";
 import TagsInput from "react-tagsinput";
 import { getCookie } from "../tools/cookies";
 import ScatterBlobs from "./components/Scattered-blobs";
+import hljs from "highlight.js";
+import "highlight.js/styles/base16/onedark.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-// import { useDispatch } from "react-redux";
-// import { createPost } from "../Api/actions";
+import { useDispatch } from "react-redux";
+import { createPost } from "../Api/actions";
+import NoPage from "./NoPage";
+
+hljs.configure({
+  languages: ["javascript", "css", "scss", "python", "html", "php"],
+});
+const highlightCode = (input) => {
+  return hljs.highlightAuto(input).value;
+};
+const modules = {
+  syntax: {
+    highlight: (text) => highlightCode(text),
+  }, // Include syntax module
+  toolbar: [
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    ["bold", "italic", "underline", "strike"],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["code-block"],
+    ["link", "image"],
+    ["clean"],
+  ], // Include button in toolbar
+};
 
 export default function CreatePost() {
   useLoader();
-  // const [tags, setTags] = useState([]);
   const [postData, setPostData] = useState({
     title: "",
     body: "",
@@ -18,76 +40,101 @@ export default function CreatePost() {
     tags: [],
     slug: "",
   });
-  function createSlug(title) {
+
+  const dispatch = useDispatch();
+  function createSlug(title = "") {
     const regex = /[^a-zA-Z0-9_-]/g; // Replacing the special characters excluding hyphens and underscore with hyphens and
     // Replace multiple consecutive hyphens with a single hyphen
     const hyphenRegex = /-+/g;
-    const slug = title.replace(regex, "-").replace(hyphenRegex, "-");
+    let slug = title.replace(regex, "-").replace(hyphenRegex, "-");
+    if (slug.endsWith("-")) {
+      slug = slug.slice(0, slug.length - 1);
+    }
     return slug;
   }
   function post(e) {
     e.preventDefault();
-    // setPostData({...postData, slug:createSlug(postData.title)});
-    console.log(postData);
+    const invalidFeedbacks = document.querySelectorAll(".invalid-feedback");
+    if (postData.title.length < 5) {
+      invalidFeedbacks[0].style.display = "block";
+    }
+    if (postData.tags.length < 3) {
+      invalidFeedbacks[1].style.display = "block";
+    }
+    if (postData.body.length < 15) {
+      invalidFeedbacks[2].style.display = "block";
+    } else {
+      console.log("Posting successful");
+      console.log(dispatch(createPost(postData)));
+      window.history.back();
+    }
   }
-  return (
-    <div className="mainContent bg-dark text-light p-4 createPost">
-      <ScatterBlobs />
-      <div className="container rounded-2 border border-2 border-light border-opacity-25 p-3">
-        <form onSubmit={post}>
-          <h2 className="mb-3">Start a new topic to discuss!</h2>
-          <div className="mb-3">
-            <label htmlFor="post-title" className="form-label">
-              Title
-            </label>
-            <input
-              type="text"
-              className="form-control input"
-              id="post-title"
-              placeholder="Discussion Title"
-              name="title"
-              maxLength={36}
-              value={postData.title}
-              onChange={(e) =>
-                setPostData({
-                  ...postData,
-                  title: e.target.value,
-                  slug: createSlug(e.target.value),
-                })
-              }
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="tags">Add Tags</label>
-            <TagsInput
-              value={postData.tags}
-              onChange={(tags) => {
-                setPostData({ ...postData, tags: tags });
-              }}
-              className="input"
-            />
-          </div>
-          <div className="mb-3">
-            <label
-              htmlFor="post-body"
-              className="form-label"
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
+  if (getCookie("username") === "") {
+    return <NoPage />;
+  } else {
+    return (
+      <div className="mainContent bg-dark text-light p-4 createPost">
+        <ScatterBlobs />
+        <div className="container rounded-2 border border-2 border-light border-opacity-25 p-3">
+          <form onSubmit={post}>
+            <h2 className="mb-3">Start a new topic to discuss!</h2>
+            <div className="mb-3">
+              <label htmlFor="post-title" className="form-label">
+                Title
+              </label>
+              <input
+                type="text"
+                className="form-control input"
+                id="post-title"
+                placeholder="Discussion Title (Under 37 characters)"
+                name="title"
+                maxLength={36}
+                value={postData.title}
+                onChange={(e) =>
+                  setPostData({
+                    ...postData,
+                    title: e.target.value,
+                    slug: createSlug(e.target.value),
+                  })
+                }
+              />
+              <div className="invalid-feedback">The title is too short.</div>
+            </div>
+            <div className="mb-3">
+              <label htmlFor="tags">Add Tags (Atleast 3)</label>
+              <TagsInput
+                value={postData.tags}
+                onChange={(tags) => {
+                  setPostData({ ...postData, tags: tags });
+                }}
+                className="input"
+              />
+              <div className="invalid-feedback">
+                There should be atleast 3 tags.
+              </div>
+            </div>
+            <div className="mb-3">
+              <label htmlFor="post-body" className="form-label">
+                Body{" "}
+              </label>
+              <ReactQuill
+                className="input"
+                onChange={(newValue) =>
+                  setPostData({ ...postData, body: newValue })
+                }
+                modules={modules}
+              />
+              <div className="invalid-feedback">The body is too short.</div>
+            </div>
+            <button
+              type="submit"
+              className="btn btn-primary ps-5 pe-5 col-lg-2"
             >
-              Body{" "}
-            </label>
-            <ReactQuill
-              className="input"
-              onChange={(newValue) =>
-                setPostData({ ...postData, body: newValue })
-              }
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Post
-          </button>
-        </form>
+              Post
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }

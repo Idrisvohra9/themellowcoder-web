@@ -165,7 +165,11 @@ export default function Login() {
             <div className="modal-body">
               <p>It seems you've not logged in yet. </p>
               <p>You need to login or sign up to do dat..</p>
-              <Link to="/sign-up">Login/Register</Link>
+              <div className="d-flex justify-content-center">
+                <Link to="/sign-up" className="btn btn-dark">
+                  Login/Register
+                </Link>
+              </div>
             </div>
             <div className="modal-footer">
               <button

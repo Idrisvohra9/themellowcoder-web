@@ -2,6 +2,7 @@ import React from "react";
 import useLoader from "../Hooks/useLoader";
 import Footer from "./components/Footer";
 import { Link, useParams } from "react-router-dom";
+import { getCookie } from "../tools/cookies";
 export default function Topic({
   title,
   postedBy,
@@ -11,81 +12,91 @@ export default function Topic({
   likeCount,
   dislikeCount,
 }) {
-  const {slug} = useParams();
+  const { slug } = useParams();
   useLoader();
   function like_dislike(e) {
     let targetGroup = e.target;
     let icon, targetValue, count;
     let oppoElement;
     // If the target element is the children of group then set the target element to group
-    if (targetGroup.className !== "group") {
-      targetGroup = targetGroup.parentNode;
-    }
-
-    icon = targetGroup.children[1];
-    targetValue = targetGroup.children[2];
-    count = Number(targetValue.innerHTML);
-
-    icon.classList.toggle("active");
-    // If the target element is like then:
-    if (targetGroup.className.includes("Like")) {
-      // Logic for checking if the dislike button has already been clicked before:
-      let isDislikeActive = false;
-      oppoElement = document.querySelector(".bi-heartbreak-fill.active");
-      if (targetGroup.parentNode.contains(oppoElement)) {
-        isDislikeActive = true;
-      }
-
-      // What to do if dislike is active:
-      if (isDislikeActive) {
-        // Get the current dislike value:
-        let oppoTargetValue = oppoElement.parentNode.children[2];
-        // And decrement it's count
-        count = Number(oppoTargetValue.innerHTML);
-        count--;
-
-        // And remove the active className from it's icon:
-        oppoElement.classList.remove("active");
-        oppoTargetValue.innerHTML = count;
-      }
-      // If it is not clicked increase the count by one
-      if (icon.className.includes("active")) {
-        count++;
-        // See if it already has been clicked before
-      } else {
-        // and reduce it by one
-        count--;
-      }
-      // Else if the target element is dislike
+    if (getCookie("username") === "") {
+      document.getElementById("trigger-oopsie").click();
     } else {
-      // Logic for checking if the dislike button has already been clicked before:
-      let isLikeActive = false;
-      oppoElement = document.querySelector(".bi-heart-fill.active");
-      if (targetGroup.parentNode.contains(oppoElement)) {
-        isLikeActive = true;
+      if (targetGroup.className !== "group") {
+        targetGroup = targetGroup.parentNode;
       }
-      // What to do if dislike is active:
-      if (isLikeActive) {
-        // Get the current dislike value:
-        let oppoTargetValue = oppoElement.parentNode.children[2];
-        // And decrement it's count
-        count = Number(oppoTargetValue.innerHTML);
-        count--;
 
-        // And remove the active className from it's icon:
-        oppoElement.classList.remove("active");
-        oppoTargetValue.innerHTML = count;
-      }
-      // If it is not clicked increase the count by one
-      if (icon.className.includes("active")) {
-        count++;
-        // See if it already has been clicked before
+      icon = targetGroup.children[1];
+      targetValue = targetGroup.children[2];
+      count = Number(targetValue.innerHTML);
+
+      icon.classList.toggle("active");
+      // If the target element is like then:
+      if (targetGroup.className.includes("Like")) {
+        // Logic for checking if the dislike button has already been clicked before:
+        let isDislikeActive = false;
+        oppoElement = document.querySelector(".bi-heartbreak-fill.active");
+        if (targetGroup.parentNode.contains(oppoElement)) {
+          isDislikeActive = true;
+        }
+
+        // What to do if dislike is active:
+        if (isDislikeActive) {
+          // Get the current dislike value:
+          let oppoTargetValue = oppoElement.parentNode.children[2];
+          // And decrement it's count
+          count = Number(oppoTargetValue.innerHTML);
+          count--;
+
+          // And remove the active className from it's icon:
+          oppoElement.classList.remove("active");
+          oppoTargetValue.innerHTML = count;
+        }
+        // If it is not clicked increase the count by one
+        if (icon.className.includes("active")) {
+          count++;
+          // See if it already has been clicked before
+        } else {
+          // and reduce it by one
+          count--;
+        }
+        // Else if the target element is dislike
       } else {
-        // and reduce it by one
-        count--;
+        // Logic for checking if the dislike button has already been clicked before:
+        let isLikeActive = false;
+        oppoElement = document.querySelector(".bi-heart-fill.active");
+        if (targetGroup.parentNode.contains(oppoElement)) {
+          isLikeActive = true;
+        }
+        // What to do if dislike is active:
+        if (isLikeActive) {
+          // Get the current dislike value:
+          let oppoTargetValue = oppoElement.parentNode.children[2];
+          // And decrement it's count
+          count = Number(oppoTargetValue.innerHTML);
+          count--;
+
+          // And remove the active className from it's icon:
+          oppoElement.classList.remove("active");
+          oppoTargetValue.innerHTML = count;
+        }
+        // If it is not clicked increase the count by one
+        if (icon.className.includes("active")) {
+          count++;
+          // See if it already has been clicked before
+        } else {
+          // and reduce it by one
+          count--;
+        }
       }
+      targetValue.innerHTML = count;
     }
-    targetValue.innerHTML = count;
+  }
+  function reply() {
+    if (getCookie("username") === "") {
+      document.getElementById("trigger-oopsie").click();
+    } else {
+    }
   }
   return (
     <div className="mainContent">
@@ -135,7 +146,7 @@ export default function Topic({
                     </li>
                   </ul>
                 </div>
-                <div className="group">
+                <div className="group" onClick={reply}>
                   <span className="tooltiptext">Reply</span>
 
                   <i className="bi bi-reply"></i>
@@ -169,15 +180,7 @@ export default function Topic({
             <div className="mt-3">
               <h3>Replies</h3>
               <div className="container">
-                <div className="reply-form">
-                  <input
-                    className="reply-input"
-                    placeholder="Share your thoughts"
-                    required=""
-                    type="text"
-                  />
-                  <span className="input-border"></span>
-                </div>
+                <div className="reply-form"></div>
               </div>
             </div>
           </div>
