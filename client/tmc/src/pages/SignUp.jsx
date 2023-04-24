@@ -33,10 +33,10 @@ export default function SignUp() {
 
   // First it validates username and pass:
   const validate = (e) => {
-    const userRegex = /[A-Za-z]+[A-Za-z0-9_]/i;
+    const userRegex = /[A-Za-z]+[A-Za-z0-9_-]/i;
     const passRegex =
       /^(?=.*[A-Z])(?=.*[@!#$%^&*()<>?/|}{~:`,./:;'" +=])(?=.*[0-9])(?=.*[a-z]).{9}$/;
-    const specialChars = /[@!#$%^&*()<>?/|}{~:`,./:;'" +=-]/;
+    const specialChars = /[@!#$%^&*()<>?/|}{~:`,./:;'" +=]/;
 
     if (e.target.name === "username") {
       const valid = e.target.parentNode.children[2];
@@ -124,8 +124,10 @@ export default function SignUp() {
       Valid Email : ${validEmail}\n
       Valid Password : ${validPass}
       `);
-      place.current.innerHTML = "Invalid Sign up (Please refer to the warnings..)";
-    } if (userData.tags.length < 3) {
+      place.current.innerHTML =
+        "Invalid Sign up (Please refer to the warnings..)";
+    }
+    if (userData.tags.length < 3) {
       place.current.innerHTML = "Tags are less";
     } else {
       // Send otp to the email for confirmation
@@ -143,8 +145,15 @@ export default function SignUp() {
     });
     enteredOtp = Number(enteredOtp);
     if (enteredOtp === otp) {
-      dispatch(createUser(userData));
+      const formData = new FormData();
+      const keys = Object.keys(userData);
+      keys.forEach((key) => {
+        formData.append(key, userData[key]);
+      });
+      const { _id } = dispatch(createUser(formData));
+
       setCookie("username", userData.username);
+      setCookie("uid", _id);
       welcomeMail(userData.email, userData.username);
       window.history.back();
     } else {
@@ -261,7 +270,7 @@ export default function SignUp() {
                     <div className="invalid-feedback">
                       The username must be more than 2 characters long, it
                       Should follow the variable declaration rules of python and
-                      there should be no{" "}
+                      There should be no{" "}
                       <a href="/about#reserved-keywords">reserved keywords</a>{" "}
                       used. Examples of good usernames: (Idris_vohra, idris_987,
                       idris987, idris)
@@ -339,12 +348,10 @@ export default function SignUp() {
                       value={userData.tags}
                       onChange={(tags) => {
                         setUserData({ ...userData, tags: tags });
-                        // validate(event)
                       }}
+                      className="input form-control"
                       onlyUnique={true}
                       maxTags={4}
-                      className="input form-control"
-                      addOnBlur={true}
                       addOnPaste={true}
                     />
                   </div>
@@ -366,7 +373,14 @@ export default function SignUp() {
                       <div className="drop-container">
                         <div className="drop-title">Drop An Image</div>
                         or
-                        <input type="file" />
+                        <input
+                          type="file"
+                          required
+                          multiple={false}
+                          onChange={(e) =>
+                            setUserData({ ...userData, dp: e.target.files[0] })
+                          }
+                        />
                       </div>
                     </div>
                   </div>

@@ -53,6 +53,9 @@ export default function CreateStory() {
                     setPostData({ ...postData, tags: tags });
                   }}
                   className="input"
+                  onlyUnique={true}
+                  maxTags={4}
+                  addOnPaste={true}
                 />
               </div>
               <div className="mb-3">

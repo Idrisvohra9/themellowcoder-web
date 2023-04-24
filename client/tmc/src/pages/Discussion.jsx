@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../Api/actions";
 import Footer from "./components/Footer";
-import { getCookie } from "../tools/cookies";
+import { isLoggedIn } from "../tools/cookies";
 import {PostLink} from "./components/PostLinks";
 // import axios from "axios";
 
@@ -91,7 +91,7 @@ export default function Discussion() {
             <span className="input-group-text search-btn">🔍</span>
           </div>
           <div className="d-flex">
-            {getCookie("username") ? (
+            {isLoggedIn() ? (
               <Link to="/discuss/create" className="addPost">
                 <svg viewBox="0 0 24 24" fill="aliceblue">
                   <g

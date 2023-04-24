@@ -1,19 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useLoader from "../Hooks/useLoader";
 import Footer from "./components/Footer";
 import { Link, useParams } from "react-router-dom";
 import { getCookie } from "../tools/cookies";
-export default function Topic({
-  title,
-  postedBy,
-  postBody,
-  tags,
-  date,
-  likeCount,
-  dislikeCount,
-}) {
+import ReactTimeAgo from "react-time-ago";
+import DOMPurify from "dompurify";
+import axios from "axios";
+
+export default function Topic() {
   const { slug } = useParams();
+  const [postData, setPostData] = useState({});
   useLoader();
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/posts/${slug}`)
+      .then((response) => setPostData(response.data))
+      .catch((error) => console.log(error));
+    console.log(postData);
+    const pureBody = DOMPurify.sanitize(postData.body);
+  }, [slug]);
   function like_dislike(e) {
     let targetGroup = e.target;
     let icon, targetValue, count;
@@ -104,19 +109,20 @@ export default function Topic({
         <div className="col-2 border-end border-light"></div>
         <div className="col-10">
           <div className="p-3">
-            <h1>{title}</h1>
+            <h1>{postData.title}</h1>
+            <hr />
             <div className="d-flex mt-3">
               {/* Side Buttons  */}
               <div className="d-flex flex-column me-4">
                 <div className="group Like" onClick={like_dislike}>
                   <span className="tooltiptext">Like</span>
                   <i className="bi bi-heart-fill"></i>
-                  <div className="count">{likeCount}</div>
+                  <div className="count">{postData.likedBy?.length}</div>
                 </div>
                 <div className="group Dislike" onClick={like_dislike}>
                   <span className="tooltiptext">Disike</span>
                   <i className="bi bi-heartbreak-fill"></i>
-                  <div className="count">{dislikeCount}</div>
+                  <div className="count">{postData.dislikedBy?.length}</div>
                 </div>
                 <div className="group">
                   <span className="tooltiptext">More Options</span>
@@ -152,31 +158,49 @@ export default function Topic({
                   <i className="bi bi-reply"></i>
                 </div>
               </div>
-              <div className="post-body">
-                {postBody}
-                <div className="d-flex justify-content-start mt-2 mb-2 align-self-end">
-                  {tags.map((tag, id) => (
-                    <span className="post-tag" key={id}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="d-flex justify-content-start mb-2 align-self-end">
-                <div className="box">
-                  <div>
-                    Shared By:
-                    <span className="sub-text ms-1">
-                      <Link>{postedBy}</Link>
-                    </span>
+              <div className="d-flex flex-column">
+                <div
+                  className="post-body"
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(postData.body),
+                  }}
+                ></div>
+                <div>
+                  <div className="d-flex justify-content-start mt-4 mb-2 align-self-end">
+                    {postData.tags?.map((tag, id) => (
+                      <span className="post-tag" key={id}>
+                        {tag}
+                      </span>
+                    ))}
                   </div>
-                  <div>
-                    Shared At:<span className="sub-text ms-1">{date}</span>
+                  <div className="d-flex justify-content-end mb-2 ms-auto">
+                    <div className="box">
+                      <div>
+                        Shared By:
+                        <span className="sub-text ms-1">
+                          <Link>{postData.postedBy?.username}</Link>
+                        </span>
+                      </div>
+                      <div>
+                        <span className="sub-text">
+                          <ReactTimeAgo
+                            date={
+                              postData.createdAt
+                                ? postData.createdAt
+                                : new Date().getTime()
+                            }
+                            locale="en-US"
+                            timeStyle="round-minute"
+                          />
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
               {/* end Side Buttons  */}
             </div>
+            <hr />
             <div className="mt-3">
               <h3>Replies</h3>
               <div className="container">
@@ -190,14 +214,3 @@ export default function Topic({
     </div>
   );
 }
-
-Topic.defaultProps = {
-  title: "Placeholder title",
-  postedBy: "Username",
-  date: "date",
-  postBody:
-    "Some quick example text to build on the card title and make up the bulk of the card's content.",
-  tags: ["There", "Will", "Be Tags"],
-  likeCount: 0,
-  dislikeCount: 0,
-};

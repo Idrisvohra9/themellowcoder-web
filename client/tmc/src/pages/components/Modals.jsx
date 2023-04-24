@@ -15,9 +15,10 @@ export default function Login() {
       getData
     );
     // This returns true if the user already exists in db and false else wise.
-    let userExist = existingUser.data;
-    if (userExist) {
+    let { _id, result } = existingUser.data;
+    if (result) {
       setCookie("username", getData.username);
+      setCookie("uid", _id);
       window.location.reload();
     } else {
       document.querySelector(".toast.text-bg-danger").classList.add("show");

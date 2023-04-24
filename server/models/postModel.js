@@ -1,6 +1,15 @@
 import mongoose, { Schema } from "mongoose";
 
 // Schema is a rule for every columns of post that is going to be stored i mongodb as documents
+const replySchema = new mongoose.Schema({
+    body: String,
+    postedBy: {
+        type: Schema.Types.ObjectId,
+        ref: "userModel"
+    },
+}, {
+    timestamps: true,
+})
 const postSchema = new mongoose.Schema({
     title: String,
     body: String,
@@ -10,17 +19,9 @@ const postSchema = new mongoose.Schema({
     },
     tags: [String],
     likedBy: [{ type: Schema.Types.ObjectId, ref: "userModel" }],
-    dislikeby: [{ type: Schema.Types.ObjectId, ref: "userModel" }],
+    dislikedBy: [{ type: Schema.Types.ObjectId, ref: "userModel" }],
     slug: { type: String, unique: true },
-    isReply: {
-        type: Boolean,
-        default: false
-    },
-    replyId: {
-        type: Schema.Types.ObjectId,
-        ref: "PostModel",
-        default: ""
-    },
+    replies: [replySchema],
 }, {
     timestamps: true,
 });

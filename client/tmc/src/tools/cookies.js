@@ -31,13 +31,14 @@ function getCookie(cname) {
     return "";
 }
 
-// module.exports = {
-//     setCookie,
-//     getCookie,
-//     deleteCookie
-// }
-
-// export {getCookie, setCookie, deleteCookie}
+function isLoggedIn() {
+    if(getCookie("username") !== "" && getCookie("uid") !== ""){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 module.exports = {
-    getCookie, setCookie, deleteCookie
+    getCookie, setCookie, deleteCookie, isLoggedIn
 }

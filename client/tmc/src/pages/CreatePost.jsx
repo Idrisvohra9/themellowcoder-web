@@ -36,7 +36,7 @@ export default function CreatePost() {
   const [postData, setPostData] = useState({
     title: "",
     body: "",
-    postedBy: getCookie("username"),
+    postedBy: getCookie("uid"),
     tags: [],
     slug: "",
   });
@@ -108,6 +108,9 @@ export default function CreatePost() {
                   setPostData({ ...postData, tags: tags });
                 }}
                 className="input"
+                onlyUnique={true}
+                maxTags={4}
+                addOnPaste={true}
               />
               <div className="invalid-feedback">
                 There should be atleast 3 tags.

@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 // Schema is a rule for every columns of post that is going to be stored i mongodb as documents
 const userSchema = new mongoose.Schema({
     username: { type: String, unique: true },
-    email: String,
+    email: { type: String, unique: true },
     password: String,
     desc: String,
     joinDate: String,

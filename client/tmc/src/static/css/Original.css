@@ -1404,6 +1404,17 @@ header {
   }
 }
 
+.card-text h1,
+.card-text h2,
+.card-text h3,
+.card-text h4,
+.card-text h5,
+.card-text h6,
+.card-text p {
+  font-size: 20px;
+  margin: 0;
+}
+
 /* Individual Post Tab */
 
 .post-topic {
@@ -1501,6 +1512,7 @@ header {
   white-space: nowrap;
   font-size: 16px;
   border-radius: .2rem;
+  box-shadow: 3px 3px var(--secondaryClr);
 }
 
 .post-topic .group .count {
@@ -1628,9 +1640,21 @@ header {
   background: linear-gradient(90deg, transparent, var(--secondaryClr));
   animation: btn-anim1 2s linear infinite;
 }
-.table th{
+.post-body h1,
+.post-body h2,
+.post-body h3,
+.post-body h4,
+.post-body h5,
+.post-body h6,
+.post-body p {
+  font-size: 23px;
+  margin: 0;
+}
+
+.table th {
   text-transform: capitalize;
 }
+
 /* Loader Animation css */
 #box-outer {
   width: 80px;
@@ -1862,10 +1886,12 @@ a.card-link:hover {
   background-color: #0f0c2963;
   text-transform: capitalize;
   cursor: pointer;
-  border-radius: 15%;
-  padding:.2%;
+  border-radius: 3px;
+  padding: 0.4em 0.5em;
   /* width: 4rem; */
   font-size: 16px;
+  white-space: nowrap;
+  text-decoration: none;
   text-align: center;
   margin-right: 2%;
   transition: all 0.3s;
@@ -1878,7 +1904,13 @@ a.card-link:hover {
 .PostLinks .card {
   width: 100%;
   height: 229px;
+  overflow: hidden;
   transition: all 0.3s;
+}
+
+.PostLinks .card time {
+  font-size: 16px;
+  margin-top: 5px;
 }
 
 .PostLinks .card:hover {
@@ -1889,127 +1921,20 @@ a.card-link:hover {
 .PostLinks .card:active {
   transform: scale(0.95) rotateZ(1.7deg);
 }
-
+.PostLinks .card .card-body{
+  height: 100%;
+}
 .PostLinks .card .card-text {
   white-space: nowrap;
   overflow: hidden;
   width: 90%;
+  height: 20%;
   text-overflow: ellipsis;
 }
 
 #LoginRegist::after {
   content: "*";
   color: red;
-}
-
-.post {
-  background-color: rgba(0, 0, 0, 0.3);
-  border-radius: 5px;
-  overflow: hidden;
-  width: 92%;
-  box-shadow: 0 0 5px rgba(0, 0, 0);
-  margin: 15px 0 10px 0;
-}
-
-
-.post .toast {
-  position: absolute;
-  right: 50px;
-  background-color: rgba(0, 0, 0, 0.72);
-}
-
-.post .toast .toast-header {
-  background-color: rgba(0, 0, 0, 0.72);
-}
-
-.post .toast .toast-header .btn-close {
-  width: 20px;
-  height: 20px;
-  color: white;
-  background-color: white;
-}
-
-.post .toast .btns {
-  width: 100%;
-  border: none;
-  border-radius: 5px;
-}
-
-#username {
-  color: rgba(192, 192, 192, 0.697);
-  padding: 10px 0 5px 10px;
-}
-
-.post .pHead {
-  font-size: 30px;
-  margin: 10px;
-}
-
-.post hr {
-  height: 1px;
-  background-color: rgba(192, 192, 192, 0.697);
-  border: none;
-}
-
-
-.post .pOpts {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: fit-content;
-  height: 20%;
-  margin-left: 10px;
-  align-self: flex-start;
-  z-index: 2;
-  background-color: rgba(0, 0, 0, 0.40);
-  border-radius: 20px;
-}
-
-.pOpts .group {
-  margin-top: -5px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 13px;
-  cursor: pointer;
-  box-sizing: border-box;
-  filter: brightness(80%);
-}
-
-.post .pContent {
-  line-height: 22px;
-  width: 85%;
-  margin: 5px 0 10px 10px;
-  font-size: 20px;
-  align-self: flex-start;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.pIcons {
-  width: 25px;
-  height: 25px;
-  box-sizing: border-box;
-  cursor: pointer;
-  margin: 10px;
-}
-
-.pOpts .group.clicked,
-.pOpts .group.clicked svg,
-.pOpts .group.clicked div {
-  color: var(--secondaryClr);
-  fill: var(--secondaryClr);
-  filter: brightness(100%);
-}
-
-.post #pDateTime {
-  align-self: flex-end;
-  font-size: 14px;
-  justify-self: flex-end;
-  white-space: nowrap;
 }
 
 span.react-tagsinput-tag {
@@ -2052,15 +1977,19 @@ span .react-tagsinput-input {
   position: relative;
 
 }
-.quill.input{
+
+.quill.input {
   padding: 5px !important;
 }
-.quill.input .ql-editor{
+
+.quill.input .ql-editor {
   color: var(--textClr);
 }
-.quill.input .ql-editor:focus{
+
+.quill.input .ql-editor:focus {
   color: var(--primaryClr);
 }
+
 /* Explore tab CSS */
 .explore .input {
   height: 2rem;
@@ -2130,7 +2059,7 @@ span .react-tagsinput-input {
   padding-right: 0.7em;
 }
 
-.share-button .icons  {
+.share-button .icons {
   background: #fff;
   margin-right: 1em;
   height: 2.2em;
@@ -2380,10 +2309,34 @@ span .react-tagsinput-input {
   min-width: 26%;
   cursor: pointer;
   transition: all 0.5s;
-  width: 100%;
+  width: 26%;
   border-radius: 0.25rem;
   overflow: hidden;
   position: relative;
+}
+
+.slider__item .user-info {
+  position: absolute;
+  padding: 0.40rem;
+}
+
+.slider__item .user-info span {
+  margin-left: 0.5rem;
+}
+
+.slider__item .postedAt {
+  position: absolute;
+  padding: 0.40rem;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  color: var(--secondaryClr);
+  font-weight: bold;
+}
+
+.slider__item .likeCount {
+  margin-top: -0.25rem;
+  font-size: .75rem;
 }
 
 .slider__item:hover .slider__info {
@@ -2426,7 +2379,7 @@ span .react-tagsinput-input {
 
 .slider__info {
   position: relative;
-  padding: 4rem 2rem 2rem;
+  padding: 1.2rem;
   opacity: 0;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
 }

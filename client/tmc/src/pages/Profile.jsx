@@ -3,7 +3,7 @@ import useLoader from "../Hooks/useLoader";
 import { getCookie, deleteCookie } from "../tools/cookies";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import grumpy from "./components/Images/kraken.webp"
+import grumpy from "./components/Images/kraken.webp";
 
 export default function Profile() {
   useLoader();
@@ -20,6 +20,7 @@ export default function Profile() {
   }
   function logOut() {
     deleteCookie("username");
+    deleteCookie("uid");
     setUserData({});
     window.location.reload();
   }
@@ -53,14 +54,14 @@ export default function Profile() {
         <div className="cols__container">
           <div className="left__col">
             <div className="img__container">
-              <img src={userData.dp} alt="User DP" />
+              <img src={`http://localhost:5000/users/${userData?.dp}`} alt="User DP" />
               <span></span>
             </div>
             <h2>{username}</h2>
-            <p>{userData.email}</p>
+            {/* <p>{userData.email}</p> */}
             <p>
-              {userData.tags?.map((tag) => (
-                <span>{tag}, </span>
+              {userData.tags?.map((tag, id) => (
+                <span key={id}>{tag}, </span>
               ))}
             </p>
 
