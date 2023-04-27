@@ -13,7 +13,6 @@ import OctoAI from "./pages/OctoAI"
 import Games from "./pages/Games"
 import PsychExperiment from "./pages/PsychExperiments"
 import PlanCode from "./pages/PlanCode"
-import IqTest from "./pages/IqTester"
 import Themes from "./pages/Themes"
 import Img2Webp from "./pages/Img2Webp"
 import SignUp from "./pages/SignUp"
@@ -27,11 +26,20 @@ import AdminPanel, { Users, Posts, StoriesList } from "./pages/AdminPanel";
 import "./static/css/Responsive.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
+// import 'materialize-css/dist/css/materialize.min.css';
+// import 'materialize-css/dist/js/materialize.min.js';
+import "@mdi/font/css/materialdesignicons.min.css";
 import { UserContextProvider } from "./UserContext";
-// console.log(process.env.REACT_APP_GREET);
 import UpdatePost from "./pages/UpdatePost";
 import UpdateProfile from "./pages/UpdateProfile";
 import AboutProfile from "./pages/AboutProfile";
+import IqTest from './pages/components/IQTest';
+import QuizInstructions from './pages/components/quiz/quizinstruction';
+import QuizSummary from './pages/components/quiz/QuizSummary';
+import Easy from './pages/components/quiz/easy';
+import Mode from './pages/components/quiz/mode';
+import Hard from './pages/components/quiz/hard';
+import Medium from './pages/components/quiz/medium';
 require(`./static/css/${getCookie("active-theme")}.css`);
 
 export default function App() {
@@ -71,7 +79,17 @@ export default function App() {
             <Route path="Games" element={<Games />} />
             <Route path="PsychExperiments" element={<PsychExperiment />} />
             <Route path="PlanCode" element={<PlanCode />} />
-            <Route path="IqTest" element={<IqTest />} />
+            <Route path="IqTest" >
+              <Route index element={<IqTest />}/>
+              <Route path="instructions" element={<QuizInstructions />} />
+              <Route path="modes" element={<Mode />} />
+              <Route path="play">
+                <Route path="basic" element={<Easy />} />
+                <Route path="intermediate" element={<Medium />} />
+                <Route path="advanced" element={<Hard />} />
+              </Route>
+              <Route path="summary" element={<QuizSummary />} />
+            </Route>
             <Route path="Themes" element={<Themes />} />
             <Route path="admin">
               <Route index element={<Admin />} />

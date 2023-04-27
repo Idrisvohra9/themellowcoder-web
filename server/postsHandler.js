@@ -6,7 +6,7 @@ const router = express.Router();
 //$ Controllers:
 const getAllPosts = async (req, res) => {
     try {
-        const posts = await postModel.find({}).sort({ createdAt: -1 }).limit(20).populate("postedBy", ["username"]);
+        const posts = await postModel.find({}).sort({ createdAt: -1 }).limit(20).populate("postedBy", ["username", "dp"]);
 
         // A message to the user that everthing went right and return the json containing all the posts data
 
@@ -20,7 +20,7 @@ const getAllPosts = async (req, res) => {
 const getPost = async (req, res) => {
     const { slug } = req.params;
     try {
-        const post = await postModel.findOne({ slug: slug }).populate("postedBy", "username");
+        const post = await postModel.findOne({ slug: slug }).populate("postedBy", ["username", "dp"]);
 
         res.status(200).json(post);
     } catch (error) {
@@ -47,12 +47,82 @@ const updatePost = async (req, res) => {
 const deletePost = async (req, res) => {
 
 }
-// const addLikes = async (req, res) => {
+const addLike = async (req, res) => {
+    const { postId, userId } = req.body;
+    const post = await postModel.findById(postId);
+    let response = "post liked";
+    if (!post) {
+        throw new Error('Post not found');
+    }
+    async function like() {
+        post.likedBy.push(userId);
+        await post.updateOne({ likedBy: post.likedBy });
+        res.status(200).json(response);
+    }
+    // If the user has already liked the post, remove it's id from the likedBy array.
+    if (post.likedBy.includes(userId)) {
+        let index = post.likedBy.indexOf(userId);
 
-// }
-// const addDislike = async (req, res) => {
+        // remove the element at the found index
+        if (index > -1) {
+            post.likedBy.splice(index, 1);
+        }
+        await post.updateOne({ likedBy: post.likedBy });
+    }
+    // If the user has already disliked the post, remove it's id from the dislikedBy array and add it to the likedBy array.
 
-// }
+    if (post.dislikedBy.includes(userId)) {
+        let index = post.dislikedBy.indexOf(userId);
+
+        // remove the element at the found index
+        if (index > -1) {
+            post.dislikedBy.splice(index, 1);
+        }
+        await post.updateOne({ dislikedBy: post.dislikedBy });
+        like();
+    }
+    else {
+        like();
+    }
+}
+const addDislike = async (req, res) => {
+    const { postId, userId } = req.body;
+    const post = await postModel.findById(postId);
+    let response = "post disliked";
+    if (!post) {
+        throw new Error('Post not found');
+    }
+    async function dislike() {
+        post.dislikedBy.push(userId);
+        await post.updateOne({ dislikedBy: post.dislikedBy });
+        res.status(200).json(response);
+    }
+    // If the user has already disliked the post, remove it's id from the dislikedBy array.
+    if (post.dislikedBy.includes(userId)) {
+        let index = post.dislikedBy.indexOf(userId);
+
+        // remove the element at the found index
+        if (index > -1) {
+            post.dislikedBy.splice(index, 1);
+        }
+        await post.updateOne({ dislikedBy: post.dislikedBy });
+    }
+    // If the user has already liked the post, remove it's id from the dislikedBy array and add it to the likedBy array.
+
+    if (post.likedBy.includes(userId)) {
+        let index = post.likedBy.indexOf(userId);
+
+        // remove the element at the found index
+        if (index > -1) {
+            post.likedBy.splice(index, 1);
+        }
+        await post.updateOne({ likedBy: post.likedBy });
+        dislike();
+    }
+    else {
+        dislike();
+    }
+}
 // const addReply = async (req,res) => {
 
 // }
@@ -60,9 +130,9 @@ const deletePost = async (req, res) => {
 router.get('/', getAllPosts);// Fetch all
 router.get('/:slug', getPost);// Get single
 router.post("/", createPost);// Create new
-router.patch('/:slug', updatePost);// Update
-// router.patch('/:slug', updatePost);// Update
-// router.patch('/:slug', updatePost);// Update
+router.patch('/update', updatePost);// Update
+router.post('/like', addLike);// Update
+router.post('/dislike', addDislike);// Update
 router.delete('/:slug', deletePost);// Delete
 
 export default router;

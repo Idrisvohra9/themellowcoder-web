@@ -9,10 +9,8 @@ import { Link } from "react-router-dom";
 import Footer from "./components/Footer";
 export default function SignUp() {
   useLoader();
-  const username = useRef();
   const pass = useRef();
   const re_pass = useRef();
-  const email = useRef();
   const desc = useRef();
   const place = useRef();
   const dispatch = useDispatch();
@@ -263,7 +261,6 @@ export default function SignUp() {
                       name="username"
                       maxLength={14}
                       required
-                      ref={username}
                       onChange={validate}
                     />
                     <div className="valid-feedback">It suits you!</div>
@@ -284,7 +281,6 @@ export default function SignUp() {
                       placeholder="iamcool@gmail.com"
                       aria-label="email"
                       name="email"
-                      ref={email}
                       required
                       onChange={validate}
                     />
@@ -380,6 +376,7 @@ export default function SignUp() {
                           onChange={(e) =>
                             setUserData({ ...userData, dp: e.target.files[0] })
                           }
+                          accept="image/png, image/jpeg, image/webp"
                         />
                       </div>
                     </div>

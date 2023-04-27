@@ -21,6 +21,8 @@ const userReducer = (users = [], action) => {
         case "DELETE_SPECIFIC":
             return action.payload;
 
+        case "UPDATE":
+            return action.payload;
         default:
             return users;
 
@@ -39,6 +41,8 @@ const postReducer = (posts = [], action) => {
             return action.payload;
 
         case "DELETE_SPECIFIC":
+            return action.payload;
+        case "UPDATE":
             return action.payload;
 
         default:

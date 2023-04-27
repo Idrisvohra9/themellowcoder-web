@@ -5,14 +5,20 @@ const storySchema = new mongoose.Schema({
     title: String,
     body: String,
     postedBy: { type: Schema.Types.ObjectId, ref: "userModel" },
-    tags: [String],
+    type: String,
     image: String,
-    likeCount: {
-        type: Number,
-        default: 0,
+    likedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "userModel",
     },
-}, {
-    timestamps: true,
+    createdAt: {
+        type: Date,
+        default: Date.now()
+    },
+    deleteAt: {
+        type: Date,
+        default: () => Date.now() + (2 * 24 * 60 * 60 * 1000) // 2 days in milliseconds
+    }
 });
 
 const storyModel = mongoose.model("StoryModel", storySchema);

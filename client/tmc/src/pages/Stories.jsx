@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import useLoader from "../Hooks/useLoader";
 import Footer from "./components/Footer";
 import Story from "./components/Story";
+import { getCookie } from "../tools/cookies";
 export default function ShortBlogs() {
   useLoader();
   return (
@@ -108,12 +109,39 @@ export default function ShortBlogs() {
             </g>
           </svg>
         </div>
+        <div
+          className={`toast align-items-center bg-primary border-0 w-100 ${
+            getCookie("username") === "" ? "show" : ""
+          }`}
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+        >
+          <div className="d-flex">
+            <div className="toast-body">
+              <h6>
+                TMC Stories stories are short, vertical photos with brief
+                immersive content and links, created under a predifined
+                category, they disappear after 48 hours. They are typically
+                shared by users to give a glimpse into their daily lives or to
+                share specific moments and experiences with everyone around the
+                world.
+              </h6>
+            </div>
+            <button
+              type="button"
+              className="btn-close btn-close-white me-2 m-auto ms-2"
+              data-bs-dismiss="toast"
+              aria-label="Close"
+            ></button>
+          </div>
+        </div>
         <hr />
+        <h2>Personal progress </h2>
         <div className="slider">
           <div className="slider__content">
-            <Story/>
-            <Story/>
-
+            <Story />
+            <Story />
           </div>
           <div className="slider__nav">
             <button className="slider__nav__button">Previous</button>

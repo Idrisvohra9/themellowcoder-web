@@ -13,10 +13,10 @@ export function PostLink({ title, body, postedBy, tags, createdAt, slug }) {
           </Link>
           <Link
             to={`/profile/${postedBy.username}`}
-            className="text-decoration-none"
+            className="text-decoration-none d-flex align-items-center mb-2"
           >
-            {/* <img src={} alt="" className="dp"/> */}
-            <h6 className="card-subtitle mb-2 ">{postedBy.username}</h6>
+            <img src={`http://localhost:5000/users/${postedBy?.dp}`} alt="" className="dp me-1"/>
+            <h6 className="card-subtitle">{postedBy.username}</h6>
           </Link>
           <div className="d-flex justify-content-start mb-2">
             {tags.map((tag, id) => (
@@ -44,20 +44,3 @@ export function PostLink({ title, body, postedBy, tags, createdAt, slug }) {
   );
 }
 
-// PostLink.defaultProps = {
-//   title: "Placeholder title",
-//   body: "Some quick example text to build on the card title and make up the bulk of the card's content.",
-//   postedBy: "Username",
-//   tags:[],
-//   createdAt: new Date(),
-//   slug: "discuss/topic",
-// };
-
-// PostLink.
-// export function PostLinks({ filteredList }) {
-//   return (
-//     <div className="PostLinks">
-//       <PostLink />
-//     </div>
-//   );
-// }

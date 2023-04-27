@@ -1,0 +1,202 @@
+[
+    {
+        "question": "What is a syntax error in programming?",
+        "optionA": "A type of loop",
+        "optionB": "A type of data structure",
+        "optionC": "A way to write comments",
+        "optionD": "An error in the code that violates the language's rules",
+        "answer": "An error in the code that violates the language's rules"
+    },
+    {
+        "question": "What is an object in programming?",
+        "optionA": "A type of loop",
+        "optionB": "A type of data structure",
+        "optionC": "A way to write comments",
+        "optionD": "A collection of data and methods",
+        "answer": "A collection of data and methods"
+    },
+    {
+        "question": "What is a class in programming?",
+        "optionA": "A blueprint for creating objects",
+        "optionB": "A type of data structure",
+        "optionC": "A way to format text",
+        "optionD": "A type of loop",
+        "answer": "A blueprint for creating objects"
+    },
+    {
+        "question": "What is an algorithm in programming?",
+        "optionA": "A way to write comments",
+        "optionB": "A type of data structure",
+        "optionC": "A sequence of steps to solve a problem or perform a task",
+        "optionD": "A type of loop",
+        "answer": "A sequence of steps to solve a problem or perform a task"
+    },
+    {
+        "question": "What is debugging in programming?",
+        "optionA": "A type of data structure",
+        "optionB": "A type of loop",
+        "optionC": "The process of finding and fixing errors in code",
+        "optionD": "A way to write comments",
+        "answer": "The process of finding and fixing errors in code"
+    },
+    {
+        "question": "What is version control in programming?",
+        "optionA": "A type of loop",
+        "optionB": "A way to write comments",
+        "optionC": "The management of changes to source code over time",
+        "optionD": "A type of data structure",
+        "answer": "The management of changes to source code over time"
+    },
+    {
+        "question": "What is a class in object-oriented programming?",
+        "optionA": "A type of loop",
+        "optionB": "A collection of data and associated behavior",
+        "optionC": "A way to format text",
+        "optionD": "A type of data structure",
+        "answer": "A collection of data and associated behavior"
+    },
+    {
+        "question": "What is a method in programming?",
+        "optionA": "A type of loop",
+        "optionB": "A way to write comments",
+        "optionC": "A named sequence of code that can be reused",
+        "optionD": "A type of data structure",
+        "answer": "A named sequence of code that can be reused"
+    },
+    {
+        "question": "What is recursion in programming?",
+        "optionA": "A type of loop",
+        "optionB": "A way to write comments",
+        "optionD": "A technique where a function calls itself",
+        "optionC": "A type of data structure",
+        "answer": "A technique where a function calls itself"
+    },
+    {
+        "question": "What is polymorphism in object-oriented programming?",
+        "optionA": "A type of loop",
+        "optionB": "A way to format text",
+        "optionC": "The ability of an object to have multiple types",
+        "optionD": "A type of decision-making statement",
+        "answer": "The ability of an object to have multiple types"
+    },
+    {
+        "question": "What is version control in software development?",
+        "optionA": "A type of data structure",
+        "optionC": "A way to format text",
+        "optionB": "A system for tracking changes to code over time",
+        "optionD": "A type of loop",
+        "answer": "A system for tracking changes to code over time"
+    },
+    {
+        "question": "What is a pointer in programming?",
+        "optionA": "A type of loop",
+        "optionB": "A type of data structure",
+        "optionC": "A way to write comments",
+        "optionD": "A memory address that points to the location of a value",
+        "answer": "A memory address that points to the location of a value"
+    },
+    {
+        "question": "What is the purpose of a constructor in object-oriented programming?",
+        "optionA": "To create a new instance of a class",
+        "optionB": "To define a method that returns a value",
+        "optionC": "To handle exceptions",
+        "optionD": "To perform arithmetic operations",
+        "answer": "To create a new instance of a class"
+    },
+    {
+        "question": "What is the purpose of the 'this' keyword in object-oriented programming?",
+        "optionA": "To specify a variable as a constant",
+        "optionB": "To refer to the current instance of an object",
+        "optionC": "To define a method that returns a value",
+        "optionD": "To perform arithmetic operations",
+        "answer": "To refer to the current instance of an object"
+    },
+    {
+        "question": "What is a cache in computer science?",
+        "optionA": "A temp. storage area for accessed data to improve performance",
+        "optionB": "A type of computer memory",
+        "optionC": "A buffer for storing input/output data",
+        "optionD": "A data structure used for organizing data",
+        "answer": "A temporary storage area for frequently accessed data to improve performance"
+    },
+    {
+        "question": "What is a query language?",
+        "optionA": "A language used for querying databases",
+        "optionB": "A language used for querying the file system",
+        "optionC": "A language used for querying web pages",
+        "optionD": "A language used for querying APIs",
+        "answer": "A language used for querying databases"
+    },
+    {
+        "question": "What is the purpose of the 'break' statement in programming?",
+        "optionA": "To terminate a loop or switch statement",
+        "optionB": "To continue to the next iteration of a loop",
+        "optionC": "To define a method that returns a value",
+        "optionD": "To perform arithmetic operations",
+        "answer": "To terminate a loop or switch statement"
+    },
+    {
+        "question": "What is the purpose of a foreign key in a relational database?",
+        "optionA": "To establish relationships between tables",
+        "optionB": "To uniquely identify a row in a table",
+        "optionC": "To define the data types of columns in a table",
+        "optionD": "To specify constraints on data in a table",
+        "answer": "To establish relationships between tables"
+    },
+    {
+        "question": "What is the purpose of an index in a database?",
+        "optionA": "To provide additional security for data in a database",
+        "optionB": "To speed up data retrieval by allowing faster lookups",
+        "optionC": "To define the schema of a database",
+        "optionD": "To enforce data integrity constraints in a database",
+        "answer": "To speed up data retrieval by allowing faster lookups"
+    },
+    {
+        "question": "What is the purpose of a try-catch block in programming?",
+        "optionA": "To handle runtime errors and exceptions",
+        "optionB": "To define the structure of a class",
+        "optionC": "To establish a connection to a database",
+        "optionD": "To define the interface of a program",
+        "answer": "To handle runtime errors and exceptions"
+    },
+    {
+        "question": "What is the purpose of dynamic typing in programming languages?",
+        "optionA": "To create user interfaces",
+        "optionB": "To optimize performance",
+        "optionC": "To enforce strong type checking",
+        "optionD": "To allow variables to change data types during runtime",
+        "answer": "To allow variables to change data types during runtime"
+    },
+    {
+        "question": "What is the purpose of data validation in programming?",
+        "optionA": "To store and retrieve data",
+        "optionB": "To create graphical user interfaces",
+        "optionC": "To ensure that input data meets specified criteria",
+        "optionD": "To optimize performance",
+        "answer": "To ensure that input data meets specified criteria"
+    },
+    {
+        "question": "What is the purpose of abstraction in object-oriented programming?",
+        "optionA": "To perform mathematical calculations",
+        "optionB": "To create graphical user interfaces",
+        "optionC": "To hide implementation details and expose a well-defined interface",
+        "optionD": "To store and retrieve data",
+        "answer": "To hide implementation details and expose a well-defined interface"
+    },
+    {
+        "question": "Purpose of software testing?",
+        "optionA": "Verify, validate software requirements",
+        "optionB": "Create GUIs",
+        "optionC": "Perform math calculations",
+        "optionD": "Store, retrieve data",
+        "answer": "Verify, validate software requirements"
+    },
+    {
+        "question": "Purpose of software deployment?",
+        "optionA": "Install, configure, release software",
+        "optionB": "Create GUIs",
+        "optionC": "Perform math calculations",
+        "optionD": "Store, retrieve data",
+        "answer": "Install, configure, release software"
+    }
+]

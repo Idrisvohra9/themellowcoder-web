@@ -566,3 +566,34 @@
         font-size: 20px;
     }
 }
+
+/* Media queries for different screen sizes */
+@media (max-width: 767px) {
+
+    /* Styles for mobile screens */
+    .mode-content {
+        padding: 10px;
+    }
+
+    .mode-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+}
+
+@media (min-width: 768px) {
+
+    /* Styles for tablet and desktop screens */
+    .mode-content {
+        padding: 20px;
+    }
+
+    .mode-buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+}

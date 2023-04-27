@@ -1,32 +1,58 @@
 import React, { useState } from "react";
 import { getCookie } from "../tools/cookies";
-import TagsInput from "react-tagsinput";
+// import TagsInput from "react-tagsinput";
 import useLoader from "../Hooks/useLoader";
 import ScatterBlobs from "./components/Scattered-blobs";
+import hljs from "highlight.js";
+import "highlight.js/styles/base16/onedark.css";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { useDispatch } from "react-redux";
+import { createStory } from "../Api/actions";
 import NoPage from "./NoPage";
+
+hljs.configure({
+  languages: ["javascript", "css", "scss", "python", "html", "php"],
+});
+const highlightCode = (input) => {
+  return hljs.highlightAuto(input).value;
+};
+const modules = {
+  syntax: {
+    highlight: (text) => highlightCode(text),
+  }, // Include syntax module
+  toolbar: [
+    [{ header: [2, false] }],
+    ["bold", "italic", "underline", "strike"],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["link"],
+    ["clean"],
+  ], // Include button in toolbar
+};
 
 export default function CreateStory() {
   useLoader();
-  const [postData, setPostData] = useState({
+  const dispatch = useDispatch()
+  const [storyData, setStoryData] = useState({
     title: "",
     body: "",
-    postedBy: getCookie("username"),
-    tags: [],
-    slug: "",
+    image: "",
+    postedBy: getCookie("uid"),
+    type: "",
   });
   function post(e) {
     e.preventDefault();
-    console.log(postData);
+    console.log(storyData);
   }
   if (getCookie("username") === "") {
     return <NoPage />;
   } else {
     return (
       <div>
-        <div className="mainContent bg-dark text-light p-4 createPost">
+        <div className="mainContent bg-dark text-light p-4 createPost h-100">
           <ScatterBlobs />
           <div className="container rounded-2 border border-2 border-light border-opacity-25 p-3">
-            <form onSubmit={post}>
+            <form onSubmit={post} className="d-flex flex-column justify-content-center align-items-center">
               <h2 className="mb-3">Post a new Story!</h2>
               <div className="mb-3">
                 <label htmlFor="post-title" className="form-label">
@@ -39,41 +65,51 @@ export default function CreateStory() {
                   placeholder="Discussion Title"
                   name="title"
                   maxLength={36}
-                  value={postData.title}
+                  value={storyData.title}
                   onChange={(e) =>
-                    setPostData({ ...postData, title: e.target.value })
+                    setStoryData({ ...storyData, title: e.target.value })
                   }
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="tags">Add Tags</label>
-                <TagsInput
-                  value={postData.tags}
-                  onChange={(tags) => {
-                    setPostData({ ...postData, tags: tags });
-                  }}
-                  className="input"
-                  onlyUnique={true}
-                  maxTags={4}
-                  addOnPaste={true}
-                />
+                <div className="file-input">
+                  <div className="file-input-title">Cover Image</div>
+                  <div className="file-input-paragraph">
+                    Recomended orientation portrait
+                  </div>
+                  <div className="drop-container">
+                    <div className="drop-title">Drop An Image</div>
+                    or
+                    <input
+                      type="file"
+                      required
+                      multiple={false}
+                      onChange={(e) =>
+                        setStoryData({ ...storyData, image: e.target.files[0] })
+                      }
+                      accept="image/png, image/jpeg, image/webp"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="tags">Select A type</label>
+                
               </div>
               <div className="mb-3">
                 <label htmlFor="post-body" className="form-label">
                   Body{" "}
                 </label>
-                <textarea
-                  className="form-control input"
-                  id="post-body"
-                  rows="3"
-                  placeholder="You can use markdown typing and also html elements for creating the post body."
-                  value={postData.body}
-                  onChange={(e) =>
-                    setPostData({ ...postData, body: e.target.value })
+
+                <ReactQuill
+                  className="bg-light input"
+                  onChange={(newValue) =>
+                    setStoryData({ ...storyData, body: newValue })
                   }
-                ></textarea>
+                  modules={modules}
+                />
               </div>
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="btn btn-primary ps-5 pe-5">
                 Post
               </button>
             </form>

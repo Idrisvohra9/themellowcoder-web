@@ -21,7 +21,7 @@ export default function Login() {
       setCookie("uid", _id);
       window.location.reload();
     } else {
-      document.querySelector(".toast.text-bg-danger").classList.add("show");
+      document.querySelector(".toast.login-warning").classList.add("show");
     }
   }
   function hide_show() {
@@ -36,7 +36,7 @@ export default function Login() {
   return (
     <>
       <div
-        className="toast align-items-center text-bg-danger border-0"
+        className="toast custom login-warning align-items-center text-bg-danger border-0"
         role="alert"
         aria-live="assertive"
         aria-atomic="true"

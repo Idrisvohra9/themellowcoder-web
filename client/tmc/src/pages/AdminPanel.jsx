@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import useLoader from "../Hooks/useLoader";
 import { getCookie } from "../tools/cookies";
 import { NavLink, useParams, Outlet } from "react-router-dom";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { getPosts, getUsers, getStories } from "../Api/actions";
+
+// import axios from "axios";
 
 export default function AdminPanel() {
   useLoader();
@@ -49,14 +52,6 @@ export default function AdminPanel() {
 }
 
 export function Users() {
-  const [users, setUsers] = useState([]);
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/users/")
-      .then((response) => setUsers(response.data))
-      .catch((error) => console.log(error));
-    console.log(users?._id);
-  }, []);
   return (
     <>
       <h3>Users</h3>
@@ -78,25 +73,22 @@ export function Users() {
             <th>Friends-Count</th>
             <th>Actions</th>
           </tr>
-          {users?.map((user) => {
+          {/* {users?.map((user) => {
             <tr>
               <td>{user?._id}</td>
             </tr>;
-          })}
+          })} */}
         </tbody>
       </table>
     </>
   );
 }
 export function Posts() {
-  const [posts, setPosts] = useState([]);
+  const dispatch = useDispatch({ type: "FETCH_ALL" });
+  const posts = useSelector((store) => store.postReducer);
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/posts/")
-      .then((response) => setPosts(response.data))
-      .catch((error) => console.log(error));
-    console.log(posts?._id);
-  }, []);
+    dispatch(getPosts()); // We go to the post reducer
+  }, [dispatch]);
   return (
     <>
       <h3>Posts</h3>
@@ -105,7 +97,7 @@ export function Posts() {
           <tr>
             <th>_id</th>
             <th>title</th>
-            <th>body</th>
+            <th style={{width:"100px"}}>body</th>
             <th>postedBy</th>
             <th>tags</th>
             <th>likeCounts</th>
@@ -116,20 +108,22 @@ export function Posts() {
             <th>replyId</th>
             <th>Actions</th>
           </tr>
+          {posts.map((post, id) => {
+            return (
+              <tr key={id}>
+                <td>{post._id}</td>
+                <td>{post.title}</td>
+                <td>{post.body}</td>
+                <td>{post.postedBy.tags}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </>
   );
 }
 export function StoriesList() {
-  const [stories, setStories] = useState([]);
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/stories/")
-      .then((response) => setStories(response.data))
-      .catch((error) => console.log(error));
-    console.log(stories?._id);
-  }, []);
   return (
     <>
       <h3>Stories</h3>

@@ -1,18 +1,15 @@
-import React, { useRef, useEffect} from "react";
+import React, { useRef, useEffect } from "react";
 import useLoader from "../Hooks/useLoader";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../Api/actions";
 import Footer from "./components/Footer";
 import { isLoggedIn } from "../tools/cookies";
-import {PostLink} from "./components/PostLinks";
-// import axios from "axios";
-
+import { PostLink } from "./components/PostLinks";
+import Head from "./components/Head";
 
 export default function Discussion() {
   useLoader();
-  // Whole global redux store:
-  // const [post, getPosts] = useState([]);
   const dispatch = useDispatch({ type: "FETCH_ALL" });
   const posts = useSelector((store) => store.postReducer);
   useEffect(() => {
@@ -33,6 +30,7 @@ export default function Discussion() {
 
   return (
     <div className="mainContent discussion">
+      <Head title="Discussion" />
       <div className="mt-2 ms-3 me-3">
         <div className="d-flex flex-row mb-3">
           <h1>
@@ -40,7 +38,7 @@ export default function Discussion() {
           </h1>
         </div>
         <div className="d-flex align-items-center">
-          <div className="me-2">Filter By</div>
+          <div className="me-2">Sort By</div>
           <div
             className="btn-group filterBy"
             role="group"
@@ -85,7 +83,7 @@ export default function Discussion() {
           <div className="input-group w-50 flex-nowrap">
             <input
               type="text"
-              placeholder="Search for a topic"
+              placeholder="Filter by topic title or tags"
               className="input"
             />
             <span className="input-group-text search-btn">🔍</span>

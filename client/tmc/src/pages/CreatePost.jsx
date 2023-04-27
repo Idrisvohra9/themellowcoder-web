@@ -22,7 +22,7 @@ const modules = {
     highlight: (text) => highlightCode(text),
   }, // Include syntax module
   toolbar: [
-    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    [{ header: [ 2, 3, 4, 5, 6, false] }],
     ["bold", "italic", "underline", "strike"],
     [{ list: "ordered" }, { list: "bullet" }],
     ["code-block"],
@@ -64,9 +64,12 @@ export default function CreatePost() {
     if (postData.body.length < 15) {
       invalidFeedbacks[2].style.display = "block";
     } else {
-      console.log("Posting successful");
-      console.log(dispatch(createPost(postData)));
-      window.history.back();
+      if (postData.slug.length > 3) {
+        dispatch(createPost(postData));
+        window.history.back();
+      }
+      document.querySelector(".toast.post-warning").classList.add("show");
+
     }
   }
   if (getCookie("username") === "") {
@@ -75,6 +78,22 @@ export default function CreatePost() {
     return (
       <div className="mainContent bg-dark text-light p-4 createPost">
         <ScatterBlobs />
+        <div
+          className="toast post-warning custom align-items-center text-bg-danger border-0"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+        >
+          <div className="d-flex">
+            <div className="toast-body">Invalid Post Request!</div>
+            <button
+              type="button"
+              className="btn-close btn-close-white me-2 m-auto"
+              data-bs-dismiss="toast"
+              aria-label="Close"
+            ></button>
+          </div>
+        </div>
         <div className="container rounded-2 border border-2 border-light border-opacity-25 p-3">
           <form onSubmit={post}>
             <h2 className="mb-3">Start a new topic to discuss!</h2>
@@ -121,7 +140,7 @@ export default function CreatePost() {
                 Body{" "}
               </label>
               <ReactQuill
-                className="input"
+                className="bg-light input"
                 onChange={(newValue) =>
                   setPostData({ ...postData, body: newValue })
                 }
@@ -131,7 +150,7 @@ export default function CreatePost() {
             </div>
             <button
               type="submit"
-              className="btn btn-primary ps-5 pe-5 col-lg-2"
+              className="btn btn-primary ps-5 pe-5"
             >
               Post
             </button>

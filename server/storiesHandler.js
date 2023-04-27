@@ -7,7 +7,7 @@ const router = express.Router();
 // This takes time hence we make it asynchronous function
 export const getAllStories = async (req, res) => {
     try {
-        const stories = await storyModel.find();
+        const stories = await storyModel.find({}).sort({ createdAt: -1 }).limit(20).populate("postedBy", ["username", "dp"]);
 
         // A message to the user that everthing went right and return the json containing all the stories data
 
@@ -18,10 +18,9 @@ export const getAllStories = async (req, res) => {
 }
 
 export const createStory = async (req, res) => {
-    const body = req.body;
-    const newStory = new storyModel();
+    const story = req.body;
     try {
-        await newStory.save();
+        const newStory = await storyModel.create(story);
         // Successful creation:
         res.status(201).json(newStory);
     } catch (error) {
