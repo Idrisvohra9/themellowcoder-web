@@ -18,20 +18,6 @@ export default function Topic() {
       .get(`http://localhost:5000/posts/${slug}`)
       .then((response) => setPostData(response.data))
       .catch((error) => console.log(error));
-    // console.log(postData?._id);
-    // Logic for saving the like and dislike state:
-
-    const likeIcon = document.querySelector(".bi-heart-fill");
-    const dislikeIcon = document.querySelector(".bi-heartbreak-fill");
-    console.log(likeIcon);
-    console.log(dislikeIcon);
-    console.log(postData?.likedBy?.includes(getCookie("uid")));
-    if (postData.likedBy?.includes(getCookie("uid"))) {
-      likeIcon?.classList.add("active");
-    }
-    if (postData.dislikedBy?.includes(getCookie("uid"))) {
-      dislikeIcon?.classList.add("active");
-    }
   }, [slug]);
   async function deletePost() {}
   async function sendLike() {
@@ -49,17 +35,18 @@ export default function Topic() {
   }
   function like_dislike(e) {
     let targetGroup = e.target;
-    let icon;
+    let icon, count, targetValue;
     let oppoElement;
     // If the target element is the children of group then set the target element to group
     if (getCookie("username") === "") {
       document.getElementById("trigger-oopsie").click();
     } else {
-      if (targetGroup.className !== "group") {
+      if (!targetGroup.className.includes("group")) {
         targetGroup = targetGroup.parentNode;
       }
       icon = targetGroup.children[1];
-
+      targetValue = targetGroup.children[2];
+      count = Number(targetValue.innerHTML);
       icon.classList.toggle("active");
       // If the target element is like then:
       if (targetGroup.className.includes("Like")) {
@@ -72,12 +59,27 @@ export default function Topic() {
         sendLike();
         // What to do if dislike is active:
         if (isDislikeActive) {
+          // Get the current dislike value:
+          let oppoTargetValue = oppoElement.parentNode.children[2];
+          // And decrement it's count
+          count = Number(oppoTargetValue.innerHTML);
+          count--;
           // And remove the active className from it's icon:
           oppoElement.classList.remove("active");
+          oppoTargetValue.innerHTML = count;
+          count = Number(targetValue.innerHTML);
+        }
+        // If it is not clicked increase the count by one
+        if (icon.className.includes("active")) {
+          count++;
+          // See if it already has been clicked before
+        } else {
+          // and reduce it by one
+          count--;
         }
         // Else if the target element is dislike
       } else {
-        // Logic for checking if the dislike button has already been clicked before:
+        // Logic for checking if the like button has already been clicked before:
         let isLikeActive = false;
         oppoElement = document.querySelector(".bi-heart-fill.active");
         if (targetGroup.parentNode.contains(oppoElement)) {
@@ -86,10 +88,27 @@ export default function Topic() {
         sendDislike();
         // What to do if like is active:
         if (isLikeActive) {
+          // Get the current dislike value:
+          let oppoTargetValue = oppoElement.parentNode.children[2];
+          // And decrement it's count
+          count = Number(oppoTargetValue.innerHTML);
+          count--;
+
           // And remove the active className from it's icon:
           oppoElement.classList.remove("active");
+          oppoTargetValue.innerHTML = count;
+          count = Number(targetValue.innerHTML);
+        }
+        // If it is not clicked increase the count by one
+        if (icon.className.includes("active")) {
+          count++;
+          // See if it already has been clicked before
+        } else {
+          // and reduce it by one
+          count--;
         }
       }
+      targetValue.innerHTML = count;
     }
   }
   function reply() {
@@ -135,12 +154,24 @@ export default function Topic() {
                     // }}
                   >
                     <span className="tooltiptext">Like</span>
-                    <i className="bi bi-heart-fill"></i>
+                    <i
+                      className={`bi bi-heart-fill ${
+                        postData.likedBy?.includes(getCookie("uid"))
+                          ? "active"
+                          : ""
+                      }`}
+                    ></i>
                     <div className="count">{postData.likedBy?.length}</div>
                   </div>
                   <div className="group Dislike" onClick={like_dislike}>
                     <span className="tooltiptext">Disike</span>
-                    <i className="bi bi-heartbreak-fill"></i>
+                    <i
+                      className={`bi bi-heartbreak-fill ${
+                        postData.dislikedBy?.includes(getCookie("uid"))
+                          ? "active"
+                          : ""
+                      }`}
+                    ></i>
                     <div className="count">{postData.dislikedBy?.length}</div>
                   </div>
                   <div className="group">
@@ -162,9 +193,12 @@ export default function Topic() {
                       {getCookie("username") === postData.postedBy?.username ? (
                         <>
                           <li>
-                            <a className="dropdown-item" href="#">
-                              Edit
-                            </a>
+                            <Link
+                              className="dropdown-item"
+                              to={`/discuss/topic/update/${postData.slug}`}
+                            >
+                              Update
+                            </Link>
                           </li>
                           <li>
                             <a className="dropdown-item" href="#">

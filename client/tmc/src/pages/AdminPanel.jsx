@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import useLoader from "../Hooks/useLoader";
 import { getCookie } from "../tools/cookies";
-import { NavLink, useParams, Outlet } from "react-router-dom";
+import { NavLink, useParams, Outlet, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts, getUsers, getStories } from "../Api/actions";
 
@@ -12,7 +12,7 @@ export default function AdminPanel() {
   const { isAdmin } = useParams();
   if (getCookie("isAdmin") === isAdmin) {
     return (
-      <div className="minContent gradient-bg p-2">
+      <div className="minContent gradient-bg p-2 h-100">
         <h2>Welcome to admin Panel {getCookie("isAdmin")}!</h2>
         <p>You have all the access to all the data.</p>
         <div className="container">
@@ -38,7 +38,9 @@ export default function AdminPanel() {
               </li>
             </ul>
           </div>
-          <Outlet />
+          <div className="admin container-fluid">
+            <Outlet />
+          </div>
         </div>
       </div>
     );
@@ -52,6 +54,11 @@ export default function AdminPanel() {
 }
 
 export function Users() {
+  const dispatch = useDispatch({ type: "FETCH_ALL" });
+  const users = useSelector((store) => store.userReducer);
+  useEffect(() => {
+    dispatch(getUsers()); // We go to the post reducer
+  }, [dispatch]);
   return (
     <>
       <h3>Users</h3>
@@ -73,11 +80,32 @@ export function Users() {
             <th>Friends-Count</th>
             <th>Actions</th>
           </tr>
-          {/* {users?.map((user) => {
-            <tr>
-              <td>{user?._id}</td>
-            </tr>;
-          })} */}
+          {users?.map((user) => {
+            return (
+              <tr className="clipped-row">
+                <td>{user._id}</td>
+                <td>{user.username}</td>
+                <td>{user.email}</td>
+                <td>{user.password}</td>
+                <td className="clipped-row">{user.desc}</td>
+                <td>{user.joinDate}</td>
+                <td>
+                  {user.tags?.map((tag, id) => (
+                    <span key={id}>{tag}, </span>
+                  ))}
+                </td>
+                <td>
+                  <img
+                    src={`http://localhost:5000/users/${user.dp}`}
+                    alt=""
+                    className="dp"
+                  />
+                </td>
+                <td>{user.tmcPoints}</td>
+                <td>{user.tmcPoints}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </>
@@ -97,24 +125,34 @@ export function Posts() {
           <tr>
             <th>_id</th>
             <th>title</th>
-            <th style={{width:"100px"}}>body</th>
+            <th style={{ width: "200px" }}>body</th>
             <th>postedBy</th>
             <th>tags</th>
             <th>likeCounts</th>
             <th>dislikeCounts</th>
             <th>postedAt</th>
             <th>slug</th>
-            <th>isReply</th>
-            <th>replyId</th>
             <th>Actions</th>
           </tr>
           {posts.map((post, id) => {
             return (
-              <tr key={id}>
+              <tr key={id} className="clipped-row">
                 <td>{post._id}</td>
                 <td>{post.title}</td>
-                <td>{post.body}</td>
-                <td>{post.postedBy.tags}</td>
+                <td className="clipped-col">{post.body}</td>
+                <td>{post.postedBy?.username}</td>
+                <td>
+                  {post.tags.map((tag, id) => (
+                    <span key={id}>{tag}, </span>
+                  ))}
+                </td>
+                <td>{post.likedBy?.length}</td>
+                <td>{post.dislikedBy?.length}</td>
+                <td>{post.createdAt}</td>
+                <td>{post.slug}</td>
+                <td>
+                  <Actions />{" "}
+                </td>
               </tr>
             );
           })}
@@ -144,5 +182,17 @@ export function StoriesList() {
         </tbody>
       </table>
     </>
+  );
+}
+
+function Actions(updateLink, delFun) {
+  return (
+    <div className="d-flex">
+      <Link to={updateLink} className="bi bi-pencil-square btn btn-primary" />
+      <button
+        className="bi bi-trash3 btn btn-danger ms-2"
+        onClick={() => delFun}
+      ></button>
+    </div>
   );
 }

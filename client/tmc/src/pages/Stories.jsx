@@ -111,7 +111,7 @@ export default function ShortBlogs() {
         </div>
         <div
           className={`toast align-items-center bg-primary border-0 w-100 ${
-            getCookie("username") === "" ? "show" : ""
+            getCookie("username") !== "" ? "show" : ""
           }`}
           role="alert"
           aria-live="assertive"

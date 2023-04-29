@@ -13,7 +13,7 @@ import useLoader from "../../../Hooks/useLoader";
 function QuizInstructions() {
     useLoader();
     return (
-        <Fragment>
+        <div className="gradient-bg-2 pt-4">
 
             <Helmet><title>Quiz Instructions - Quiz App</title></Helmet>
             <div className="instructions container">
@@ -42,6 +42,7 @@ function QuizInstructions() {
                         selecting a 50-50 lifeline by clicking the icon
                         <span className="mdi mdi-set-center mdi-24px lifeline-icon"></span>
                         will remove 2 wrong answers, leaving the correct answer and one incorrect answer.
+                        <br />
                         <img src={fiftyFifty} alt="Quiz App Fifty-Fifty example" />
                     </li>
                     <li>
@@ -61,11 +62,11 @@ function QuizInstructions() {
                     </li>
                 </ul>
                 <div className="d-flex justify-content-between">
-                    <span><Link to="/IqTest">No take me back</Link></span>
-                    <span><Link to="/IqTest/modes">Okay, Let's do this!</Link></span>
+                    <span><Link to="/IqTest" className="text-decoration-none text-primary">No take me back</Link></span>
+                    <span><Link to="/IqTest/modes" className="text-decoration-none text-primary">Okay, Let's do this!</Link></span>
                 </div>
             </div>
-        </Fragment>
+        </div >
     );
 }
 

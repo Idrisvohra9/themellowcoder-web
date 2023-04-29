@@ -16,15 +16,22 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    postsCount: {
-        type: Number,
-        default: 0,
-    },
-    storiesCount: {
-        type: Number,
-        default: 0
-    },
-    friends: [String]
+    posts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "PostModel"
+    }],
+    stories: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "StoryModel"
+    }],
+    plannedCodes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "PlanCodeModel"
+    }],
+    friends: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "userModel"
+    }]
 });
 
 const userModel = mongoose.model("userModel", userSchema);

@@ -141,6 +141,7 @@ export default function CreatePost() {
               </label>
               <ReactQuill
                 className="bg-light input"
+                value={postData.body}
                 onChange={(newValue) =>
                   setPostData({ ...postData, body: newValue })
                 }

@@ -31,7 +31,6 @@ import "bootstrap/dist/js/bootstrap.min.js";
 import "@mdi/font/css/materialdesignicons.min.css";
 import { UserContextProvider } from "./UserContext";
 import UpdatePost from "./pages/UpdatePost";
-import UpdateProfile from "./pages/UpdateProfile";
 import AboutProfile from "./pages/AboutProfile";
 import IqTest from './pages/components/IQTest';
 import QuizInstructions from './pages/components/quiz/quizinstruction';
@@ -65,8 +64,7 @@ export default function App() {
             <Route path="explore" element={<Explore />} />
             <Route path="profile" >
               <Route path=":username" exact element={<Profile />} />
-              <Route path="update/:username" element={<UpdateProfile />} />
-              <Route path="about/:username" element={<AboutProfile />} />
+              <Route path="settings/:username" element={<AboutProfile />} />
             </Route>
             <Route path="stories" >
               <Route index element={<Stories />} />

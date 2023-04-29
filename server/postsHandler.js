@@ -50,6 +50,7 @@ const deletePost = async (req, res) => {
 const addLike = async (req, res) => {
     const { postId, userId } = req.body;
     const post = await postModel.findById(postId);
+    let revertLike = false;
     let response = "post liked";
     if (!post) {
         throw new Error('Post not found');
@@ -57,10 +58,10 @@ const addLike = async (req, res) => {
     async function like() {
         post.likedBy.push(userId);
         await post.updateOne({ likedBy: post.likedBy });
-        res.status(200).json(response);
     }
     // If the user has already liked the post, remove it's id from the likedBy array.
     if (post.likedBy.includes(userId)) {
+        revertLike = true;
         let index = post.likedBy.indexOf(userId);
 
         // remove the element at the found index
@@ -68,6 +69,7 @@ const addLike = async (req, res) => {
             post.likedBy.splice(index, 1);
         }
         await post.updateOne({ likedBy: post.likedBy });
+        response = "like removed";
     }
     // If the user has already disliked the post, remove it's id from the dislikedBy array and add it to the likedBy array.
 
@@ -81,31 +83,34 @@ const addLike = async (req, res) => {
         await post.updateOne({ dislikedBy: post.dislikedBy });
         like();
     }
-    else {
+    else if (!post.likedBy.includes(userId) && !post.dislikedBy.includes(userId) && !revertLike) {
         like();
     }
+    res.status(200).json(response);
+
 }
 const addDislike = async (req, res) => {
     const { postId, userId } = req.body;
     const post = await postModel.findById(postId);
-    let response = "post disliked";
+    let revertUnlike = false
+    let response = "";
     if (!post) {
         throw new Error('Post not found');
     }
     async function dislike() {
         post.dislikedBy.push(userId);
         await post.updateOne({ dislikedBy: post.dislikedBy });
-        res.status(200).json(response);
     }
     // If the user has already disliked the post, remove it's id from the dislikedBy array.
     if (post.dislikedBy.includes(userId)) {
+        revertUnlike = true;
         let index = post.dislikedBy.indexOf(userId);
-
         // remove the element at the found index
         if (index > -1) {
             post.dislikedBy.splice(index, 1);
         }
         await post.updateOne({ dislikedBy: post.dislikedBy });
+        response = "dislike removed";
     }
     // If the user has already liked the post, remove it's id from the dislikedBy array and add it to the likedBy array.
 
@@ -119,9 +124,10 @@ const addDislike = async (req, res) => {
         await post.updateOne({ likedBy: post.likedBy });
         dislike();
     }
-    else {
+    else if (!post.likedBy.includes(userId) && !post.dislikedBy.includes(userId) && !revertUnlike) {
         dislike();
     }
+    res.status(200).json(response);
 }
 // const addReply = async (req,res) => {
 
