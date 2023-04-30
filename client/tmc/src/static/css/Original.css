@@ -522,22 +522,8 @@ a:hover {
 }
 
 a.link {
-  display: flex;
-  align-items: center;
   color: var(--textClr);
   text-decoration: none;
-}
-
-a.link::before {
-  content: "🔗";
-  align-self: flex-start;
-  margin-right: 4px;
-  font-size: 36px;
-  display: none;
-}
-
-a.link:hover::before {
-  display: block;
 }
 
 .jumbotron {
@@ -844,7 +830,6 @@ svg.btns {
   font-size: 16px;
   color: var(--textClr);
   display: none;
-  margin-top: 52px;
   margin-left: 5px;
   text-align: left;
 }
@@ -2023,10 +2008,46 @@ span .react-tagsinput-input {
 }
 
 /* Explore tab CSS */
+.explore{
+  background: linear-gradient(135deg, #1d1d1b, #a313a8, #6e046f, #E5B8F4);
+}
 .explore .input {
   height: 2rem;
 }
+.explore-back {
+  background-color: var(--postBg);
+  backdrop-filter: blur(5px) saturate(8);
+}
+.search-profiles{
+  padding: 0.4rem;
+  border-radius:.4rem;
+  overflow: hidden;
+  border: 1px solid var(--primaryClr);
+}
+.search-profiles:hover{
+  border: 1px solid var(--secondaryClr);
+}
 
+.user-tags{
+  background-color: #59567363;
+  text-transform: capitalize;
+  text-decoration: none;
+  color: var(--textClr);
+  cursor: pointer;
+  border-radius: 3px;
+  padding: 0.4em 0.5em;
+  margin-top: 15px;
+  font-size: 16px;
+  white-space: nowrap;
+  text-decoration: none;
+  text-align: center;
+  margin-right: 2%;
+  transition: all 0.3s;
+
+}
+.user-tags:hover{
+  background-color:#61236563;
+}
 /* Profile tab css */
 :root {
   --pink: #ff74a4;
@@ -2187,12 +2208,13 @@ span .react-tagsinput-input {
   flex-direction: row;
 }
 
-.header__wrapper a.tabs {
-  text-transform: uppercase;
+.header__wrapper .tabs {
+  text-transform: capitalize;
   color: #e9b6ed;
+  cursor: pointer;
 }
 
-.header__wrapper a.tabs.active {
+.header__wrapper .tabs.active {
   color: #9cccf3;
   font-weight: 600;
 }
@@ -2505,7 +2527,7 @@ a.storyBtn:hover .icon-3 {
 .profile-container {
   display: flex;
   flex-wrap: wrap;
-  box-shadow: 0 5px 5px black;
+  box-shadow: 5px 10px 15px black;
 
 }
 .profile-sidebar .logo .title{
@@ -2522,7 +2544,7 @@ a.storyBtn:hover .icon-3 {
 .profile-sidebar {
   width: 100%;
   max-width: 200px;
-  height: 100vh;
+  height: 100%;
   background-color: var(--primaryClr);
   display: flex;
   flex-direction: column;

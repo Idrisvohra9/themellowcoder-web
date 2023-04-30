@@ -133,16 +133,6 @@ export default function Home() {
       <div className="d-flex justify-content-between align-items-center p-5 jumbotron">
         <div className="d-flex align-items-start flex-column w-75">
           <h1>Our Popular must have tools</h1>
-          <Link to="/Img2Webp" className="link mt-2">
-            <h2>Image 2 Webp Converter</h2>
-          </Link>
-          <b>
-            WebP is a modern image format that provides superior lossless and
-            lossy compression for images on the web. Using WebP, webmasters and
-            web developers can create smaller, richer images that make the web
-            faster. WebP lossless images are 26% smaller in size compared to
-            PNGs.
-          </b>
           <Link to="/PlanCode" className="link mt-2">
             <h2>Plan Code</h2>
           </Link>

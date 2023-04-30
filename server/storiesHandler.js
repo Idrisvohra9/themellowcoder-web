@@ -1,7 +1,21 @@
 import express from "express";
 import storyModel from "./models/storyModel.js"
-import mongoose from "mongoose";
 const router = express.Router();
+import { URL } from 'url';
+import path from "path";
+import multer from "multer";
+
+let __dirname = decodeURI(new URL('.', import.meta.url).pathname);
+__dirname = __dirname.slice(1, __dirname.length);
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/dp');
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+const upload = multer({ storage: storage })
 
 // $Controllers:
 // This takes time hence we make it asynchronous function
@@ -29,21 +43,14 @@ export const createStory = async (req, res) => {
     }
 }
 
-const updateStory = async (req, res) => {
-    const { id: _id } = req.params;
-    const story = req.body;
-
-    if (!mongoose.Types.ObjectId.isValid(_id)) {
-        return res.status(404).send("No story with that id.")
-    }
-    const patchedStory = await storyModel.findByIdAndUpdate(_id, story, { new: true });
-    res.json(patchedStory);
-}
 const deleteStory = async (req, res) => {
 
 }
+
+const uploadsPath = path.join(__dirname, 'uploads', "stories");
 router.get('/', getAllStories);
-router.post("/", createStory);
-router.patch("/:id", updateStory);
+router.post("/", upload.single("cover"), createStory);
 router.delete("/:id", deleteStory);
+router.use("/uploads/stories", express.static(uploadsPath));
+
 export default router;

@@ -12,11 +12,11 @@ export function PostLink({ title, body, postedBy, tags, createdAt, slug }) {
             <h5 className="card-title">{title}</h5>
           </Link>
           <Link
-            to={`/profile/${postedBy.username}`}
+            to={`/profile/${postedBy?.username}`}
             className="text-decoration-none d-flex align-items-center mb-2"
           >
             <img src={`http://localhost:5000/users/${postedBy?.dp}`} alt="" className="dp me-1"/>
-            <h6 className="card-subtitle">{postedBy.username}</h6>
+            <h6 className="card-subtitle">{postedBy?.username}</h6>
           </Link>
           <div className="d-flex justify-content-start mb-2">
             {tags.map((tag, id) => (

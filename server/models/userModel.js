@@ -12,9 +12,17 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
-    tmcPoints: {
+    tmcSilver: {
         type: Number,
         default: 0,
+    },
+    tmcGold: {
+        type: Number,
+        default: 0,
+    },
+    isVerified: {
+        type: Boolean,
+        default: false
     },
     posts: [{
         type: mongoose.Schema.Types.ObjectId,

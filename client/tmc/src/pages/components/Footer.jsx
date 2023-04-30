@@ -125,9 +125,6 @@ export default function Footer() {
               <li className="mb-2">
                 <Link to="/PlanCode">Plan A Code</Link>
               </li>
-              <li className="mb-2">
-                <Link to="/img2webp">Img 2 Webp</Link>
-              </li>
             </ul>
           </div>
           <div className="col-6 col-lg-2 mb-3">

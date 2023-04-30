@@ -69,7 +69,6 @@ export default function CreatePost() {
         window.history.back();
       }
       document.querySelector(".toast.post-warning").classList.add("show");
-
     }
   }
   if (getCookie("username") === "") {

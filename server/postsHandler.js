@@ -40,8 +40,14 @@ export const createPost = async (req, res) => {
     }
 }
 const updatePost = async (req, res) => {
-    const { slug } = req.params;
-    const { post } = req.body;
+    const { id: _id } = req.params;
+    const newPostData = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
+        return res.status(404).send("No post with that id.")
+    }
+    const updatedPost = await postModel.findByIdAndUpdate(_id, newPostData, { new: true });
+    res.json(updatedPost);
 }
 
 const deletePost = async (req, res) => {

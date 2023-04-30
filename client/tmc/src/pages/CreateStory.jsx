@@ -10,6 +10,7 @@ import "react-quill/dist/quill.snow.css";
 import { useDispatch } from "react-redux";
 import { createStory } from "../Api/actions";
 import NoPage from "./NoPage";
+import { Link } from "react-router-dom";
 
 hljs.configure({
   languages: ["javascript", "css", "scss", "python", "html", "php"],
@@ -32,7 +33,7 @@ const modules = {
 
 export default function CreateStory() {
   useLoader();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [storyData, setStoryData] = useState({
     title: "",
     body: "",
@@ -42,7 +43,26 @@ export default function CreateStory() {
   });
   function post(e) {
     e.preventDefault();
-    console.log(storyData);
+    const invalidFeedbacks = document.querySelectorAll(".invalid-feedback");
+    if (storyData.title.length < 5) {
+      invalidFeedbacks[0].style.display = "block";
+    }
+    if (!storyData.image.type.includes("image/")) {
+      invalidFeedbacks[1].style.display = "block";
+    } else {
+      // const keys = Object.keys(storyData);
+      // const formData = new FormData();
+      // keys.forEach((key) => {
+      //   formData.append(key, storyData[key]);
+      // });
+      // dispatch(createStory(formData));
+      console.log(storyData);
+      const toast = document.querySelector(".toast.story-posted");
+      toast.classList.add("show");
+      toast.querySelector(
+        ".toast-body"
+      ).innerHTML += ` <a href="/stories#${storyData.type}">${storyData.type}</a>`;
+    }
   }
   if (getCookie("username") === "") {
     return <NoPage />;
@@ -52,7 +72,28 @@ export default function CreateStory() {
         <div className="mainContent bg-dark text-light p-4 createPost h-100">
           <ScatterBlobs />
           <div className="container rounded-2 border border-2 border-light border-opacity-25 p-3">
-            <form onSubmit={post} className="d-flex flex-column justify-content-center align-items-center">
+            <div
+              className="toast story-posted custom align-items-center bg-primary border-0"
+              role="alert"
+              aria-live="assertive"
+              aria-atomic="true"
+            >
+              <div className="d-flex">
+                <div className="toast-body">
+                  Your story is posted and can be found at
+                </div>
+                <button
+                  type="button"
+                  className="btn-close btn-close-white me-2 m-auto"
+                  data-bs-dismiss="toast"
+                  aria-label="Close"
+                ></button>
+              </div>
+            </div>
+            <form
+              onSubmit={post}
+              className="d-flex flex-column justify-content-center align-items-center"
+            >
               <h2 className="mb-3">Post a new Story!</h2>
               <div className="mb-3">
                 <label htmlFor="post-title" className="form-label">
@@ -64,12 +105,15 @@ export default function CreateStory() {
                   id="post-title"
                   placeholder="Discussion Title"
                   name="title"
+                  required
                   maxLength={36}
                   value={storyData.title}
                   onChange={(e) =>
                     setStoryData({ ...storyData, title: e.target.value })
                   }
                 />
+
+                <div className="invalid-feedback">The title is too short.</div>
               </div>
               <div className="mb-3">
                 <div className="file-input">
@@ -91,10 +135,27 @@ export default function CreateStory() {
                     />
                   </div>
                 </div>
+                <div className="invalid-feedback">
+                  The file should be an image!
+                </div>
               </div>
               <div className="mb-3">
-                <label htmlFor="tags">Select A type</label>
-                
+                <label htmlFor="tags">
+                  Select a type
+                  <select
+                    className="form-select form-select mb-3 bg-dark text-light"
+                    required
+                    onChange={(e) =>
+                      setStoryData({ ...storyData, type: e.target.value })
+                    }
+                    defaultValue="misc"
+                  >
+                    <option value="progress-check-ins">Project Check-in</option>
+                    <option value="tech-roundups">Technology Roundup</option>
+                    <option value="fun-stuff">Fun Stuff</option>
+                    <option value="misc">Misc</option>
+                  </select>
+                </label>
               </div>
               <div className="mb-3">
                 <label htmlFor="post-body" className="form-label">

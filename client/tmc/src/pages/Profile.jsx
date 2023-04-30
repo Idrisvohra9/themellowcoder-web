@@ -69,7 +69,9 @@ export default function Profile() {
               {/* <p>{userData.email}</p> */}
               <p>
                 {userData.tags?.map((tag, id) => (
-                  <span key={id}>{tag}, </span>
+                  <span key={id} className="user-tags">
+                    {tag}
+                  </span>
                 ))}
               </p>
 
@@ -202,24 +204,32 @@ export default function Profile() {
               <nav>
                 <ul className="nav">
                   <li>
-                    <Link
-                      to=""
+                    <div
                       className={`tabs ${activeTab === "Post" ? "active" : ""}`}
                       onClick={() => handleTabClick("Post")}
                     >
                       posts <span>{userData.postsCount}</span>
-                    </Link>
+                    </div>
                   </li>
                   <li>
-                    <Link
-                      to=""
+                    <div
                       className={`tabs ${
                         activeTab === "Story" ? "active" : ""
                       }`}
                       onClick={() => handleTabClick("Story")}
                     >
                       stories <span>{userData.storiesCount}</span>
-                    </Link>
+                    </div>
+                  </li>
+                  <li>
+                    <div
+                      className={`tabs ${
+                        activeTab === "PlannedCodes" ? "active" : ""
+                      }`}
+                      onClick={() => handleTabClick("PlannedCodes")}
+                    >
+                      PlannedCodes <span>{userData.storiesCount}</span>
+                    </div>
                   </li>
                 </ul>
                 {getCookie("username") !== username ? (
@@ -258,12 +268,9 @@ export default function Profile() {
               </nav>
 
               <div className="profile-media">
-                {activeTab === "Post" && (
-                  <div>Posts</div>
-                )}
-                {activeTab === "Story" && (
-                  <div>Stories</div>
-                )}
+                {activeTab === "Post" && <div>Posts</div>}
+                {activeTab === "Story" && <div>Stories</div>}
+                {activeTab === "PlannedCodes" && <div>PlannedCodes</div>}
               </div>
             </div>
           </div>

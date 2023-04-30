@@ -17,7 +17,7 @@ export default function Discussion() {
   }, [dispatch]);
 
   const showFilter = useRef();
-  const filterBy = (e) => {
+  const sortBy = (e) => {
     let filterBtns = document.getElementsByClassName(e.target.className);
     filterBtns = Array.from(filterBtns);
 
@@ -28,6 +28,25 @@ export default function Discussion() {
     showFilter.current.innerHTML = e.target.innerHTML;
   };
 
+  function searchFilter(e) {
+    const SearchValue = e.target.value.toUpperCase();
+    const postLinks = document.querySelectorAll(".PostLinks");
+
+    for(const postLink of postLinks) {
+      let title = postLink.querySelector(".card-title").innerHTML.toUpperCase();
+      let tags = postLink.querySelectorAll(".post-tag");
+      // console.log(tags);
+      let tagsHTML = "";
+      tags.forEach((tag) => (tagsHTML += " " + tag.innerHTML.toUpperCase()));
+      // console.log(tagsHTML);
+      if (title.includes(SearchValue) || tagsHTML.includes(SearchValue)) {
+        postLink.style.display = "block";
+      }
+      else{
+        postLink.style.display = "none"
+      }
+    }
+  }
   return (
     <div className="mainContent discussion">
       <Head title="Discussion" />
@@ -40,20 +59,20 @@ export default function Discussion() {
         <div className="d-flex align-items-center">
           <div className="me-2">Sort By</div>
           <div
-            className="btn-group filterBy"
+            className="btn-group sortBy"
             role="group"
             aria-label="Basic example"
           >
-            <button onClick={filterBy} className="btn btn-primary active">
+            <button onClick={sortBy} className="btn btn-primary active">
               All
             </button>
-            <button onClick={filterBy} className="btn btn-primary">
+            <button onClick={sortBy} className="btn btn-primary">
               Latest
             </button>
-            <button onClick={filterBy} className="btn btn-primary">
+            <button onClick={sortBy} className="btn btn-primary">
               Trending
             </button>
-            <button onClick={filterBy} className="btn btn-primary">
+            <button onClick={sortBy} className="btn btn-primary">
               Most Rated
             </button>
           </div>
@@ -85,6 +104,7 @@ export default function Discussion() {
               type="text"
               placeholder="Filter by topic title or tags"
               className="input"
+              onChange={searchFilter}
             />
             <span className="input-group-text search-btn">🔍</span>
           </div>

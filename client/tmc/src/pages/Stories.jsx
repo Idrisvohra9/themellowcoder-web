@@ -9,7 +9,7 @@ export default function ShortBlogs() {
   return (
     <div className="mainContent">
       <div className="mt-2 ms-3 me-3">
-        <h1 className="mb-2">Stories!</h1>
+        <h1 className="mb-3">TMC Stories!</h1>
         <div className="d-flex mb-4">
           <Link
             to="/stories/create"
@@ -110,9 +110,7 @@ export default function ShortBlogs() {
           </svg>
         </div>
         <div
-          className={`toast align-items-center bg-primary border-0 w-100 ${
-            getCookie("username") !== "" ? "show" : ""
-          }`}
+          className={`toast align-items-center bg-primary border-0 w-100 show`}
           role="alert"
           aria-live="assertive"
           aria-atomic="true"
@@ -137,7 +135,59 @@ export default function ShortBlogs() {
           </div>
         </div>
         <hr />
-        <h2>Personal progress </h2>
+        <a href="#progress-check-ins" className="text-light text-decoration-none">
+          <h2
+            className="mb-5 d-flex justify-content-center"
+            id="progress-check-ins"
+          >
+            Progress Check-ins:
+          </h2>
+        </a>
+        <div className="slider">
+          <div className="slider__content">
+            <Story />
+            <Story />
+          </div>
+          <div className="slider__nav">
+            <button className="slider__nav__button">Previous</button>
+            <button className="slider__nav__button">Next</button>
+          </div>
+        </div>
+        <a href="#tech-roundups" className="text-light text-decoration-none">
+          <h2 className="mb-5 d-flex justify-content-center" id="tech-roundups">
+            Technology roundup:
+          </h2>
+        </a>
+        <div className="slider">
+          <div className="slider__content">
+            <Story />
+            <Story />
+          </div>
+          <div className="slider__nav">
+            <button className="slider__nav__button">Previous</button>
+            <button className="slider__nav__button">Next</button>
+          </div>
+        </div>
+        <a href="#fun-stuff" className="text-light text-decoration-none">
+          <h2 className="mb-5 d-flex justify-content-center" id="fun-stuff">
+            Fun stuff:
+          </h2>
+        </a>
+        <div className="slider">
+          <div className="slider__content">
+            <Story />
+            <Story />
+          </div>
+          <div className="slider__nav">
+            <button className="slider__nav__button">Previous</button>
+            <button className="slider__nav__button">Next</button>
+          </div>
+        </div>
+        <a href="#misc" className="text-light text-decoration-none">
+          <h2 className="mb-5 d-flex justify-content-center" id="misc">
+            Misc:
+          </h2>
+        </a>
         <div className="slider">
           <div className="slider__content">
             <Story />

@@ -17,11 +17,10 @@ export default function AboutProfile() {
   const place = useRef();
   // Declaring initial field validtators variables to be invalid
   const [validUname, setValidUname] = useState(false);
-  const [validEmail, setValidEmail] = useState(false);
   const validate = (e) => {
     const userRegex = /[A-Za-z]+[A-Za-z0-9_-]/i;
-    const passRegex =
-      /^(?=.*[A-Z])(?=.*[@!#$%^&*()<>?/|}{~:`,./:;'" +=])(?=.*[0-9])(?=.*[a-z]).{9}$/;
+    // const passRegex =
+    //   /^(?=.*[A-Z])(?=.*[@!#$%^&*()<>?/|}{~:`,./:;'" +=])(?=.*[0-9])(?=.*[a-z]).{9}$/;
     const specialChars = /[@!#$%^&*()<>?/|}{~:`,./:;'" +=]/;
 
     if (e.target.name === "username") {
@@ -65,7 +64,7 @@ export default function AboutProfile() {
     }
     // To Check if the email already exists if it does tell to login instead
     else if (e.target.name === "email") {
-      setValidEmail(true);
+      // setValidEmail(true);
       setUserData({ ...userData, email: e.target.value });
     }
   };
@@ -75,10 +74,9 @@ export default function AboutProfile() {
   function updateProfile(e) {
     e.preventDefault();
     // If anything is invalid
-    if (validEmail === false || validUname === false) {
+    if (validUname === false) {
       console.log(`
       Valid username :${validUname}\n
-      Valid Email : ${validEmail}\n
       `);
       place.current.innerHTML =
         "Invalid Sign up (Please refer to the warnings..)";

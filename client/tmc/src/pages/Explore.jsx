@@ -1,13 +1,70 @@
-import React from 'react'
-import useLoader from "../Hooks/useLoader"
+import React, { useEffect } from "react";
+import useLoader from "../Hooks/useLoader";
+import Footer from "./components/Footer";
+import { useDispatch, useSelector } from "react-redux";
+import { getUsers } from "../Api/actions";
+import { Link } from "react-router-dom";
 export default function Explore() {
   useLoader();
+  const dispatch = useDispatch({ type: "FETCH_ALL" });
+  const users = useSelector((store) => store.userReducer);
+  useEffect(() => {
+    dispatch(getUsers()); // We go to the post reducer
+  }, [dispatch]);
+  function search(e) {
+    const searchValue = e.target.value.toUpperCase();
+    const searchProfiles = document.querySelectorAll(".search-profiles");
+    for (const profile of searchProfiles) {
+      const uname = profile.querySelector(".uname").innerHTML.toUpperCase();
+      const usertags = profile.querySelectorAll("user-tags");
+      let userTagsHML = "";
+      usertags.forEach((tag) => (userTagsHML += tag.innerHTML.toUpperCase()));
+      if (uname.includes(searchValue) || userTagsHML.includes(searchValue)) {
+        profile.style.display = "block";
+      } else {
+        profile.style.display = "none";
+      }
+    }
+  }
   return (
-    <div className="mainContent explore">
+    <div className="mainContent explore pt-4">
       <div className="container mt-4">
         <h1>Explore</h1>
-        <input type="text" className='input mt-3' placeholder='Explore the verse'/>
+        <input
+          type="text"
+          className="input mt-3"
+          placeholder="Explore and find people alike!"
+          onChange={search}
+        />
+        <div className="container-fluid mt-2 mb-2 rounded-2 explore-back p-3">
+          {users.map((user, id) => (
+            <div className="mt-2 mb-2 search-profiles" key={id}>
+              <Link
+                to={`/profile/${user.username}`}
+                className="text-decoration-none w-100"
+              >
+                <div className="d-flex align-items-center flex-lg-grow-0 flex-wrap">
+                  <img
+                    src={`http://localhost:5000/users/${user.dp}`}
+                    alt=""
+                    className="dp"
+                  />
+                  <span className="text-light ms-2 uname">{user.username}</span>
+                  <div className="ms-auto">
+                    {user.tags.map((tag, id) => (
+                      <span className="user-tags" key={id}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <hr />
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
+      <Footer />
     </div>
-  )
+  );
 }

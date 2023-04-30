@@ -34,7 +34,11 @@ export const getAllUsers = async (req, res) => {
 export const getUser = async (req, res) => {
     const { username } = req.params;
     try {
-        const user = await userModel.findOne({ username });
+        const user = await userModel.findOne({ username })
+            .populate("posts")
+            .populate("stories")
+            .populate("plannedCodes")
+            .populate("friends");
         // console.log(user);
         res.status(200).json(user);
     } catch (error) {
