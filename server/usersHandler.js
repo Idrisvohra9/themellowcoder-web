@@ -59,7 +59,7 @@ export const createUser = async (req, res) => {
         res.status(200).json({ _id: _id, result: true });
     } catch (error) {
         // Unsuccessful creation"
-        res.status(404).json({ message: error.message })
+        res.status(404).json(error.message);
     }
 }
 const login = async (req, res) => {

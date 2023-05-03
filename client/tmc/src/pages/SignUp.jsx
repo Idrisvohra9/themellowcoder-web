@@ -259,6 +259,7 @@ export default function SignUp() {
                       placeholder="Username"
                       aria-label="Username"
                       name="username"
+                      value={userData.username}
                       maxLength={14}
                       required
                       onChange={validate}
@@ -281,6 +282,7 @@ export default function SignUp() {
                       placeholder="iamcool@gmail.com"
                       aria-label="email"
                       name="email"
+                      value={userData.email}
                       required
                       onChange={validate}
                     />
@@ -298,6 +300,7 @@ export default function SignUp() {
                       placeholder="9 digits complex password"
                       required
                       ref={pass}
+                      // value={userData.password}
                       maxLength={9}
                       onChange={validate}
                     />

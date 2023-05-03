@@ -6,6 +6,7 @@ import postRoutes from "./postsHandler.js"
 import userRoutes from "./usersHandler.js"
 import storyRoutes from "./storiesHandler.js"
 import emailRoutes from "./emailHandler.js"
+import planCodeRoutes from "./planCodeHandler.js"
 import dotenv from "dotenv";
 
 dotenv.config()
@@ -27,6 +28,7 @@ app.use(cors());
 app.use("/posts", postRoutes);
 app.use("/users", userRoutes);
 app.use("/stories", storyRoutes);
+app.use("/planCode", planCodeRoutes);
 app.use("/sendemail", emailRoutes);
 
 app.get("/", (req, res) => {

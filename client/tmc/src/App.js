@@ -24,8 +24,6 @@ import AdminPanel, { Users, Posts, StoriesList } from "./pages/AdminPanel";
 import "./static/css/Responsive.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
-// import 'materialize-css/dist/css/materialize.min.css';
-// import 'materialize-css/dist/js/materialize.min.js';
 import "@mdi/font/css/materialdesignicons.min.css";
 import { UserContextProvider } from "./UserContext";
 import UpdatePost from "./pages/UpdatePost";
@@ -73,7 +71,8 @@ export default function App() {
               <Route path="create" element={<CreateStory />} />
             </Route>
             <Route path="sign-up" element={<SignUp />} />
-            <Route path="Forgot-Password" element={<ForgotPass />} />
+            <Route path="change-password" element={<ForgotPass />} />
+            <Route path="forgot-password" element={<ForgotPass />} />
             <Route path="OctoAI" element={<OctoAI />} />
             <Route path="Games" element={<Games />} />
             <Route path="PlanCode" element={<PlanCode />} />

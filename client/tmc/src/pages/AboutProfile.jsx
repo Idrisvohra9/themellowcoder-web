@@ -1,71 +1,66 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useLoader from "../Hooks/useLoader";
 import Logo from "./components/Logo";
 import TagsInput from "react-tagsinput";
+import { deleteCookie } from "../tools/cookies";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function AboutProfile() {
   useLoader();
+  const { username } = useParams();
   const [activeTab, setActiveTab] = useState("Edit Profile");
   const [userData, setUserData] = useState({
     username: "",
-    email: "",
     desc: "",
     tags: [],
     dp: "",
+    joinDate: "",
   });
   const desc = useRef();
   const place = useRef();
   // Declaring initial field validtators variables to be invalid
   const [validUname, setValidUname] = useState(false);
-  const validate = (e) => {
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/users/${username}`)
+      .then((response) => setUserData(response.data))
+      .catch((error) => console.log(error));
+  }, []);
+  const validate = (uname) => {
     const userRegex = /[A-Za-z]+[A-Za-z0-9_-]/i;
-    // const passRegex =
-    //   /^(?=.*[A-Z])(?=.*[@!#$%^&*()<>?/|}{~:`,./:;'" +=])(?=.*[0-9])(?=.*[a-z]).{9}$/;
     const specialChars = /[@!#$%^&*()<>?/|}{~:`,./:;'" +=]/;
 
-    if (e.target.name === "username") {
-      const valid = e.target.parentNode.children[2];
-      const invalid = e.target.parentNode.children[3];
-
-      // Checks if the username length is more than 3
-      if (e.target.value.length < 3) {
-        valid.style.display = "none";
-        invalid.style.display = "block";
-      } else {
-        // Checks if the username matches the regex pattern
-        if (RegExp(userRegex).test(e.target.value)) {
-          // Checks if the username has invalid characters
-          if (RegExp(specialChars).test(e.target.value)) {
+    const valid = document.querySelector(".valid-feedback");
+    const invalid = document.querySelector(".invalid-feedback");
+    // Checks if the username length is more than 3
+    if (uname.length < 3) {
+      valid.style.display = "none";
+      invalid.style.display = "block";
+    } else {
+      // Checks if the username matches the regex pattern
+      if (RegExp(userRegex).test(uname)) {
+        // Checks if the username has invalid characters
+        if (RegExp(specialChars).test(uname)) {
+          valid.style.display = "none";
+          invalid.style.display = "block";
+        } else {
+          // Checks if the username contains reseved keywords
+          if (
+            uname.match(/op/gi) != null ||
+            uname.match(/admin/gi) != null ||
+            uname.match(/super/gi) != null
+          ) {
             valid.style.display = "none";
             invalid.style.display = "block";
           } else {
-            // Checks if the username contains reseved keywords
-            if (
-              e.target.value.match(/op/gi) != null ||
-              e.target.value.match(/admin/gi) != null ||
-              e.target.value.match(/super/gi) != null
-            ) {
-              valid.style.display = "none";
-              invalid.style.display = "block";
-            } else {
-              // Checks if the username already exists if it does it says to pick another username
-              setUserData({
-                ...userData,
-                username: e.target.value,
-                joinDate: new Date().toDateString(),
-              });
-              invalid.style.display = "none";
-              valid.style.display = "block";
-              setValidUname(true);
-            }
+            // Checks if the username already exists if it does it says to pick another username
+            invalid.style.display = "none";
+            valid.style.display = "block";
+            setValidUname(true);
           }
         }
       }
-    }
-    // To Check if the email already exists if it does tell to login instead
-    else if (e.target.name === "email") {
-      // setValidEmail(true);
-      setUserData({ ...userData, email: e.target.value });
     }
   };
   const handleTabClick = (tab) => {
@@ -73,11 +68,7 @@ export default function AboutProfile() {
   };
   function updateProfile(e) {
     e.preventDefault();
-    // If anything is invalid
     if (validUname === false) {
-      console.log(`
-      Valid username :${validUname}\n
-      `);
       place.current.innerHTML =
         "Invalid Sign up (Please refer to the warnings..)";
     }
@@ -86,9 +77,16 @@ export default function AboutProfile() {
     } else {
     }
   }
+  function logOut() {
+    deleteCookie("username");
+    deleteCookie("uid");
+    setUserData({});
+    window.location.reload();
+  }
+  function requestVerify() {}
   return (
     <div className="gradient-bg pt-4">
-      <div className="container mt-3 mb-3">
+      <div className="container mt-3 mb-3 rounded-2">
         <h1>Profile Management</h1>
         <div className="profile-container">
           <div className="profile-sidebar">
@@ -144,7 +142,7 @@ export default function AboutProfile() {
                   onSubmit={updateProfile}
                   className="d-flex flex-column justify-content-center align-items-center"
                 >
-                  <div className="input-group mb-3">
+                  <div className="input-group w-50 mb-3">
                     <span className="input-group-text">@</span>
                     <input
                       type="text"
@@ -154,7 +152,10 @@ export default function AboutProfile() {
                       name="username"
                       maxLength={14}
                       required
-                      onChange={validate}
+                      onChange={(e) =>
+                        setUserData({ ...userData, username: e.target.value })
+                      }
+                      value={userData.username}
                     />
                     <div className="valid-feedback">It suits you!</div>
                     <div className="invalid-feedback">
@@ -165,8 +166,12 @@ export default function AboutProfile() {
                       used. Examples of good usernames: (Idris_vohra, idris_987,
                       idris987, idris)
                     </div>
+                    <div className="note">
+                      {" "}
+                      Don't change your username if it contains reserved words!
+                    </div>
                   </div>
-                  <div className="input-group mb-3">
+                  <div className="input-group w-50 mb-3">
                     <label className="input-group-text">Keywords:</label>
                     <TagsInput
                       value={userData.tags}
@@ -200,7 +205,7 @@ export default function AboutProfile() {
                       </div>
                     </div>
                   </div>
-                  <div className="input-group text-dark mb-3">
+                  <div className="input-group w-50 text-dark mb-3">
                     <label
                       htmlFor="describe-you"
                       className="input-group-text w-25"
@@ -237,13 +242,14 @@ export default function AboutProfile() {
                       ></div>
                     </div>
                   </div>
+                  <Link to="/change-password">Change Password</Link>
                   <div className="bg-dark d-flex justify-content-between align-items-center mb-3 p-3 rounded-2">
                     <input
                       type="submit"
-                      value="Sign in"
+                      value="Update Profile"
                       className="btn btn-primary"
                     />
-                    <span className="ms-2 text-danger" ref={place}></span>
+                    <span className="text-danger" ref={place}></span>
                   </div>
                 </form>
               </div>
@@ -251,6 +257,10 @@ export default function AboutProfile() {
             {activeTab === "Log-out" && (
               <div>
                 <h2>Log-Out</h2>
+                <p>Are you sure you want to log out?</p>
+                <button class="btn btn-warning" onClick={logOut}>
+                  Yes
+                </button>
               </div>
             )}
             {activeTab === "Login with New Account" && (

@@ -2528,7 +2528,15 @@ a.storyBtn:hover .icon-3 {
   display: flex;
   flex-wrap: wrap;
   box-shadow: 5px 10px 15px black;
-
+  background-color: var(--primaryClr);
+  /* border-radius: 5px; */
+}
+.note{
+  /* display: flex; */
+  padding: 5px;
+  background-color: gold;
+  border-radius: 5px;
+  text-align: center;
 }
 .profile-sidebar .logo .title{
   font-size: 18px;
@@ -2537,8 +2545,8 @@ a.storyBtn:hover .icon-3 {
   font-size: 14px;
 }
 .profile-sidebar .logo img{
-  width: 43px;
-  height: 43px;
+  width: 52px;
+  height: 52px;
   margin-left:-10px;
 }
 .profile-sidebar {

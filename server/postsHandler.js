@@ -144,7 +144,7 @@ router.get('/:slug', getPost);// Get single
 router.post("/", createPost);// Create new
 router.patch('/update', updatePost);// Update
 router.post('/like', addLike);// Update
-router.post('/dislike', addDislike);// Update
 router.delete('/:slug', deletePost);// Delete
+router.post('/dislike', addDislike);// Update
 
 export default router;

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import useLoader from "../Hooks/useLoader";
 import { getCookie, setCookie } from "../tools/cookies";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 export default function Admin() {
   useLoader();
   const [adminData, setAdminData] = useState({
@@ -18,7 +18,7 @@ export default function Admin() {
     ) {
       setCookie("isAdmin", adminData.username);
       // console.log("Redirect");
-      redirect(`/admin/panel/${adminData.username}`)
+      redirect(`/admin/panel/${adminData.username}`);
     }
   }
   useEffect(() => {
@@ -33,9 +33,9 @@ export default function Admin() {
       <div className="d-flex justify-content-center align-items-center w-100 h-100">
         <div className="login-box">
           <form onSubmit={validateAdmin}>
-              <div className="d-flex justify-content-center align-items-center mb-2">
-                <h4>Admin Login</h4>
-              </div>
+            <div className="d-flex justify-content-center align-items-center mb-3">
+              <h4>Admin Login</h4>
+            </div>
             <div className="user-box">
               <input
                 type="text"
