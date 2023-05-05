@@ -11,23 +11,18 @@
   --textClr: #d8d4cf;
   --lightestPink: #E5B8F4;
   --postBg: rgba(33, 37, 41, 0.72);
+  --pink: #ff74a4;
+  --violet: #9f6ea3;
+  --lightblack: #515C6F;
+  --white: #ffffff;
+  --darkwhite: #cecaca;
+  --pinkshadow: #ffcbdd;
+  --lightbshadow: rgba(0, 0, 0, 0.15);
 }
 
 #root {
-  width: 100%;
-  height: 100%;
-}
-
-html {
-  width: 100%;
-  height: 100%;
-}
-
-body {
   color: var(--textClr);
   font-family: "nunito";
-  width: max-content;
-  height: max-content;
   background-color: var(--primaryClr) !important;
   background-image: url("../Images/layered-waves-haikei.svg");
   background-size: 100%;
@@ -40,6 +35,10 @@ body {
   overflow-x: hidden;
 }
 
+html,body{
+  height: 100%;
+  width: 100%;
+}
 * {
   margin: 0;
   padding: 0;
@@ -487,7 +486,7 @@ span.stars:nth-child(10) {
 
 .mainContent {
   width: 100vw;
-  height: 100vh;
+  height: max-content;
 }
 
 .dropdown-item.active {
@@ -1256,6 +1255,7 @@ header {
 
 .post-link {
   background-color: var(--postBg);
+  -webkit-backdrop-filter: blur(5px) saturate(1);
   backdrop-filter: blur(5px) saturate(1);
   margin-bottom: 1rem;
 }
@@ -1312,6 +1312,7 @@ header {
   border-radius: 20px;
   padding: 15px;
   background-color: var(--postBg);
+  -webkit-backdrop-filter:blur(5px) saturate(1) ;
   backdrop-filter: blur(5px) saturate(1);
   overflow: hidden;
 }
@@ -1406,6 +1407,7 @@ header {
 
 .post-topic {
   background-color: var(--postBg);
+  -webkit-backdrop-filter:blur(5px) saturate(1) ;
   backdrop-filter: blur(5px) saturate(1);
 }
 
@@ -1641,8 +1643,8 @@ header {
 }
 
 .post-body img {
-  width: 300px;
-  height: 400px;
+  width: 100%;
+  height: 50%;
   object-fit: contain;
 }
 
@@ -1695,7 +1697,8 @@ pre.ql-syntax {
   width: 60px;
   height: 60px;
   border-radius: 12px;
-  rotate: 45deg;
+  /* web */
+  transform:rotate(45deg);
   animation: revolve_29 5s infinite;
   background-color: #FF8062;
 }
@@ -1925,6 +1928,7 @@ a.card-link:hover {
   background-color: #20323981;
 }
 
+
 .PostLinks .card {
   width: 100%;
   height: 229px;
@@ -1947,6 +1951,7 @@ a.card-link:hover {
 }
 
 .PostLinks .card .card-body {
+  width: 100%;
   height: 100%;
 }
 
@@ -1975,7 +1980,7 @@ span .react-tagsinput-input {
   background-color: transparent !important;
   outline: none;
   border: none !important;
-  margin-top: 17px;
+  /* margin-top: 17px; */
 }
 .input-group .react-tagsinput-input{
   margin-top:5px;
@@ -2049,27 +2054,25 @@ span .react-tagsinput-input {
   background-color:#61236563;
 }
 /* Profile tab css */
-:root {
-  --pink: #ff74a4;
-  --violet: #9f6ea3;
-  --lightblack: #515C6F;
-  --white: #ffffff;
-  --darkwhite: #cecaca;
-  --pinkshadow: #ffcbdd;
-  --lightbshadow: rgba(0, 0, 0, 0.15);
-}
 
 .profile {
   width: 100%;
   height: 100% !important;
-  background-size: cover;
+  background-repeat: no-repeat;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  padding-bottom: 30px;
   background: linear-gradient(var(--primaryClr) 50%, var(--tertiaryClr) 100%);
-  /* background: linear-gradient(var(--lightblack) 50%, var(--violet) 100%); */
+  background-size: cover;
 }
-
+.coin{
+  display: inline;
+  width: 36px;
+  height: 36px;
+}
+.profile .PostLinks{
+  width: 50%;
+}
 .profile ul {
   list-style-type: none;
   margin: 0;
@@ -2270,7 +2273,6 @@ span .react-tagsinput-input {
   display: flex;
   gap: 1rem;
   padding-bottom: 1rem;
-  scrollbar-color: var(--scrollcolor) var(--scrollbackground);
 }
 
 .slider__content::-webkit-scrollbar {
@@ -2561,7 +2563,14 @@ a.storyBtn:hover .icon-3 {
   border-right: 1px solid var(--secondaryClr);
   order: 1;
 }
-
+.profile-media{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content:center; */
+  align-items: center;
+  height: 100%;
+}
 .profile-tab {
   width: 100%;
   padding: 10px;
@@ -2746,10 +2755,11 @@ a.storyBtn:hover .icon-3 {
 
 .controls i {
   font-size: 28px;
+  -webkit-user-select: none;
   user-select: none;
   background: linear-gradient(var(--lightblack) 50%, var(--violet) 100%);
-  background-clip: text;
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -2793,8 +2803,8 @@ a.storyBtn:hover .icon-3 {
   line-height: 43px;
   text-align: center;
   background: inherit;
-  background-clip: text;
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   position: absolute;
 }

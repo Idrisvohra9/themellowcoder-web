@@ -24,9 +24,6 @@
         margin: 0 auto;
         width: 90%;
         justify-content: space-between;
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        gap: 50px;
     }
 
     .header__wrapper .cols__container .left__col {
@@ -36,12 +33,6 @@
     .header__wrapper .cols__container .right__col nav ul {
         flex-direction: row;
         gap: 30px;
-    }
-
-    .header__wrapper .cols__container .right__col .posts {
-        height: 365px;
-        overflow: auto;
-        padding: 0 0 30px;
     }
 }
 

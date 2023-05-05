@@ -1,5 +1,6 @@
 import express from "express";
 import postModel from "./models/postModel.js"
+import mongoose from "mongoose";
 const router = express.Router();
 
 
@@ -46,12 +47,18 @@ const updatePost = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(_id)) {
         return res.status(404).send("No post with that id.")
     }
-    const updatedPost = await postModel.findByIdAndUpdate(_id, newPostData, { new: true });
+    const updatedPost = await postModel.findByIdAndUpdate(_id, { ...newPostData, _id: _id }, { new: true });
     res.json(updatedPost);
 }
 
 const deletePost = async (req, res) => {
-
+    const { id: _id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
+        return res.status(404).send("No post with that id.")
+    }
+    await postModel.findByIdAndRemove(_id);
+    
+    res.json({message: "Post Deleted successfully"});
 }
 const addLike = async (req, res) => {
     const { postId, userId } = req.body;
@@ -142,7 +149,7 @@ const addDislike = async (req, res) => {
 router.get('/', getAllPosts);// Fetch all
 router.get('/:slug', getPost);// Get single
 router.post("/", createPost);// Create new
-router.patch('/update', updatePost);// Update
+router.patch('/update/:id', updatePost);// Update
 router.post('/like', addLike);// Update
 router.delete('/:slug', deletePost);// Delete
 router.post('/dislike', addDislike);// Update

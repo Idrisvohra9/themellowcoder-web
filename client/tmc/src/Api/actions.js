@@ -57,7 +57,26 @@ export const createPost = (postData) => async (dispatch) => {
         console.log(error.message);
     }
 }
+export const updatePost = (id, postData) => async (dispatch) => {
+    try {
+        // Getting the response object from the api which has the key data (object) and that is users
+        const { data } = await api.updatePost(id, postData);
 
+        dispatch({ type: 'UPDATE', payload: data});
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+export const deletePost = (id) => async (dispatch) => {
+    try {
+        
+    } catch (error) {
+        console.log(error.message);
+        
+    }
+}
 export const createStory = (storyData) => async (dispatch) => {
     try {
         // Getting the response object from the api which has the key data (object) and that is users

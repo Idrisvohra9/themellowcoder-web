@@ -8,7 +8,7 @@ export function PostLink({ title, body, postedBy, tags, createdAt, slug }) {
     <div className="PostLinks">
       <div className="card post-link text-light">
         <div className="card-body">
-          <Link to={"topic/"+slug} className="card-link">
+          <Link to={"/discuss/topic/"+slug} className="card-link">
             <h5 className="card-title">{title}</h5>
           </Link>
           <Link

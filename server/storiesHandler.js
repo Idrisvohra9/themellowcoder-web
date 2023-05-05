@@ -4,7 +4,7 @@ const router = express.Router();
 import { URL } from 'url';
 import path from "path";
 import multer from "multer";
-
+import moment from "moment";
 let __dirname = decodeURI(new URL('.', import.meta.url).pathname);
 __dirname = __dirname.slice(1, __dirname.length);
 const storage = multer.diskStorage({
@@ -44,7 +44,19 @@ export const createStory = async (req, res) => {
 }
 
 const deleteStory = async (req, res) => {
-
+    try {
+        // Get all stories that are older than 48 hours
+        const cutoff = moment().subtract(48, 'hours').toDate();
+        const oldStories = await storyModel.find({ createdAt: { $lt: cutoff } });
+        
+        // Delete each old story
+        for (const story of oldStories) {
+          await story.remove();
+        }
+        
+      } catch (error) {
+        console.error(error);
+      }
 }
 
 const uploadsPath = path.join(__dirname, 'uploads', "stories");

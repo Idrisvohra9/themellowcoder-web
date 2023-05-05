@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { redirect, useParams } from "react-router-dom";
 import useLoader from "../Hooks/useLoader";
 import TagsInput from "react-tagsinput";
 import { getCookie } from "../tools/cookies";
@@ -9,9 +9,10 @@ import "highlight.js/styles/base16/onedark.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useDispatch } from "react-redux";
-import { createPost } from "../Api/actions";
 import NoPage from "./NoPage";
+import { useSelector } from "react-redux";
 import axios from "axios";
+import { updatePost } from "../Api/actions";
 
 hljs.configure({
   languages: ["javascript", "css", "scss", "python", "html", "php"],
@@ -35,7 +36,6 @@ const modules = {
 
 export default function UpdatePost() {
   const { slug } = useParams();
-  const [body, setBody] = useState("");
   useLoader();
   const [postData, setPostData] = useState({
     title: "",
@@ -43,16 +43,18 @@ export default function UpdatePost() {
     postedBy: getCookie("uid"),
     tags: [],
     slug: "",
+    _id: "",
   });
   useEffect(() => {
     axios
       .get(`http://localhost:5000/posts/${slug}`)
       .then((response) => {
         setPostData(response.data);
-        // setBody(postData.body);
       })
       .catch((error) => console.log(error));
+      console.log(postData);
   }, [slug]);
+  // const [body, setBody] = useState(postData.body);
 
   const dispatch = useDispatch();
   function createSlug(title = "") {
@@ -78,10 +80,12 @@ export default function UpdatePost() {
       invalidFeedbacks[2].style.display = "block";
     } else {
       if (postData.slug.length > 3) {
-        dispatch(createPost(postData));
-        window.history.back();
+        dispatch(updatePost(postData._id, postData));
+        redirect("/discuss");
       }
-      document.querySelector(".toast.post-warning").classList.add("show");
+      else{
+        document.querySelector(".toast.post-warning").classList.add("show");
+      }
     }
   }
   if (getCookie("username") === "") {
@@ -120,7 +124,7 @@ export default function UpdatePost() {
                 placeholder="Discussion Title (Under 37 characters)"
                 name="title"
                 maxLength={36}
-                value={postData.title}
+                value={postData?.title}
                 onChange={(e) =>
                   setPostData({
                     ...postData,
@@ -128,13 +132,14 @@ export default function UpdatePost() {
                     slug: createSlug(e.target.value),
                   })
                 }
+                autoComplete=""
               />
               <div className="invalid-feedback">The title is too short.</div>
             </div>
             <div className="mb-3">
               <label htmlFor="tags">Add Tags (Atleast 3)</label>
               <TagsInput
-                value={postData.tags}
+                value={postData?.tags}
                 onChange={(tags) => {
                   setPostData({ ...postData, tags: tags });
                 }}
@@ -153,7 +158,8 @@ export default function UpdatePost() {
               </label>
               <ReactQuill
                 className="bg-light input"
-                value={"hyyyyy"}
+                // value="hyyyyy"
+                value={postData?.body}
                 onChange={(newValue) =>
                   setPostData({ ...postData, body: newValue })
                 }

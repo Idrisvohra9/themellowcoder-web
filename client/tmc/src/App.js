@@ -64,7 +64,7 @@ export default function App() {
             <Route path="explore" element={<Explore />} />
             <Route path="profile" >
               <Route path=":username" exact element={<Profile />} />
-              <Route path="settings/:username" element={<AboutProfile />} />
+              <Route path="manage/:username" element={<AboutProfile />} />
             </Route>
             <Route path="stories" >
               <Route index element={<Stories />} />

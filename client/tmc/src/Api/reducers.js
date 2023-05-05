@@ -22,7 +22,7 @@ const userReducer = (users = [], action) => {
             return action.payload;
 
         case "UPDATE":
-            return action.payload;
+            return users.map((user) => user._id === action.payload._id ? action.payload : user);
         default:
             return users;
 
@@ -32,7 +32,7 @@ const userReducer = (users = [], action) => {
 const postReducer = (posts = [], action) => {
     switch (action.type) {
         case "CREATE":
-            return action.payload;
+            return [...posts, action.payload];
 
         case "FETCH_ALL":
             return action.payload;
@@ -43,7 +43,8 @@ const postReducer = (posts = [], action) => {
         case "DELETE_SPECIFIC":
             return action.payload;
         case "UPDATE":
-            return action.payload;
+            // If the existing post id is the same as the new post id it will return the new post id else the old one.
+            return posts.map((post) => post._id === action.payload._id ? action.payload : post);
 
         default:
             return posts;
