@@ -86,28 +86,30 @@ export default function OctoAI() {
         <div className="container bg-dark rounded-4 w-100 p-2">
           <pre className="result">{result}</pre>
         </div>
-        <div className="container d-flex prompt-field w-100 justify-content-center align-items-center">
-          <input
-            type="text"
-            className="input"
-            placeholder="Ask me something..."
-            value={prompt}
-            onChange={(event) => setPrompt(event.target.value)}
-            onKeyDown={enterSend}
-            ref={input}
-          />
-          <button className="btn btn-primary ms-2" onClick={handleSend}>
-            <svg viewBox="0 0 24 24" fill="none">
-              <g
-                stroke="#292D32"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M9.51 4.23l8.56 4.28c3.84 1.92 3.84 5.06 0 6.98l-8.56 4.28c-5.76 2.88-8.11.52-5.23-5.23l.87-1.73c.22-.44.22-1.17 0-1.61l-.87-1.74C1.4 3.71 3.76 1.35 9.51 4.23zM5.44 12h5.4" />
-              </g>
-            </svg>
-          </button>
+        <div className="prompt-field">
+          <div className="container w-75 d-flex justify-content-center align-items-end">
+            <input
+              type="text"
+              className="input"
+              placeholder="Ask me anything."
+              value={prompt}
+              onChange={(event) => setPrompt(event.target.value)}
+              onKeyDown={enterSend}
+              ref={input}
+            />
+            <button className="btn btn-primary ms-2" onClick={handleSend}>
+              <svg viewBox="0 0 24 24" fill="none">
+                <g
+                  stroke="#292D32"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M9.51 4.23l8.56 4.28c3.84 1.92 3.84 5.06 0 6.98l-8.56 4.28c-5.76 2.88-8.11.52-5.23-5.23l.87-1.73c.22-.44.22-1.17 0-1.61l-.87-1.74C1.4 3.71 3.76 1.35 9.51 4.23zM5.44 12h5.4" />
+                </g>
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </div>
