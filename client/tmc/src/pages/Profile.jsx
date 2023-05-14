@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import { PostLink } from "./components/PostLinks";
 import tmcGold from "../static/Images/tmcGold.png";
 import tmcSilver from "../static/Images/tmcSilver.png";
+import UserListModal from "./components/UserListModal";
 
 export default function Profile() {
   useLoader();
@@ -17,7 +18,8 @@ export default function Profile() {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
-  function followPerson() {
+
+  function addFreind() {
     // If the user is not logged in:
     if (getCookie("username") === "") {
       document.getElementById("trigger-oopsie").click();
@@ -25,12 +27,14 @@ export default function Profile() {
       console.log("followed");
     }
   }
+
   function logOut() {
     deleteCookie("username");
     deleteCookie("uid");
     setUserData({});
     window.location.reload();
   }
+
   useEffect(() => {
     axios
       .get(`http://localhost:5000/users/${username}`)
@@ -38,7 +42,7 @@ export default function Profile() {
       .catch((error) => console.log(error));
 
     console.log(userData);
-  }, [username, userData]);
+  }, []);
   if (!userData) {
     return (
       <div className="mainContent dark">
@@ -60,6 +64,11 @@ export default function Profile() {
     return (
       <>
         <div className="mainContent">
+          <UserListModal
+            heading="Friends"
+            type="friends"
+            userList={userData.friends}
+          />
           <div className="profile header__wrapper h-100">
             <header></header>
             <div className="cols__container">
@@ -82,7 +91,11 @@ export default function Profile() {
                 </p>
 
                 <ul className="about">
-                  <li className="c-point">
+                  <li
+                    className="c-point"
+                    data-bs-toggle="modal"
+                    data-bs-target="#userlist-modal-friends"
+                  >
                     <span>{userData.friends?.length}</span>Friends
                   </li>
                   <li className="c-point">
@@ -253,7 +266,7 @@ export default function Profile() {
                     </li>
                   </ul>
                   {getCookie("username") !== username ? (
-                    <button onClick={followPerson}>Follow</button>
+                    <button onClick={addFreind}>Add Friend +</button>
                   ) : (
                     <>
                       <button
@@ -291,17 +304,23 @@ export default function Profile() {
                 </nav>
 
                 <div className="profile-media">
-                  {activeTab === "Post" &&
-                    userData.posts?.map((post, id) => (
-                      <PostLink {...post} key={id} />
-                    ))}
-                  {activeTab === "Story" && <div>Stories</div>}
-                  {activeTab === "PlannedCodes" && <div>PlannedCodes</div>}
+                  {activeTab === "Post" && userData.posts?.length === 0
+                    ? "No Posts"
+                    : userData.posts?.map((post, id) => (
+                        <PostLink {...post} key={id} />
+                      ))}
+                  {activeTab === "Story" && userData.stories?.length === 0
+                    ? "No Stories"
+                    : userData.stories?.map((post, id) => "")}
+                  {activeTab === "PlannedCodes" &&
+                  userData.plannedCodes?.length === 0
+                    ? "No Planned Codes"
+                    : userData.plannedCodes?.map((post, id) => "")}
                 </div>
               </div>
             </div>
           </div>
-        <Footer />
+          <Footer />
         </div>
       </>
     );

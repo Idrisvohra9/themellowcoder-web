@@ -15,7 +15,7 @@ const storySchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     },
-    deleteAt: {
+    expiresAt: {
         type: Date,
         default: () => Date.now() + (2 * 24 * 60 * 60 * 1000) // 2 days in milliseconds
     }

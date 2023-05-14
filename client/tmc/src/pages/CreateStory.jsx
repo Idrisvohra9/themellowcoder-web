@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { getCookie } from "../tools/cookies";
-// import TagsInput from "react-tagsinput";
 import useLoader from "../Hooks/useLoader";
 import ScatterBlobs from "./components/Scattered-blobs";
 import hljs from "highlight.js";
@@ -10,7 +9,6 @@ import "react-quill/dist/quill.snow.css";
 import { useDispatch } from "react-redux";
 import { createStory } from "../Api/actions";
 import NoPage from "./NoPage";
-import { Link } from "react-router-dom";
 
 hljs.configure({
   languages: ["javascript", "css", "scss", "python", "html", "php"],
@@ -39,7 +37,7 @@ export default function CreateStory() {
     body: "",
     image: "",
     postedBy: getCookie("uid"),
-    type: "",
+    type: "fun-stuff",
   });
   function post(e) {
     e.preventDefault();
@@ -148,7 +146,7 @@ export default function CreateStory() {
                     onChange={(e) =>
                       setStoryData({ ...storyData, type: e.target.value })
                     }
-                    defaultValue="misc"
+                    value={storyData.type}
                   >
                     <option value="progress-check-ins">Project Check-in</option>
                     <option value="tech-roundups">Technology Roundup</option>

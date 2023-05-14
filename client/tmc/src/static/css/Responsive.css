@@ -588,3 +588,32 @@
         gap: 20px;
     }
 }
+
+@media (max-width: 768px) {
+    .summary-container {
+        padding: 20px;
+    }
+
+    .summary-heading {
+        font-size: 24px;
+    }
+
+    .summary-remark {
+        font-size: 18px;
+    }
+
+    .summary-score {
+        font-size: 20px;
+    }
+
+    .summary-stat {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .summary-button {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+
+}

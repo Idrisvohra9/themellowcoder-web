@@ -11,7 +11,7 @@ import Home from "./pages/Home";
 import Stories from "./pages/Stories";
 import OctoAI from "./pages/OctoAI"
 import Games from "./pages/Games"
-import PlanCode from "./pages/PlanCode"
+import PlanCode from "./pages/PlanCodes"
 import Themes from "./pages/Themes"
 import SignUp from "./pages/SignUp"
 import ForgotPass from "./pages/ForgotPass"
@@ -75,7 +75,7 @@ export default function App() {
             <Route path="forgot-password" element={<ForgotPass />} />
             <Route path="OctoAI" element={<OctoAI />} />
             <Route path="Games" element={<Games />} />
-            <Route path="PlanCode" element={<PlanCode />} />
+            <Route path="PlanCodes" element={<PlanCode />} />
             <Route path="IqTest" >
               <Route index element={<IqTest />}/>
               <Route path="instructions" element={<QuizInstructions />} />

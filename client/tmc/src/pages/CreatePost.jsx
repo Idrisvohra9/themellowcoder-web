@@ -94,6 +94,26 @@ export default function CreatePost() {
           </div>
         </div>
         <div className="container rounded-2 border border-2 border-light border-opacity-25 p-3">
+        <div
+            className="toast align-items-center bg-primary border-0 w-100 show mb-3"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+          >
+            <div className="d-flex">
+              <div className="toast-body">
+                <h6>
+                  There are certain things to keep in mind while creating a topic of discussion please checkout <a href="about" className="">topic guidelines</a>.
+                </h6>
+              </div>
+              <button
+                type="button"
+                className="btn-close btn-close-white me-2 m-auto ms-2"
+                data-bs-dismiss="toast"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
           <form onSubmit={post}>
             <h2 className="mb-3">Start a new topic to discuss!</h2>
             <div className="mb-3">

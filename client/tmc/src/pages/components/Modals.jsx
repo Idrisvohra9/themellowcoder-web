@@ -184,7 +184,6 @@ export default function Login() {
           </div>
         </div>
       </div>
-
       <button
         className="d-none"
         id="trigger-oopsie"

@@ -1,6 +1,7 @@
 import express from "express";
 import postModel from "./models/postModel.js"
 import mongoose from "mongoose";
+import userModel from "./models/userModel.js";
 const router = express.Router();
 
 
@@ -33,6 +34,14 @@ export const createPost = async (req, res) => {
     const post = req.body;
     try {
         const newPost = await postModel.create(post);
+        const userId = post.postedBy;
+        console.log("userId", userId);
+        const postId = post._id;
+        console.log("postId", postId);
+        const userPosted = userModel.findById(userId);
+        console.log("userPosted", userPosted);
+        await userModel.findByIdAndUpdate(userId, { ...userPosted, posts: userPosted.posts.push(postId) }, { new: true });
+
         // Successful creation:
         res.status(201).json(newPost);
     } catch (error) {
@@ -52,13 +61,13 @@ const updatePost = async (req, res) => {
 }
 
 const deletePost = async (req, res) => {
-    const { id: _id } = req.params;
+    const { _id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(_id)) {
         return res.status(404).send("No post with that id.")
     }
     await postModel.findByIdAndRemove(_id);
-    
-    res.json({message: "Post Deleted successfully"});
+
+    res.json({ message: "Post Deleted successfully" });
 }
 const addLike = async (req, res) => {
     const { postId, userId } = req.body;
@@ -151,7 +160,7 @@ router.get('/:slug', getPost);// Get single
 router.post("/", createPost);// Create new
 router.patch('/update/:id', updatePost);// Update
 router.post('/like', addLike);// Update
-router.delete('/:slug', deletePost);// Delete
+router.delete('/:_id', deletePost);// Delete
 router.post('/dislike', addDislike);// Update
 
 export default router;

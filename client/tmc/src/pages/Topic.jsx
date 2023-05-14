@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import useLoader from "../Hooks/useLoader";
 import Footer from "./components/Footer";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { getCookie } from "../tools/cookies";
 import ReactTimeAgo from "react-time-ago";
 import DOMPurify from "dompurify";
 import axios from "axios";
 import NoPage from "./NoPage";
 import Head from "./components/Head";
+import DeleteModal from "./components/DeleteModal";
+import UserListModal from "./components/UserListModal";
 
 export default function Topic() {
   const { slug } = useParams();
   const [postData, setPostData] = useState({});
+  const navigate = useNavigate();
   useLoader();
   useEffect(() => {
     axios
@@ -19,7 +22,11 @@ export default function Topic() {
       .then((response) => setPostData(response.data))
       .catch((error) => console.log(error));
   }, [slug]);
-  async function deletePost() {}
+
+  async function deletePost() {
+    await axios.delete(`http://localhost:5000/posts/${postData._id}`);
+    navigate("/discuss");
+  }
   async function sendLike() {
     await axios.post("http://localhost:5000/posts/like/", {
       userId: getCookie("uid"),
@@ -42,7 +49,12 @@ export default function Topic() {
       document.getElementById("trigger-oopsie").click();
     } else {
       if (!targetGroup.className.includes("group")) {
-        targetGroup = targetGroup.parentNode;
+        if (!targetGroup.className.includes("count")) {
+          targetGroup = targetGroup.parentNode;
+        }
+        else{
+          e.stopPropagation();
+        }
       }
       icon = targetGroup.children[1];
       targetValue = targetGroup.children[2];
@@ -120,24 +132,27 @@ export default function Topic() {
   if (!postData) {
     return <NoPage />;
   } else {
-    const likedBy = postData?.likedBy || [];
-    const dislikedBy = postData?.dislikedBy || [];
-
-    // If the user has already clicked like or dislike buttons
-    if (likedBy.includes(getCookie("uid"))) {
-    }
-    if (dislikedBy.includes(getCookie("uid"))) {
-    }
-    // console.log(likedBy);
     return (
       <div className="mainContent">
         <Head title={postData.title} />
+        <DeleteModal delFunc={deletePost} />
+        <UserListModal
+          heading={`Likes  ${postData.likedBy?.length}`}
+          type="likedBy"
+          userList={postData.likedBy}
+        />
+        <UserListModal
+          heading={`Dislikes  ${postData.dislikedBy?.length}`}
+          type="dislikedBy"
+          userList={postData.dislikedBy}
+        />
+
         <div className="row post-topic">
           <div className="col-2 border-end border-light"></div>
           <div className="col-10">
             <div className="p-3">
               <Link
-                to={postData.slug}
+                to={`/discuss/topic/${slug}`}
                 className="text-text-decoration-none text-light"
               >
                 <h1>{postData.title}</h1>
@@ -146,13 +161,7 @@ export default function Topic() {
               <div className="d-flex mt-3 w-100">
                 {/* Side Buttons  */}
                 <div className="d-flex flex-column me-4">
-                  <div
-                    className="group Like"
-                    onClick={like_dislike}
-                    // onLoad={(e) => {
-                    //   return console.log(e.target.children);
-                    // }}
-                  >
+                  <div className="group Like" onClick={like_dislike}>
                     <span className="tooltiptext">Like</span>
                     <i
                       className={`bi bi-heart-fill ${
@@ -161,7 +170,13 @@ export default function Topic() {
                           : ""
                       }`}
                     ></i>
-                    <div className="count">{postData.likedBy?.length}</div>
+                    <div
+                      className="count"
+                      data-bs-toggle="modal"
+                      data-bs-target="#userlist-modal-likedBy"
+                    >
+                      {postData.likedBy?.length}
+                    </div>
                   </div>
                   <div className="group Dislike" onClick={like_dislike}>
                     <span className="tooltiptext">Disike</span>
@@ -172,7 +187,13 @@ export default function Topic() {
                           : ""
                       }`}
                     ></i>
-                    <div className="count">{postData.dislikedBy?.length}</div>
+                    <div
+                      className="count"
+                      data-bs-toggle="modal"
+                      data-bs-target="#userlist-modal-dislikedBy"
+                    >
+                      {postData.dislikedBy?.length}
+                    </div>
                   </div>
                   <div className="group">
                     <span className="tooltiptext">More Options</span>
@@ -201,9 +222,13 @@ export default function Topic() {
                             </Link>
                           </li>
                           <li>
-                            <a className="dropdown-item" href="#">
+                            <button
+                              className="dropdown-item"
+                              data-bs-toggle="modal"
+                              data-bs-target="#delete-modal"
+                            >
                               Delete
-                            </a>
+                            </button>
                           </li>
                         </>
                       ) : (

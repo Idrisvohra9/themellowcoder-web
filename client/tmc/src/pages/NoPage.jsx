@@ -5,7 +5,7 @@ import grumpy from "./components/Images/kraken.webp"
 export default function NoPage() {
   useLoader();
   return (
-    <div className='mainContent dark'>
+    <div className='mainContent dark h-100'>
       <div className="ms-3 me-3 d-flex justify-content-center align-items-center h-100 flex-column">
         <img src={grumpy} alt="" style={{width:"220px", height:"220px"}}/>
         <h1>You encountered Ocro!</h1>

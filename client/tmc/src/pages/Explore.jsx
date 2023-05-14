@@ -24,21 +24,24 @@ export default function Explore() {
       } else {
         profile.style.display = "none";
       }
+      if (searchValue === "") {
+        profile.style.display = "none";
+      }
     }
   }
   return (
-    <div className="mainContent explore pt-4">
-      <div className="container mt-4">
+    <div className="mainContent explore pt-4 explore-header-bg">
+      <div className="container mt-4 mb-2">
         <h1>Explore</h1>
         <input
           type="text"
           className="input mt-3"
-          placeholder="Explore and find people alike!"
+          placeholder="Find people alike!"
           onChange={search}
         />
-        <div className="container-fluid mt-2 mb-2 rounded-2 explore-back p-3">
+        <div className="container-fluid p-2 rounded-2 explore-back">
           {users.map((user, id) => (
-            <div className="mt-2 mb-2 search-profiles" key={id}>
+            <div className="m-2 search-profiles" key={id}>
               <Link
                 to={`/profile/${user.username}`}
                 className="text-decoration-none w-100"

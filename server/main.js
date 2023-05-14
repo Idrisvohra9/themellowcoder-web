@@ -23,7 +23,6 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(cors());
-
 // Now the routes for post will be get at /post url
 app.use("/posts", postRoutes);
 app.use("/users", userRoutes);

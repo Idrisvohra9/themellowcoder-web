@@ -4,7 +4,7 @@ const router = express.Router();
 import { URL } from 'url';
 import path from "path";
 import multer from "multer";
-import moment from "moment";
+// import moment from "moment";
 let __dirname = decodeURI(new URL('.', import.meta.url).pathname);
 __dirname = __dirname.slice(1, __dirname.length);
 const storage = multer.diskStorage({
@@ -21,7 +21,7 @@ const upload = multer({ storage: storage })
 // This takes time hence we make it asynchronous function
 export const getAllStories = async (req, res) => {
     try {
-        const stories = await storyModel.find({}).sort({ createdAt: -1 }).limit(20).populate("postedBy", ["username", "dp"]);
+        const stories = await storyModel.find({ expiresAt: { $gt: new Date() } }).sort({ createdAt: -1 }).populate("postedBy", ["username", "dp"]);
 
         // A message to the user that everthing went right and return the json containing all the stories data
 
@@ -43,24 +43,24 @@ export const createStory = async (req, res) => {
     }
 }
 
-const deleteStory = async (req, res) => {
+const checkExpiredStories = async (req, res, next) => {
     try {
         // Get all stories that are older than 48 hours
-        const cutoff = moment().subtract(48, 'hours').toDate();
+        // const cutoff = moment().subtract(48, 'hours').toDate();
         const oldStories = await storyModel.find({ createdAt: { $lt: cutoff } });
-        
+
         // Delete each old story
         for (const story of oldStories) {
-          await story.remove();
+            await story.remove();
         }
-        
-      } catch (error) {
+
+    } catch (error) {
         console.error(error);
-      }
+    }
 }
 
 const uploadsPath = path.join(__dirname, 'uploads', "stories");
-router.get('/', getAllStories);
+router.get('/', checkExpiredStories, getAllStories);
 router.post("/", upload.single("cover"), createStory);
 router.delete("/:id", deleteStory);
 router.use("/uploads/stories", express.static(uploadsPath));

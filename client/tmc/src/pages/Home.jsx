@@ -16,7 +16,7 @@ export default function Home() {
           <h3>Below are some of the functionality it offers:</h3>
         </b>
       </div>
-      <div className="d-flex justify-content-between align-items-center p-5 jumbotron">
+      <div className="d-flex justify-content-between align-items-center p-5 jumbotron discussion-header-bg">
         <div className="d-flex align-items-start flex-column w-75">
           <Link to="/discuss" className="link">
             <h1>Connect With people</h1>
@@ -39,7 +39,7 @@ export default function Home() {
           </svg>
         </div>
       </div>
-      <div className="d-flex justify-content-between align-items-center p-5 jumbotron">
+      <div className="d-flex justify-content-between align-items-center p-5 jumbotron story-header-bg">
         <div>
           <svg width="800" height="800" viewBox="0 0 24 24" fill="none">
             <path
@@ -67,7 +67,7 @@ export default function Home() {
           </b>
         </div>
       </div>
-      <div className="d-flex justify-content-between align-items-center p-5 jumbotron">
+      <div className="d-flex justify-content-between align-items-center p-5 jumbotron octo-header-bg">
         <div className="d-flex align-items-start flex-column w-75">
           <Link to="/OctoAI" className="link">
             <h1>Meet Octo the AI</h1>
@@ -100,7 +100,7 @@ export default function Home() {
           </svg>{" "}
         </div>
       </div>
-      <div className="d-flex justify-content-between align-items-center p-5 jumbotron">
+      <div className="d-flex justify-content-between align-items-center p-5 jumbotron mellowtunes-header-bg">
         <div>
           <svg
             width="800"
@@ -130,7 +130,7 @@ export default function Home() {
           </b>
         </div>
       </div>
-      <div className="d-flex justify-content-between align-items-center p-5 jumbotron">
+      <div className="d-flex justify-content-between align-items-center p-5 jumbotron planCode-header-bg">
         <div className="d-flex align-items-start flex-column w-75">
           <h1>Our Popular must have tools</h1>
           <Link to="/PlanCode" className="link mt-2">
@@ -166,7 +166,7 @@ export default function Home() {
           </svg>
         </div>
       </div>
-      <div className="d-flex justify-content-between align-items-center p-5 jumbotron">
+      <div className="d-flex justify-content-between align-items-center p-5 jumbotron explore-header-bg">
         <div>
           <svg
             fill="#fff"
@@ -186,7 +186,7 @@ export default function Home() {
           </b>
         </div>
       </div>
-      <div className="d-flex justify-content-between align-items-center p-5 jumbotron">
+      <div className="d-flex justify-content-between align-items-center p-5 jumbotron themes-header-bg">
         <div className="d-flex align-items-start flex-column w-75">
           <Link to="/Themes" className="link">
             <h1>Change the appearance of the website, Try out new themes.</h1>
@@ -204,7 +204,7 @@ export default function Home() {
           </svg>
         </div>
       </div>
-      <div className="d-flex flex-column align-items-center p-5 jumbotron">
+      <div className="d-flex flex-column align-items-center p-5 jumbotron games-header-bg">
         <div className="d-flex justify-content-evenly mb-4">
           <svg
             viewBox="0 0 1069 1069"
