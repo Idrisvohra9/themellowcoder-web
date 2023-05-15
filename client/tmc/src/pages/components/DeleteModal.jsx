@@ -7,7 +7,7 @@ export default function DeleteModal({ delFunc }) {
       <div className="modal-dialog modal-dialog-centered modal-sm">
         <div className="modal-content">
           <div className="modal-header">
-            <h4 className="modal-title">Warning!</h4>
+            <h4 className="modal-title text-danger">Warning!</h4>
             <button
               type="button"
               className="btn-close btn-close-white"

@@ -48,12 +48,12 @@ export default function CreateStory() {
     if (!storyData.image.type.includes("image/")) {
       invalidFeedbacks[1].style.display = "block";
     } else {
-      // const keys = Object.keys(storyData);
-      // const formData = new FormData();
-      // keys.forEach((key) => {
-      //   formData.append(key, storyData[key]);
-      // });
-      // dispatch(createStory(formData));
+      const keys = Object.keys(storyData);
+      const formData = new FormData();
+      keys.forEach((key) => {
+        formData.append(key, storyData[key]);
+      });
+      dispatch(createStory(formData));
       console.log(storyData);
       const toast = document.querySelector(".toast.story-posted");
       toast.classList.add("show");

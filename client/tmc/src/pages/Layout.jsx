@@ -216,7 +216,7 @@ export default function Layout() {
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink to="/PlanCode" className="dropdown-item">
+                      <NavLink to="/PlanCodes" className="dropdown-item">
                         Plan Code
                       </NavLink>
                     </li>

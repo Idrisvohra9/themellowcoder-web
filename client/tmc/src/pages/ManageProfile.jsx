@@ -6,6 +6,7 @@ import { deleteCookie, getCookie } from "../tools/cookies";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import NoPage from "./NoPage";
+import DeleteModal from "./components/DeleteModal";
 
 export default function AboutProfile() {
   useLoader();
@@ -82,14 +83,33 @@ export default function AboutProfile() {
     deleteCookie("username");
     deleteCookie("uid");
     setUserData({});
+
+    window.location.reload();
+  }
+  function logOutAndClearData() {
+    deleteCookie("username");
+    deleteCookie("uid");
+    deleteCookie("active-theme");
+    setUserData({});
+
+    window.location.reload();
+  }
+  async function logOutAndDelUser() {
+    deleteCookie("username");
+    deleteCookie("uid");
+    deleteCookie("active-theme");
+    setUserData({});
+    await axios.delete(`http://localhost:5000/users/${userData._id}`);
     window.location.reload();
   }
   function requestVerify() {}
   if (getCookie("username") === username) {
     return (
       <div className="gradient-bg pt-4">
+        <DeleteModal delFunc={logOutAndDelUser} />
+
         <div className="container mt-3 mb-3 rounded-2">
-          <h1>Profile Management</h1>
+          <h1 className="mb-4">Profile Management</h1>
           <div className="profile-container">
             <div className="profile-sidebar">
               <div>
@@ -264,24 +284,67 @@ export default function AboutProfile() {
                 <div>
                   <h2>Log-Out</h2>
                   <p>Are you sure you want to log out?</p>
-                  <button class="btn btn-warning" onClick={logOut}>
-                    Yes
+                  <button className="btn btn-secondary" onClick={logOut}>
+                    Yes, Logout
+                  </button>
+                  <button
+                    className="btn btn-outline-danger ms-2"
+                    onClick={logOutAndClearData}
+                  >
+                    Logout and clear data
+                  </button>
+                  <button
+                    className="btn btn-danger ms-2"
+                    // onClick={logOutAndClearData}
+                    data-bs-toggle="modal"
+                    data-bs-target="#delete-modal"
+                  >
+                    Logout and delete user
                   </button>
                 </div>
               )}
               {activeTab === "Login with New Account" && (
                 <div>
                   <h2>Login with New Account</h2>
+                  <button
+                    className="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#loginReg"
+                  >
+                    New Login
+                  </button>
                 </div>
               )}
               {activeTab === "Other Info" && (
                 <div>
-                  <h2>Other Info</h2>
+                  <h2 className="mb-3">Other Info</h2>
+                  <div className="bg-dark text-light p-2 rounded-3">
+                    <h4>Join Date: {userData.joinDate}</h4>
+                    <h4>Friends: {userData.friends?.length}</h4>
+                    <h4>TMC Silver: {userData.tmcSilver}</h4>
+                    <h4>TMC Gold: {userData.tmcGold}</h4>
+                    <h4>
+                      Verification status:{" "}
+                      {userData.isVerified ? "Verified" : "Not verified"}
+                    </h4>
+                  </div>
+                  {userData.isVerified && (
+                    <button
+                      className="btn btn-dark mt-2"
+                      type="button"
+                      onClick={requestVerify}
+                    >
+                      Request Verification
+                    </button>
+                  )}
                 </div>
               )}
               {activeTab === "privacy-policy" && (
                 <div>
                   <h2>Privacy Policy</h2>
+                  <p>
+                    Check out <Link to="">privacy policy</Link>.
+                  </p>
                 </div>
               )}
             </div>
@@ -289,8 +352,7 @@ export default function AboutProfile() {
         </div>
       </div>
     );
-  }
-  else{
-    return <NoPage/>
+  } else {
+    return <NoPage />;
   }
 }

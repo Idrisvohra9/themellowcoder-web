@@ -246,8 +246,8 @@ export default function SignUp() {
       <div className="gradient-bg">
         <div className="container">
           <div className="d-flex w-100 flex-shrink-1 pt-4">
-            <div className="w-50">
-              <div className="d-flex justify-content-center flex-column">
+            <div className="w-50" style={{height: "50vw", overflowY: "scroll"}}>
+              <div className="d-flex justify-content-center flex-column p-3">
                 <h1>Sign-up, and join the community!</h1>
                 <p>We are glad to have you here!</p>
                 <form className="mt-3 needs-validation" onSubmit={handleSubmit}>
@@ -557,11 +557,12 @@ export default function SignUp() {
                 </div>
               </div>
             </div>
-            <div className="w-50">
-              <div className="container">
+            <div className="w-50 d-flex">
+              <div className="p-3 d-flex align-items-center justify-content-center flex-column">
+                <h1>The features</h1>
                 <div
                   id="carouselExampleCaptions"
-                  className="carousel slide"
+                  className="carousel slide rounded-2"
                   data-bs-ride="false"
                 >
                   <div className="carousel-indicators">
@@ -585,12 +586,28 @@ export default function SignUp() {
                       data-bs-slide-to="2"
                       aria-label="Slide 3"
                     ></button>
+                    <button
+                      type="button"
+                      data-bs-target="#carouselExampleCaptions"
+                      data-bs-slide-to="3"
+                      aria-label="Slide 4"
+                    ></button>
+                    <button
+                      type="button"
+                      data-bs-target="#carouselExampleCaptions"
+                      data-bs-slide-to="4"
+                      aria-label="Slide 5"
+                    ></button>
                   </div>
                   <div className="carousel-inner">
                     <div className="carousel-item active">
-                      <img src="" className="d-block w-100" alt="" />
+                      <img
+                        src={require("../static/Images/programmersDiscuss.jpeg")}
+                        className="d-block w-100 rounded-4"
+                        alt=""
+                      />
                       <div className="carousel-caption d-none d-md-block">
-                        <h5>First slide label</h5>
+                        <h5>Discuss and solve the problems</h5>
                         <p>
                           Some representative placeholder content htmlFor the
                           first slide.
@@ -598,7 +615,11 @@ export default function SignUp() {
                       </div>
                     </div>
                     <div className="carousel-item">
-                      <img src="" className="d-block w-100" alt="" />
+                      <img
+                        src={require("../static/Images/programmerStory.jpeg")}
+                        className="d-block w-100 rounded-4"
+                        alt=""
+                      />
                       <div className="carousel-caption d-none d-md-block">
                         <h5>Second slide label</h5>
                         <p>
@@ -608,7 +629,41 @@ export default function SignUp() {
                       </div>
                     </div>
                     <div className="carousel-item">
-                      <img src="" className="d-block w-100" alt="" />
+                      <img
+                        src={require("../static/Images/octoAI.jpeg")}
+                        className="d-block w-100 rounded-4"
+                        alt=""
+                      />
+                      <div className="carousel-caption d-none d-md-block">
+                        <h5>Third slide label</h5>
+                        <p>
+                          Some representative placeholder content htmlFor the
+                          third slide.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="carousel-item">
+                      <img
+                        src={require("../static/Images/octopusThinking.jpeg")}
+                        className="d-block w-100 rounded-4"
+                        alt=""
+                      />
+                      <div className="carousel-caption d-none d-md-block">
+                        <h5>Third slide label</h5>
+                        <p>
+                          Some representative placeholder content htmlFor the
+                          third slide.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="carousel-item">
+                      <img
+                        src={require("../static/Images/octopusVibin.jpeg")}
+                        className="d-block w-100 rounded-4"
+                        alt=""
+                      />
                       <div className="carousel-caption d-none d-md-block">
                         <h5>Third slide label</h5>
                         <p>

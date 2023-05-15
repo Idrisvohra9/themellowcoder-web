@@ -51,9 +51,9 @@ export default function OctoAI() {
       <Helmet>
         <title>themellowcoder - OctoAI</title>
       </Helmet>
-      <div className="frosty-gradient-bg pt-4">
-        <div className="mt-2 ms-3 me-3">
-          <div className="d-flex justify-content-center flex-column align-items-center">
+      <div className="frosty-gradient-bg">
+        <div className="ms-3 me-3">
+          <div className="d-flex justify-content-center flex-column align-items-center octo-header-bg pt-4 rounded-3">
             <svg
               width="800"
               height="800"

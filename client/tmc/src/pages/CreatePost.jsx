@@ -103,7 +103,7 @@ export default function CreatePost() {
             <div className="d-flex">
               <div className="toast-body">
                 <h6>
-                  There are certain things to keep in mind while creating a topic of discussion please checkout <a href="about" className="">topic guidelines</a>.
+                  There are certain things to keep in mind while creating a topic of discussion please checkout <a href="about" className="link2">topic guidelines</a>.
                 </h6>
               </div>
               <button

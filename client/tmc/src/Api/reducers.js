@@ -55,7 +55,7 @@ const postReducer = (posts = [], action) => {
 const storyReducer = (stories = [], action) => {
     switch (action.type) {
         case "CREATE":
-            return stories;
+            return [...stories, action.payload];
 
         case "FETCH_ALL":
             return stories;

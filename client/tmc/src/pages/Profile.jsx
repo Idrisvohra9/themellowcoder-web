@@ -80,7 +80,12 @@ export default function Profile() {
                   />
                   <span></span>
                 </div>
-                <h2>{username}</h2>
+                <h2 className="mb-4">
+                  {username}{" "}
+                  {userData.isVerified && (
+                    <i className="bi bi-patch-check-fill"></i>
+                  )}
+                </h2>
                 {/* <p>{userData.email}</p> */}
                 <p>
                   {userData.tags?.map((tag, id) => (
@@ -304,18 +309,23 @@ export default function Profile() {
                 </nav>
 
                 <div className="profile-media">
-                  {activeTab === "Post" && userData.posts?.length === 0
-                    ? "No Posts"
-                    : userData.posts?.map((post, id) => (
-                        <PostLink {...post} key={id} />
-                      ))}
-                  {activeTab === "Story" && userData.stories?.length === 0
-                    ? "No Stories"
-                    : userData.stories?.map((post, id) => "")}
-                  {activeTab === "PlannedCodes" &&
-                  userData.plannedCodes?.length === 0
-                    ? "No Planned Codes"
-                    : userData.plannedCodes?.map((post, id) => "")}
+                  {activeTab === "Post"
+                    ? userData.posts?.length === 0
+                      ? "No Posts"
+                      : userData.posts?.map((post, id) => (
+                          <PostLink {...post} key={id} />
+                        ))
+                    : ""}
+                  {activeTab === "Story"
+                    ? userData.stories?.length === 0
+                      ? "No Stories"
+                      : userData.stories?.map((post, id) => "")
+                    : ""}
+                  {activeTab === "PlannedCodes"
+                    ? userData.plannedCodes?.length === 0
+                      ? "No Planned Codes"
+                      : userData.plannedCodes?.map((post, id) => "")
+                    : ""}
                 </div>
               </div>
             </div>

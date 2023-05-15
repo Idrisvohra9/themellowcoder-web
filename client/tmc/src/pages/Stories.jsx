@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useLoader from "../Hooks/useLoader";
 import Footer from "./components/Footer";
 import Story from "./components/Story";
+import { useDispatch, useSelector } from "react-redux";
+import { getStories } from "../Api/actions";
 import { getCookie } from "../tools/cookies";
-export default function ShortBlogs() {
+import DeleteModal from "./components/DeleteModal";
+export default function Stories() {
   useLoader();
+  const dispatch = useDispatch({ type: "FETCH_ALL" });
+  const stories = useSelector((store) => store.storyReducer);
+  function delStory() {}
+  useState(() => {
+    dispatch(getStories());
+    console.log(stories);
+  }, [dispatch]);
+
   return (
     <div className="mainContent">
+      <DeleteModal delFunc={delStory} />
       <div className="mt-2 ms-3 me-3">
         <div className="story-header-bg">
           <h1 className="mb-3">TMC Stories!</h1>
@@ -150,8 +162,9 @@ export default function ShortBlogs() {
         </a>
         <div className="slider">
           <div className="slider__content">
-            <Story />
-            <Story />
+            {stories.map((story) => (
+              <Story {...story} key={story._id} />
+            ))}
           </div>
           <div className="slider__nav">
             <button className="slider__nav__button">Previous</button>
@@ -165,8 +178,7 @@ export default function ShortBlogs() {
         </a>
         <div className="slider">
           <div className="slider__content">
-            <Story />
-            <Story />
+
           </div>
           <div className="slider__nav">
             <button className="slider__nav__button">Previous</button>
@@ -180,8 +192,7 @@ export default function ShortBlogs() {
         </a>
         <div className="slider">
           <div className="slider__content">
-            <Story />
-            <Story />
+
           </div>
           <div className="slider__nav">
             <button className="slider__nav__button">Previous</button>
@@ -195,8 +206,6 @@ export default function ShortBlogs() {
         </a>
         <div className="slider">
           <div className="slider__content">
-            <Story />
-            <Story />
           </div>
           <div className="slider__nav">
             <button className="slider__nav__button">Previous</button>

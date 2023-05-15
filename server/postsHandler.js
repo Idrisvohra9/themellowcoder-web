@@ -36,10 +36,13 @@ export const createPost = async (req, res) => {
         const newPost = await postModel.create(post);
         const userId = post.postedBy;
         console.log("userId", userId);
+
         const postId = post._id;
         console.log("postId", postId);
+
         const userPosted = userModel.findById(userId);
         console.log("userPosted", userPosted);
+        
         await userModel.findByIdAndUpdate(userId, { ...userPosted, posts: userPosted.posts.push(postId) }, { new: true });
 
         // Successful creation:
