@@ -11,7 +11,7 @@ export default function Login() {
   async function logIn(e) {
     e.preventDefault();
     const existingUser = await axios.post(
-      "http://localhost:5000/users/login",
+      "${process.env.REACT_APP_SERVER}users/login",
       getData
     );
     // This returns true if the user already exists in db and false else wise.

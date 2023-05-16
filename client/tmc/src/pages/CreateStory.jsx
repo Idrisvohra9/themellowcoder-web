@@ -59,7 +59,7 @@ export default function CreateStory() {
       toast.classList.add("show");
       toast.querySelector(
         ".toast-body"
-      ).innerHTML += ` <a href="/stories#${storyData.type}">${storyData.type}</a>`;
+      ).innerHTML += ` <a href="/stories#${storyData.type}" class="link2">${storyData.type}</a>`;
     }
   }
   if (getCookie("username") === "") {

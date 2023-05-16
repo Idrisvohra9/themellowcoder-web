@@ -107,7 +107,7 @@ export default function Layout() {
   useEffect(() => {
     if (getCookie("username") !== "") {
       axios
-        .get(`http://localhost:5000/users/${getCookie("username")}`)
+        .get(`${process.env.REACT_APP_SERVER}users/${getCookie("username")}`)
         .then((response) => setUserData(response.data))
         .catch((error) => console.log(error));
     }
@@ -231,7 +231,7 @@ export default function Layout() {
                   <div className="d-flex align-items-center justify-content-between">
                     {userData?.dp && (
                       <img
-                        src={`http://localhost:5000/users/${userData?.dp}`}
+                        src={`${process.env.REACT_APP_SERVER}users/${userData?.dp}`}
                         alt={`@${userData?.username}`}
                         className="dp"
                       />

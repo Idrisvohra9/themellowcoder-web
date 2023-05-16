@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:5000/";
+const url = process.env.REACT_APP_SERVER;
 // Get users
 export const fetchUsers = () => axios.get(url + "users")
 export const addUser = (newUser) => axios.post(url + "users", newUser)

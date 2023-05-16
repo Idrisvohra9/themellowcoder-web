@@ -18,24 +18,24 @@ export default function Topic() {
   useLoader();
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/posts/${slug}`)
+      .get(`${process.env.REACT_APP_SERVER}posts/${slug}`)
       .then((response) => setPostData(response.data))
       .catch((error) => console.log(error));
   }, [slug]);
 
   async function deletePost() {
-    await axios.delete(`http://localhost:5000/posts/${postData._id}`);
+    await axios.delete(`${process.env.REACT_APP_SERVER}posts/${postData._id}`);
     navigate("/discuss");
   }
   async function sendLike() {
-    await axios.post("http://localhost:5000/posts/like/", {
+    await axios.post("${process.env.REACT_APP_SERVER}posts/like/", {
       userId: getCookie("uid"),
       postId: postData._id,
     });
   }
 
   async function sendDislike() {
-    await axios.post("http://localhost:5000/posts/dislike/", {
+    await axios.post("${process.env.REACT_APP_SERVER}posts/dislike/", {
       userId: getCookie("uid"),
       postId: postData._id,
     });
@@ -267,7 +267,7 @@ export default function Topic() {
                               className="d-flex justify-content-between align-items-center"
                             >
                               <img
-                                src={`http://localhost:5000/users/${postData.postedBy?.dp}`}
+                                src={`${process.env.REACT_APP_SERVER}users/${postData.postedBy?.dp}`}
                                 alt={`@${postData.postedBy?.username}`}
                                 className="dp me-1"
                               />

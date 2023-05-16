@@ -16,7 +16,7 @@ const root = createRoot(document.getElementById('root'));
 // console.log(getCookie("uid"));
 // setCookie("username","");
 
-// console.log(process.env.REACT_APP_BACKEND_URL);
+// console.log(process.env.REACT_APP_GREET);
 const store = createStore(reducers, compose(applyMiddleware(thunk)))
 root.render(
   <Provider store={store}>

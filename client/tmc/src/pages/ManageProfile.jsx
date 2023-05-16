@@ -25,7 +25,7 @@ export default function AboutProfile() {
   const [validUname, setValidUname] = useState(false);
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/users/${username}`)
+      .get(`${process.env.REACT_APP_SERVER}users/${username}`)
       .then((response) => setUserData(response.data))
       .catch((error) => console.log(error));
   }, [username]);
@@ -99,7 +99,7 @@ export default function AboutProfile() {
     deleteCookie("uid");
     deleteCookie("active-theme");
     setUserData({});
-    await axios.delete(`http://localhost:5000/users/${userData._id}`);
+    await axios.delete(`${process.env.REACT_APP_SERVER}users/${userData._id}`);
     window.location.reload();
   }
   function requestVerify() {}

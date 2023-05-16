@@ -15,7 +15,7 @@ export function PostLink({ title, body, postedBy, tags, createdAt, slug }) {
             to={`/profile/${postedBy?.username}`}
             className="text-decoration-none d-flex align-items-center mb-2"
           >
-            <img src={`http://localhost:5000/users/${postedBy?.dp}`} alt="" className="dp me-1"/>
+            <img src={`${process.env.REACT_APP_SERVER}users/${postedBy?.dp}`} alt="" className="dp me-1"/>
             <h6 className="card-subtitle">{postedBy?.username}</h6>
           </Link>
           <div className="d-flex justify-content-start mb-2">
@@ -32,7 +32,7 @@ export function PostLink({ title, body, postedBy, tags, createdAt, slug }) {
           <div className="d-flex justify-content-end align-items-center">
             <time className="text-muted">
               <ReactTimeAgo
-                date={createdAt}
+                date={createdAt || new Date().getTime()}
                 locale="en-US"
                 timeStyle="round-minute"
               />

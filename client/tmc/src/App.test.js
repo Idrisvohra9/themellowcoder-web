@@ -6,4 +6,4 @@
 // a.splice(index,1);
 // console.log(a);
 
-console.log();
+console.log(new Date().getTime());

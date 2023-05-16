@@ -47,7 +47,7 @@ export default function UpdatePost() {
   });
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/posts/${slug}`)
+      .get(`${process.env.REACT_APP_SERVER}posts/${slug}`)
       .then((response) => {
         setPostData(response.data);
       })

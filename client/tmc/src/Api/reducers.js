@@ -58,13 +58,13 @@ const storyReducer = (stories = [], action) => {
             return [...stories, action.payload];
 
         case "FETCH_ALL":
-            return stories;
+            return action.payload;
 
         case "FETCH_SPECIFIC":
-            return stories;
+            return action.payload;
 
         case "DELETE_SPECIFIC":
-            return stories;
+            return action.payload;
 
         default:
             return stories;

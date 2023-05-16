@@ -7,16 +7,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { getStories } from "../Api/actions";
 import { getCookie } from "../tools/cookies";
 import DeleteModal from "./components/DeleteModal";
+import axios from "axios";
 export default function Stories() {
   useLoader();
   const dispatch = useDispatch({ type: "FETCH_ALL" });
   const stories = useSelector((store) => store.storyReducer);
-  function delStory() {}
+  const [storyId, setStoryId] = useState(null);
+  function delStory() {
+    axios.delete(`${process.env.REACT_APP_SERVER}stories/${storyId}`);
+    window.location.reload();
+  }
   useState(() => {
     dispatch(getStories());
-    console.log(stories);
+    // console.log(stories);
   }, [dispatch]);
 
+  function getId(id) {
+    setStoryId(id);
+    // console.log("Id received", id);
+  }
   return (
     <div className="mainContent">
       <DeleteModal delFunc={delStory} />
@@ -163,7 +172,7 @@ export default function Stories() {
         <div className="slider">
           <div className="slider__content">
             {stories.map((story) => (
-              <Story {...story} key={story._id} />
+              <Story {...story} key={story._id} sendId={getId} />
             ))}
           </div>
           <div className="slider__nav">
@@ -177,9 +186,7 @@ export default function Stories() {
           </h2>
         </a>
         <div className="slider">
-          <div className="slider__content">
-
-          </div>
+          <div className="slider__content"></div>
           <div className="slider__nav">
             <button className="slider__nav__button">Previous</button>
             <button className="slider__nav__button">Next</button>
@@ -191,9 +198,7 @@ export default function Stories() {
           </h2>
         </a>
         <div className="slider">
-          <div className="slider__content">
-
-          </div>
+          <div className="slider__content"></div>
           <div className="slider__nav">
             <button className="slider__nav__button">Previous</button>
             <button className="slider__nav__button">Next</button>
@@ -205,8 +210,7 @@ export default function Stories() {
           </h2>
         </a>
         <div className="slider">
-          <div className="slider__content">
-          </div>
+          <div className="slider__content"></div>
           <div className="slider__nav">
             <button className="slider__nav__button">Previous</button>
             <button className="slider__nav__button">Next</button>

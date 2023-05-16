@@ -37,7 +37,7 @@ export default function Profile() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/users/${username}`)
+      .get(`${process.env.REACT_APP_SERVER}users/${username}`)
       .then((response) => setUserData(response.data))
       .catch((error) => console.log(error));
 
@@ -75,7 +75,7 @@ export default function Profile() {
               <div className="left__col">
                 <div className="img__container">
                   <img
-                    src={`http://localhost:5000/users/${userData?.dp}`}
+                    src={`${process.env.REACT_APP_SERVER}users/${userData?.dp}`}
                     alt="User DP"
                   />
                   <span></span>

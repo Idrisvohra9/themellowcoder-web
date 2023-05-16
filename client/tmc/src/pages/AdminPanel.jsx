@@ -96,7 +96,7 @@ export function Users() {
                 </td>
                 <td>
                   <img
-                    src={`http://localhost:5000/users/${user.dp}`}
+                    src={`${process.env.REACT_APP_SERVER}users/${user.dp}`}
                     alt=""
                     className="dp"
                   />

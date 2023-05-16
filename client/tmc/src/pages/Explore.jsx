@@ -48,7 +48,7 @@ export default function Explore() {
               >
                 <div className="d-flex align-items-center flex-lg-grow-0 flex-wrap">
                   <img
-                    src={`http://localhost:5000/users/${user.dp}`}
+                    src={`${process.env.REACT_APP_SERVER}users/${user.dp}`}
                     alt=""
                     className="dp"
                   />

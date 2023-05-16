@@ -24,7 +24,6 @@ import AdminPanel, { Users, Posts, StoriesList } from "./pages/AdminPanel";
 import "./static/css/Responsive.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
-import "@mdi/font/css/materialdesignicons.min.css";
 import { UserContextProvider } from "./UserContext";
 import UpdatePost from "./pages/UpdatePost";
 import ManageProfile from "./pages/ManageProfile";

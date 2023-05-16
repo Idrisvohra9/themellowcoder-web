@@ -2,16 +2,20 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ReactTimeAgo from "react-time-ago";
 import { getCookie } from "../../tools/cookies";
+import DOMPurify from "dompurify";
 
 export default function Story({
+  _id,
   title,
   body,
   postedBy,
   image,
-  likeCount,
+  likedBy,
   createdAt,
+  sendId
 }) {
-  console.log(title);
+  const pureBody = DOMPurify.sanitize(body);
+
   function like(e) {
     let targetGroup = e.target;
     let icon, count, targetValue;
@@ -20,39 +24,42 @@ export default function Story({
     } else {
     }
   }
+  function toParent(){
+    sendId(_id);
+  }
   return (
     <div className="slider__item">
       <div className="postedAt">
         <ReactTimeAgo
-          date={createdAt}
+          date={createdAt || new Date()}
           locale="en-US"
           timeStyle="round-minute"
         />
       </div>
       <img
         className="slider__image"
-        src={`http://localhost:5000/stories/${image}`}
+        src={`${process.env.REACT_APP_SERVER}stories/${image}`}
         alt="Story"
       />
       <div className="slider__info">
         <h2>{title}</h2>
-        <p>{body}</p>
+        <p dangerouslySetInnerHTML={{ __html: pureBody }}></p>
       </div>
       <span className="d-flex user-info align-items-center w-100">
         <Link className="w-100 me-auto" to={`/profile/${postedBy?.username}`}>
           <img
-            src={`http://localhost:5000/users/${postedBy?.dp}`}
+            src={`${process.env.REACT_APP_SERVER}users/${postedBy?.dp}`}
             alt={`@${postedBy?.username}`}
             className="dp"
           />
-          <span>{postedBy}</span>
+          <span>{postedBy?.username}</span>
         </Link>
         <div className="group">
           <span className="tooltiptext">Like</span>
           <i className="bi bi-heart" onClick={like}></i>
-          <div className="likeCount">{likeCount}</div>
+          <div className="likeCount">{likedBy?.length}</div>
         </div>
-        <div className="group ms-3 moreOpts">
+        <div className="group ms-3">
           <span className="tooltiptext">More Options</span>
           <i
             className="bi bi-three-dots dropend"
@@ -73,6 +80,7 @@ export default function Story({
                     className="dropdown-item"
                     data-bs-toggle="modal"
                     data-bs-target="#delete-modal"
+                    onClick={toParent}
                   >
                     Delete
                   </button>
@@ -87,8 +95,3 @@ export default function Story({
     </div>
   );
 }
-
-Story.defaultProps = {
-
-  createdAt: new Date(),
-};

@@ -7,10 +7,10 @@ const storySchema = new mongoose.Schema({
     postedBy: { type: Schema.Types.ObjectId, ref: "userModel" },
     type: String,
     image: String,
-    likedBy: {
+    likedBy: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "userModel",
-    },
+    }],
     createdAt: {
         type: Date,
         default: Date.now()

@@ -23,8 +23,8 @@ const upload = multer({ storage: storage })
 // This takes time hence we make it asynchronous function
 export const getAllStories = async (req, res) => {
     try {
-        const stories = await storyModel.find({}).sort({ createdAt: -1 }).populate("postedBy", ["username", "dp"]);
-
+        const stories = await storyModel.find({ expiresAt: { $gt: new Date() } }).sort({ createdAt: -1 }).populate("postedBy", ["username", "dp"]);
+        console.log(stories);
         // A message to the user that everthing went right and return the json containing all the stories data
 
         res.status(200).json(stories);
@@ -38,7 +38,7 @@ export const createStory = async (req, res) => {
     const { filename } = req.file;
 
     try {
-        const newStory = await storyModel.create({...story, image: "uploads/stories/"+filename});
+        const newStory = await storyModel.create({ ...story, image: "uploads/stories/" + filename });
         // Successful creation:
         res.status(201).json(newStory);
     } catch (error) {
@@ -48,19 +48,11 @@ export const createStory = async (req, res) => {
 }
 
 const checkExpiredStories = async (req, res, next) => {
-    try {
-        // Get all stories that are older than 48 hours
-        const cutoff = moment().subtract(48, 'hours').toDate();
-        const oldStories = await storyModel.find({ createdAt: { $lt: cutoff } });
-
-        // Delete each old story
-        for (const story of oldStories) {
-            await story.remove();
-        }
-
-    } catch (error) {
-        console.error(error);
+    const expiredStories = await storyModel.find({ expiresAt: { $lt: new Date() } });
+    if (expiredStories.length > 0) {
+        await Story.deleteMany({ _id: { $in: expiredStories.map(story => story._id) } });
     }
+    next();
 }
 
 const deleteStory = async (req, res) => {
@@ -72,7 +64,7 @@ const deleteStory = async (req, res) => {
     // Delete the story cover image
     fs.unlink(story.image, (err) => {
         if (err) console.error(err);
-      });
+    });
 
     res.json({ message: "Story Deleted successfully" });
 }
