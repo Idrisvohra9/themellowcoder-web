@@ -11,7 +11,9 @@ import Home from "./pages/Home";
 import Stories from "./pages/Stories";
 import OctoAI from "./pages/OctoAI"
 import Games from "./pages/Games"
-import PlanCode from "./pages/PlanCodes"
+import PlanCode from "./pages/PlanCodesMain"
+import CreatePlanCode from "./pages/CreatePlanCode"
+import PlannedCode from "./pages/PlannedCode";
 import Themes from "./pages/Themes"
 import SignUp from "./pages/SignUp"
 import ForgotPass from "./pages/ForgotPass"
@@ -64,6 +66,8 @@ export default function App() {
             <Route path="profile" >
               <Route path=":username" exact element={<Profile />} />
               <Route path="manage/:username" element={<ManageProfile />} />
+              <Route path="*" element={<NoPage />} />
+
             </Route>
             <Route path="stories" >
               <Route index element={<Stories />} />
@@ -74,9 +78,15 @@ export default function App() {
             <Route path="forgot-password" element={<ForgotPass />} />
             <Route path="OctoAI" element={<OctoAI />} />
             <Route path="Games" element={<Games />} />
-            <Route path="PlanCodes" element={<PlanCode />} />
+            <Route path="PlanCodes" >
+              <Route index element={<PlanCode />} />
+              <Route path="create" element={<CreatePlanCode />} />
+              <Route path=":slug" element={<PlannedCode />} />
+              <Route path="*" element={<NoPage />} />
+
+            </Route>
             <Route path="IqTest" >
-              <Route index element={<IqTest />}/>
+              <Route index element={<IqTest />} />
               <Route path="instructions" element={<QuizInstructions />} />
               <Route path="modes" element={<Mode />} />
               <Route path="play">

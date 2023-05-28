@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../Api/actions";
 import Footer from "./components/Footer";
 import { isLoggedIn } from "../tools/cookies";
-import { PostLink } from "./components/PostLinks";
+import { PostCard } from "./components/PostCard";
 import Head from "./components/Head";
+import MusicToast from "./components/MusicToast";
 
 export default function Discussion() {
   useLoader();
@@ -144,10 +145,12 @@ export default function Discussion() {
                 </div>
               </div>
             ) : (
-              posts.map((post) => <PostLink {...post} key={post._id} />)
+              posts.map((post) => <PostCard {...post} key={post._id} />)
             )}
           </div>
-          <div className="ads"></div>
+          <div className="ads">
+            <MusicToast/>
+          </div>
         </div>
       </div>
       <Footer />

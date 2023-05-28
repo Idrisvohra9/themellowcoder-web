@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ReactTimeAgo from "react-time-ago";
 import DOMPurify from "dompurify";
-export function PostLink({ title, body, postedBy, tags, createdAt, slug }) {
+export function PostCard({ title, body, postedBy, tags, createdAt, slug }) {
   const pureBody = DOMPurify.sanitize(body);
   return (
     <div className="PostLinks">

@@ -273,7 +273,7 @@ export default function Layout() {
           </NavLink>
 
           <NavLink to="/Games" className="mainlinks">
-            <svg className="btns" width="24" height="24" fill="none">
+            <svg width="800" height="800" className="btns">
               <path
                 d="M15.47 11.293a1 1 0 10-1.415 1.414 1 1 0 001.415-1.414zM16.177 9.172a1 1 0 111.414 1.414 1 1 0 01-1.414-1.414zM19.712 11.293a1 1 0 10-1.414 1.414 1 1 0 001.414-1.414zM16.177 13.414a1 1 0 111.414 1.415 1 1 0 01-1.414-1.415zM6 13H4v-2h2V9h2v2h2v2H8v2H6v-2z"
                 fill="silver"

@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import grumpy from "./components/Images/kraken.webp";
 import Footer from "./components/Footer";
-import { PostLink } from "./components/PostLinks";
+import { PostCard } from "./components/PostCard";
 import tmcGold from "../static/Images/tmcGold.png";
 import tmcSilver from "../static/Images/tmcSilver.png";
 import UserListModal from "./components/UserListModal";
@@ -313,7 +313,7 @@ export default function Profile() {
                     ? userData.posts?.length === 0
                       ? "No Posts"
                       : userData.posts?.map((post, id) => (
-                          <PostLink {...post} key={id} />
+                          <PostCard {...post} key={id} />
                         ))
                     : ""}
                   {activeTab === "Story"

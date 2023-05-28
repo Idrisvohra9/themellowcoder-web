@@ -24,7 +24,7 @@ const upload = multer({ storage: storage })
 export const getAllStories = async (req, res) => {
     try {
         const stories = await storyModel.find({ expiresAt: { $gt: new Date() } }).sort({ createdAt: -1 }).populate("postedBy", ["username", "dp"]);
-        console.log(stories);
+        // console.log(stories);
         // A message to the user that everthing went right and return the json containing all the stories data
 
         res.status(200).json(stories);
@@ -50,7 +50,7 @@ export const createStory = async (req, res) => {
 const checkExpiredStories = async (req, res, next) => {
     const expiredStories = await storyModel.find({ expiresAt: { $lt: new Date() } });
     if (expiredStories.length > 0) {
-        await Story.deleteMany({ _id: { $in: expiredStories.map(story => story._id) } });
+        await storyModel.deleteMany({ _id: { $in: expiredStories.map(story => story._id) } });
     }
     next();
 }
@@ -74,7 +74,7 @@ const addLike = async (req, res) => {
     const story = await storyModel.findById(storyId);
     let response = "story liked";
     if (!story) {
-        throw new Error('Post not found');
+        throw new Error('Story not found');
     }
     async function like() {
         story.likedBy.push(userId);

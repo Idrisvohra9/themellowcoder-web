@@ -15,3 +15,8 @@ export const deletePost = (_id) => axios.delete(url + `posts/${_id}`)
 
 export const fetchStories = () => axios.get(url + "stories")
 export const addStory = (newStory) => axios.post(url + "stories", newStory)
+
+// PC: PlanCode module
+export const fetchPCs = () => axios.get(url + "planCode")
+export const addPC = (newPost) => axios.post(url + "planCode", newPost)
+export const updatePC = (id, newPost) => axios.patch(url + `planCode/update/${id}`, newPost)

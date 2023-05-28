@@ -71,7 +71,29 @@ const storyReducer = (stories = [], action) => {
 
     }
 }
+// pc: PlanCode in short
+const planCodeReducer = (pcs = [], action) => {
+    switch (action.type) {
+        case "CREATE":
+            return [...pcs, action.payload];
 
+        case "FETCH_ALL":
+            return action.payload;
+
+        case "FETCH_SPECIFIC":
+            return action.payload;
+
+        case "DELETE_SPECIFIC":
+            return action.payload;
+        case "UPDATE":
+            // If the existing post id is the same as the new post id it will return the new post id else the old one.
+            return pcs.map((pc) => pc._id === action.payload._id ? action.payload : pc);
+
+        default:
+            return pcs;
+
+    }
+}
 export default combineReducers({
-    userReducer, postReducer, storyReducer
+    userReducer, postReducer, storyReducer, planCodeReducer
 });

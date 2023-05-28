@@ -4,7 +4,7 @@ import ReactTimeAgo from "react-time-ago";
 import { getCookie } from "../../tools/cookies";
 import DOMPurify from "dompurify";
 
-export default function Story({
+export default function StoryCard({
   _id,
   title,
   body,

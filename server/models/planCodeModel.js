@@ -5,6 +5,7 @@ const planCodeSchema = new mongoose.Schema({
         type: String, unique: true
     },
     projDesc: String,
+    tags: [String],
     technologies: [String],
     cover: String,
     privacy: String,
