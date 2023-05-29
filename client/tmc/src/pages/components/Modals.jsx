@@ -11,7 +11,7 @@ export default function Login() {
   async function logIn(e) {
     e.preventDefault();
     const existingUser = await axios.post(
-      "${process.env.REACT_APP_SERVER}users/login",
+      `${process.env.REACT_APP_SERVER}users/login`,
       getData
     );
     // This returns true if the user already exists in db and false else wise.
@@ -22,15 +22,6 @@ export default function Login() {
       window.location.reload();
     } else {
       document.querySelector(".toast.login-warning").classList.add("show");
-    }
-  }
-  function hide_show() {
-    const pass = document.getElementById("pass");
-    console.log(pass.type);
-    if (pass.type === "password") {
-      pass.type = "text";
-    } else {
-      pass.type = "password";
     }
   }
   return (
@@ -100,17 +91,6 @@ export default function Login() {
                             setData({ ...getData, pass: e.target.value })
                           }
                         />
-                        <br />
-                        <label
-                          style={{ fontSize: "16px", fontWeight: "bold" }}
-                          onClick={() => hide_show()}
-                        >
-                          <input
-                            className="form-check-input text-bg-dark me-2 align-self-end"
-                            type="checkbox"
-                          />
-                          Show Password
-                        </label>
                       </td>
                     </tr>
                   </tbody>

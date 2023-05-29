@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import useLoader from "../Hooks/useLoader";
 import Helmet from "react-helmet";
 import { Configuration, OpenAIApi } from "openai";
+import { isLoggedIn } from "../tools/cookies";
 
 export default function OctoAI() {
   useLoader();
@@ -52,6 +53,34 @@ export default function OctoAI() {
         <title>themellowcoder - OctoAI</title>
       </Helmet>
       <div className="frosty-gradient-bg">
+        <div
+          className="offcanvas offcanvas-end text-bg-dark"
+          tabindex="-1"
+          data-bs-scroll="true"
+          id="chatHistory"
+          aria-labelledby="offcanvasRightLabel"
+          data-bs-backdrop="false"
+        >
+          <div className="offcanvas-header">
+            <h3 className="offcanvas-title" id="offcanvasRightLabel">
+              Chat History
+            </h3>
+            <button
+              type="button"
+              className="btn-close btn-close-white"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div className="offcanvas-body">
+            <hr />
+            <button type="button" className="btn btn-dark w-100">
+              + New Chat
+            </button>
+            <hr />
+            <div className="chats-container w-100"></div>
+          </div>
+        </div>
         <div className="ms-3 me-3">
           <div className="d-flex justify-content-center flex-column align-items-center octo-header-bg pt-4 rounded-3">
             <svg
@@ -82,35 +111,57 @@ export default function OctoAI() {
             </svg>
             <h1 className="mt-4">Octo The AI</h1>
           </div>
-        </div>
-        <div className="container bg-dark rounded-4 w-100 p-2">
-          <pre className="result">{result}</pre>
-        </div>
-        <div className="prompt-field">
-          <div className="container w-75 d-flex justify-content-center align-items-end">
-            <input
-              type="text"
-              className="input"
-              placeholder="Ask me anything."
-              value={prompt}
-              onChange={(event) => setPrompt(event.target.value)}
-              onKeyDown={enterSend}
-              ref={input}
-            />
-            <button className="btn btn-primary ms-2" onClick={handleSend}>
-              <svg viewBox="0 0 24 24" fill="none">
-                <g
-                  stroke="#292D32"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M9.51 4.23l8.56 4.28c3.84 1.92 3.84 5.06 0 6.98l-8.56 4.28c-5.76 2.88-8.11.52-5.23-5.23l.87-1.73c.22-.44.22-1.17 0-1.61l-.87-1.74C1.4 3.71 3.76 1.35 9.51 4.23zM5.44 12h5.4" />
-                </g>
-              </svg>
-            </button>
+          <div className="d-flex justify-content-end p-2 border-bottom border-dark sticky-top mb-5">
+            {isLoggedIn() ? (
+              <span
+                className="c-point"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#chatHistory"
+              >
+                <span className="bi bi-clock-history me-2"></span>
+                <span>Chat History</span>
+              </span>
+            ) : (
+              <button
+                type="button"
+                className="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#loginReg"
+              >
+                Login to Chat!
+              </button>
+            )}
           </div>
         </div>
+        {isLoggedIn() ? (
+          <div className="prompt-field">
+            <div className="container w-75 d-flex justify-content-center align-items-end">
+              <input
+                type="text"
+                className="input"
+                placeholder="Ask me anything.."
+                value={prompt}
+                onChange={(event) => setPrompt(event.target.value)}
+                onKeyDown={enterSend}
+                ref={input}
+              />
+              <button className="btn btn-primary ms-2" onClick={handleSend}>
+                <svg viewBox="0 0 24 24" fill="aliceblue">
+                  <g
+                    stroke="#292D32"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M9.51 4.23l8.56 4.28c3.84 1.92 3.84 5.06 0 6.98l-8.56 4.28c-5.76 2.88-8.11.52-5.23-5.23l.87-1.73c.22-.44.22-1.17 0-1.61l-.87-1.74C1.4 3.71 3.76 1.35 9.51 4.23zM5.44 12h5.4" />
+                  </g>
+                </svg>
+              </button>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

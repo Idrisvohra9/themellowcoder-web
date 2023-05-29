@@ -559,7 +559,7 @@ export default function SignUp() {
             </div>
             <div className="w-50 d-flex">
               <div className="p-3 d-flex align-items-center justify-content-center flex-column">
-                <h1>The features</h1>
+                <h2>The features</h2>
                 <div
                   id="carouselExampleCaptions"
                   className="carousel slide rounded-2"

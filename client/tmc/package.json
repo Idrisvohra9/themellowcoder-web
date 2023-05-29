@@ -28,6 +28,7 @@
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-quill": "^2.0.0",
+    "react-reorder": "^3.0.0-alpha.7",
     "react-router-dom": "^6.11.1",
     "react-scripts": "^5.0.1",
     "react-tagsinput": "^3.20.0",

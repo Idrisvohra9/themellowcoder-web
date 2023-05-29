@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getCookie } from "../tools/cookies";
+import { getCookie, isLoggedIn } from "../tools/cookies";
 import useLoader from "../Hooks/useLoader";
 import ScatterBlobs from "./components/Scattered-blobs";
 import hljs from "highlight.js";
@@ -62,7 +62,7 @@ export default function CreateStory() {
       ).innerHTML += ` <a href="/stories#${storyData.type}" class="link2">${storyData.type}</a>`;
     }
   }
-  if (getCookie("username") === "") {
+  if (!isLoggedIn()) {
     return <NoPage />;
   } else {
     return (

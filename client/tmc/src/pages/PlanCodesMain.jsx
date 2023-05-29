@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import useLoader from "../Hooks/useLoader";
 import { isLoggedIn } from "../tools/cookies";
-import PlanCodeCard, { PCard } from "./components/PlanCodeCard";
+import PlanCodeCard from "./components/PlanCodeCard";
 import Head from "./components/Head";
 import Footer from "./components/Footer";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +16,7 @@ export default function PlanCode() {
     dispatch(getPCs()); // We go to the post reducer
   }, [dispatch]);
   return (
-    <div>
+    <>
       <Head title="Plan Code" />
       <div className="plan-code-bg">
         <div className="pc-gradient"></div>
@@ -32,12 +32,7 @@ export default function PlanCode() {
               <div className="d-flex">
                 <div className="toast-body">
                   <h6>
-                    TMC Stories stories are short, vertical photos with brief
-                    immersive content and links, created under a predifined
-                    category, they disappear after 48 hours. They are typically
-                    shared by users to give a glimpse into their daily lives or
-                    to share specific moments and experiences with everyone
-                    around the world.
+                    Plan Code is a project planning tool of TMC (themellowocoder) which provides simple UI for developing project algorithms and many functionalities alongside, such as team management, progress tracking, Sticky notes, Milestones etc. The privacy of your Plan Code entirely depends on you and you can always explore public plan codes. 
                   </h6>
                 </div>
                 <button
@@ -108,6 +103,6 @@ export default function PlanCode() {
           <Footer />
         </div>
       </div>
-    </div>
+    </>
   );
 }

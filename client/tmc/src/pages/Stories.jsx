@@ -34,13 +34,13 @@ export default function Stories() {
         <div className="story-header-bg">
           <h1 className="mb-3">TMC Stories!</h1>
           <div className="d-flex mb-4">
-            {!isLoggedIn() ? (
+            {isLoggedIn() ? (
               <Link
                 to="/stories/create"
                 className="storyBtn"
                 style={{ textDecoration: "none" }}
               >
-                Create Your StoryCard!
+                Create Your Story!
                 <div className="icon-1">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
