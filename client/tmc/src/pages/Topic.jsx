@@ -28,14 +28,14 @@ export default function Topic() {
     navigate("/discuss");
   }
   async function sendLike() {
-    await axios.post("${process.env.REACT_APP_SERVER}posts/like/", {
+    await axios.post(`${process.env.REACT_APP_SERVER}posts/like/`, {
       userId: getCookie("uid"),
       postId: postData._id,
     });
   }
 
   async function sendDislike() {
-    await axios.post("${process.env.REACT_APP_SERVER}posts/dislike/", {
+    await axios.post(`${process.env.REACT_APP_SERVER}posts/dislike/`, {
       userId: getCookie("uid"),
       postId: postData._id,
     });

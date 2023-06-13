@@ -67,7 +67,7 @@ export default function PlanCode() {
               </div>
             </div>
             <hr />
-            <div className="mt-3 pb-3 border-bottom border-light">
+            <div className="mt-3 pb-3">
               <div className="container d-flex justify-content-center">
                 <div
                   className="btn-group w-100"
@@ -76,14 +76,14 @@ export default function PlanCode() {
                 >
                   <button
                     type="button"
-                    className="btn btn-outline-dark w-25 active"
+                    className="btn btn-outline-dark w-25 active text-truncate"
                   >
                     Personal
                   </button>
-                  <button type="button" className="btn btn-outline-dark w-50">
+                  <button type="button" className="btn btn-outline-dark w-50 text-truncate">
                     Explore All
                   </button>
-                  <button type="button" className="btn btn-outline-dark w-25">
+                  <button type="button" className="btn btn-outline-dark w-25 text-truncate">
                     Completed
                   </button>
                 </div>

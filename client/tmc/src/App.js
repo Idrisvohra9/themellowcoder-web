@@ -81,9 +81,7 @@ export default function App() {
             <Route path="PlanCodes" >
               <Route index element={<PlanCode />} />
               <Route path="create" element={<CreatePlanCode />} />
-              <Route path=":slug" element={<PlannedCode />} />
               <Route path="*" element={<NoPage />} />
-
             </Route>
             <Route path="IqTest" >
               <Route index element={<IqTest />} />
@@ -106,6 +104,8 @@ export default function App() {
               </Route>
             </Route>
           </Route>
+          <Route path="PlanCodes/:id" element={<PlannedCode />} />
+
           <Route path="*" element={<NoPage />} />
         </Routes>
       </UserContextProvider>

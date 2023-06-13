@@ -64,16 +64,16 @@ export default function Discussion() {
               role="group"
               aria-label="Basic example"
             >
-              <button onClick={sortBy} className="btn btn-primary active">
+              <button onClick={sortBy} className="btn btn-primary active text-truncate">
                 All
               </button>
-              <button onClick={sortBy} className="btn btn-primary">
+              <button onClick={sortBy} className="btn btn-primary text-truncate">
                 Latest
               </button>
-              <button onClick={sortBy} className="btn btn-primary">
+              <button onClick={sortBy} className="btn btn-primary text-truncate">
                 Trending
               </button>
-              <button onClick={sortBy} className="btn btn-primary">
+              <button onClick={sortBy} className="btn btn-primary text-truncate">
                 Most Rated
               </button>
             </div>

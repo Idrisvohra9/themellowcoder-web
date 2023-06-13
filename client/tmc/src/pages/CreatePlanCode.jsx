@@ -8,6 +8,7 @@ import hljs from "highlight.js";
 import "highlight.js/styles/base16/onedark.css";
 import ReactQuill from "react-quill";
 import { createPC } from "../Api/actions";
+import TagsInput from "react-tagsinput";
 
 hljs.configure({
   languages: ["javascript", "css", "scss", "python", "html", "php"],
@@ -32,19 +33,21 @@ export default function CreatePlanCode() {
   useLoader();
   const dispatch = useDispatch();
   const [pcData, setPcData] = useState({
-    title: "",
-    body: "",
-    image: "",
+    projTitle: "",
+    projDesc: "",
+    tags: [],
+    technologies: [],
+    cover: "",
     postedBy: getCookie("uid"),
-    type: "fun-stuff",
+    privacy: "Public",
   });
   function post(e) {
     e.preventDefault();
     const invalidFeedbacks = document.querySelectorAll(".invalid-feedback");
-    if (pcData.title.length < 5) {
+    if (pcData.projTitle.length < 5) {
       invalidFeedbacks[0].style.display = "block";
     }
-    if (!pcData.image.type.includes("image/")) {
+    if (!pcData.cover.type.includes("cover/")) {
       invalidFeedbacks[1].style.display = "block";
     } else {
       const keys = Object.keys(pcData);
@@ -58,18 +61,8 @@ export default function CreatePlanCode() {
       toast.classList.add("show");
       toast.querySelector(
         ".toast-body"
-      ).innerHTML += ` <a href="/stories#${pcData.type}" class="link2">${pcData.type}</a>`;
+      ).innerHTML += ` <a href="/stories#${pcData.privacy}" class="link2">${pcData.privacy}</a>`;
     }
-  }
-  function createSlug(title = "") {
-    const regex = /[^a-zA-Z0-9_-]/g; // Replacing the special characters excluding hyphens and underscore with hyphens and
-    // Replace multiple consecutive hyphens with a single hyphen
-    const hyphenRegex = /-+/g;
-    let slug = title.replace(regex, "-").replace(hyphenRegex, "-");
-    if (slug.endsWith("-")) {
-      slug = slug.slice(0, slug.length - 1);
-    }
-    return slug;
   }
   if (!isLoggedIn()) {
     return <NoPage />;
@@ -110,11 +103,11 @@ export default function CreatePlanCode() {
                 >
                   <div className="mb-3">
                     <label htmlFor="post-title" className="form-label">
-                      Title
+                      Project Title:
                     </label>
                     <input
                       type="text"
-                      className="form-control input"
+                      className="form-control"
                       id="post-title"
                       placeholder="Discussion Title"
                       name="title"
@@ -122,7 +115,7 @@ export default function CreatePlanCode() {
                       maxLength={36}
                       value={pcData.title}
                       onChange={(e) =>
-                        setPcData({ ...pcData, title: e.target.value })
+                        setPcData({ ...pcData, projTitle: e.target.value })
                       }
                     />
 
@@ -131,11 +124,54 @@ export default function CreatePlanCode() {
                     </div>
                   </div>
                   <div className="mb-3">
+                    <label htmlFor="post-body" className="form-label">
+                      Project Description:
+                    </label>
+
+                    <ReactQuill
+                      className="form-control"
+                      onChange={(newValue) =>
+                        setPcData({ ...pcData, projDesc: newValue })
+                      }
+                      modules={modules}
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    <label htmlFor="tags">Add Tags (Atleast 3):</label>
+                    <TagsInput
+                      value={pcData.tags}
+                      onChange={(tags) => {
+                        setPcData({ ...pcData, tags: tags });
+                      }}
+                      className="form-control"
+                      onlyUnique={true}
+                      maxTags={4}
+                      addOnPaste={true}
+                    />
+                    <div className="invalid-feedback">
+                      There should be atleast 3 tags.
+                    </div>
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="tags">Technologies Used:</label>
+                    <TagsInput
+                      value={pcData.technologies}
+                      onChange={(tags) => {
+                        setPcData({ ...pcData, technologies: tags });
+                      }}
+                      className="form-control"
+                      onlyUnique={true}
+                      maxTags={4}
+                      addOnPaste={true}
+                    />
+                    <div className="invalid-feedback">
+                      There should be atleast 3 tags.
+                    </div>
+                  </div>
+                  <div className="mb-3">
                     <div className="file-input">
                       <div className="file-input-title">Cover Image</div>
-                      <div className="file-input-paragraph">
-                        Recomended orientation portrait
-                      </div>
                       <div className="drop-container">
                         <div className="drop-title">Drop An Image</div>
                         or
@@ -146,7 +182,7 @@ export default function CreatePlanCode() {
                           onChange={(e) =>
                             setPcData({
                               ...pcData,
-                              image: e.target.files[0],
+                              cover: e.target.files[0],
                             })
                           }
                           accept="image/png, image/jpeg, image/webp"
@@ -159,39 +195,25 @@ export default function CreatePlanCode() {
                   </div>
                   <div className="mb-3">
                     <label htmlFor="tags">
-                      Select a type
+                      Privacy:
                       <select
-                        className="form-select form-select mb-3 bg-dark text-light"
+                        className="form-select mb-3 bg-dark text-light"
                         required
                         onChange={(e) =>
-                          setPcData({ ...pcData, type: e.target.value })
+                          setPcData({ ...pcData, privacy: e.target.value })
                         }
-                        value={pcData.type}
+                        value={pcData.privacy}
                       >
                         <option value="progress-check-ins">
-                          Project Check-in
+                          Public
                         </option>
                         <option value="tech-roundups">
-                          Technology Roundup
+                          Private
                         </option>
-                        <option value="fun-stuff">Fun Stuff</option>
-                        <option value="misc">Misc</option>
                       </select>
                     </label>
                   </div>
-                  <div className="mb-3">
-                    <label htmlFor="post-body" className="form-label">
-                      Body{" "}
-                    </label>
 
-                    <ReactQuill
-                      className="bg-light input"
-                      onChange={(newValue) =>
-                        setPcData({ ...pcData, body: newValue })
-                      }
-                      modules={modules}
-                    />
-                  </div>
                   <button type="submit" className="btn btn-primary ps-5 pe-5">
                     Post
                   </button>
