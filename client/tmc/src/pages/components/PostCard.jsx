@@ -4,6 +4,7 @@ import ReactTimeAgo from "react-time-ago";
 import DOMPurify from "dompurify";
 export function PostCard({ title, body, postedBy, tags, createdAt, slug }) {
   const pureBody = DOMPurify.sanitize(body);
+  console.log(createdAt)
   return (
     <div className="PostLinks">
       <div className="card post-link text-light">

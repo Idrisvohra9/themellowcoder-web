@@ -12,7 +12,7 @@ import { UserContext } from "../UserContext";
 export default function Layout() {
   // const dispatch = useDispatch({type: "FETCH_SPECIFIC"});
   // const activeUser = useSelector((store)=> store.userReducer);
-  const {setUserData, userData} = useContext(UserContext);
+  const { setUserData, userData } = useContext(UserContext);
   const sidebar = useRef();
   const navbar = useRef();
   const starfall = useRef();
@@ -32,7 +32,7 @@ export default function Layout() {
     }
   }
   window.onload = function () {
-    toTop.current.style.display = "none";
+    // toTop.current.style.display = "";
     toTop.current.onclick = topFunction;
     window.onscroll = function () {
       scrollFunction();
@@ -40,8 +40,10 @@ export default function Layout() {
   };
   // When the user clicks on the button, scroll to the top of the document
   function topFunction() {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: "smooth",
+    });
   }
   function showCookieConsent() {
     // Checks for the user consent and does'nt ask again.

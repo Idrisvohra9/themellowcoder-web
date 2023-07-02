@@ -64,16 +64,28 @@ export default function Discussion() {
               role="group"
               aria-label="Basic example"
             >
-              <button onClick={sortBy} className="btn btn-primary active text-truncate">
+              <button
+                onClick={sortBy}
+                className="btn btn-primary active text-truncate"
+              >
                 All
               </button>
-              <button onClick={sortBy} className="btn btn-primary text-truncate">
+              <button
+                onClick={sortBy}
+                className="btn btn-primary text-truncate"
+              >
                 Latest
               </button>
-              <button onClick={sortBy} className="btn btn-primary text-truncate">
+              <button
+                onClick={sortBy}
+                className="btn btn-primary text-truncate"
+              >
                 Trending
               </button>
-              <button onClick={sortBy} className="btn btn-primary text-truncate">
+              <button
+                onClick={sortBy}
+                className="btn btn-primary text-truncate"
+              >
                 Most Rated
               </button>
             </div>
@@ -147,10 +159,14 @@ export default function Discussion() {
             ) : (
               posts.map((post) => <PostCard {...post} key={post._id} />)
             )}
+            <div className="container d-flex justify-content-center mb-3">
+              <button type="button" className="load-more">
+                Load More
+              </button>
+            </div>
           </div>
-          <div className="ads">
-            <MusicToast/>
-          </div>
+          <MusicToast />
+          <div className="ads"></div>
         </div>
       </div>
       <Footer />
