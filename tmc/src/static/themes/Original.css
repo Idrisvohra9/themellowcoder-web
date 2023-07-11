@@ -2382,8 +2382,8 @@ span .react-tagsinput-input {
 }
 
 .slider {
-  width: 95%;
-  max-width: 1280px;
+  /* width: 95%; */
+  max-width: fit-content;
   margin: 0 auto;
 }
 
@@ -2398,7 +2398,6 @@ span .react-tagsinput-input {
   border-radius: 30px;
   background: var(--postBg);
   box-shadow: 15px 15px 30px var(--tertiaryClr);
-
   -webkit-backdrop-filter: blur(5px) saturate(1);
   backdrop-filter: blur(5px) saturate(1);
 }

@@ -12,7 +12,7 @@ import { isLoggedIn } from "../../tools/cookies";
 export default function Stories() {
   useLoader();
   const dispatch = useDispatch({ type: "FETCH_ALL" });
-  const stories = useSelector((store) => store.storyReducer);
+  const stories = useSelector((store) => store.storyReducer) || [];
   const [storyId, setStoryId] = useState(null);
   function delStory() {
     axios.delete(`${process.env.REACT_APP_SERVER}stories/${storyId}`);
@@ -20,10 +20,20 @@ export default function Stories() {
   }
   useState(() => {
     dispatch(getStories());
+    console.log(stories);
   }, [dispatch]);
 
   function getId(id) {
     setStoryId(id);
+  }
+  function filterByType(type) {
+    return (
+      stories
+        .filter((story) => story?.type === type)
+        .map((story) => (
+          <StoryCard {...story} key={story._id} sendId={getId} />
+        )) || "No Stories :("
+    );
   }
   return (
     <div className="mainContent">
@@ -174,9 +184,7 @@ export default function Stories() {
         </a>
         <div className="slider">
           <div className="slider__content">
-            {stories.map((story) => (
-              <StoryCard {...story} key={story._id} sendId={getId} />
-            ))}
+            {filterByType("progress-check-ins")}
           </div>
           <div className="slider__nav">
             <button className="slider__nav__button">Previous</button>
