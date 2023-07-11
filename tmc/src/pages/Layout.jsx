@@ -1,13 +1,14 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
 import { Outlet, NavLink } from "react-router-dom";
-import Logo from "./components/Logo";
+import Logo from "../components/Logo";
 import clickSound from "../static/Other/mixkit-arcade-game-jump-coin-216.wav";
 import starFallSound from "../static/Other/stars-falling.mp3";
-import CookieConsent from "./components/CookieConsent";
+import CookieConsent from "../components/CookieConsent";
 import { getCookie } from "../tools/cookies";
-import LoginModal from "./components/Modals";
+import LoginModal from "../components/Modals";
 import axios from "axios";
 import { UserContext } from "../UserContext";
+import UserDisplayPic from "../components/UserDisplayPic";
 
 export default function Layout() {
   // const dispatch = useDispatch({type: "FETCH_SPECIFIC"});
@@ -108,8 +109,7 @@ export default function Layout() {
   }
   useEffect(() => {
     if (getCookie("username") !== "") {
-      axios
-        .get(`${process.env.REACT_APP_SERVER}users/${getCookie("username")}`)
+      fetch(`${process.env.REACT_APP_SERVER}users/${getCookie("username")}`)
         .then((response) => setUserData(response.data))
         .catch((error) => console.log(error));
     }
@@ -231,13 +231,7 @@ export default function Layout() {
                   className="tab"
                 >
                   <div className="d-flex align-items-center justify-content-between">
-                    {userData?.dp && (
-                      <img
-                        src={`${process.env.REACT_APP_SERVER}users/${userData?.dp}`}
-                        alt={`@${userData?.username}`}
-                        className="dp"
-                      />
-                    )}
+                    <UserDisplayPic dp={userData?.dp} className="dp"/>
                     <div className="ms-1">{getCookie("username")}</div>
                   </div>
                   <div className="highlight"></div>

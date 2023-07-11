@@ -1,46 +1,46 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from "react";
 import Layout from "./pages/Layout";
-import About from "./pages/About";
-import Discussion from "./pages/Discussion";
-import MusicTab from "./pages/MusicTab";
-import Explore from "./pages/Explore";
-import Profile from "./pages/Profile";
-import NoPage from "./pages/NoPage";
+import About from "./pages/Other/About";
+import Discussion from "./pages/Discussion/Discussion";
+import MusicTab from "./pages/Other/MusicTab";
+import Explore from "./pages/User-Profile/Explore";
+import Profile from "./pages/User-Profile/Profile";
+import NoPage from "./pages/Other/NoPage";
 import Home from "./pages/Home";
-import Stories from "./pages/Stories";
-import OctoAI from "./pages/OctoAI"
-import Games from "./pages/Games"
-import PlanCode from "./pages/PlanCodesMain"
-import CreatePlanCode from "./pages/CreatePlanCode"
-import PlannedCode from "./pages/PlannedCode";
-import Themes from "./pages/Themes"
-import SignUp from "./pages/SignUp"
-import ForgotPass from "./pages/ForgotPass"
+import Stories from "./pages/Stories/Stories";
+import OctoAI from "./pages/Other/OctoAI"
+import Games from "./pages/Other/Games"
+import PlanCode from "./pages/PlanCode/PlanCodesMain"
+import CreatePlanCode from "./pages/PlanCode/CreatePlanCode"
+import PlannedCode from "./pages/PlanCode/PlannedCode";
+import Themes from "./pages/Other/Themes"
+import SignUp from "./pages/User-Profile/SignUp"
+import ForgotPass from "./pages/User-Profile/ForgotPass"
 import { getCookie, setCookie } from "./tools/cookies";
-import Topic from "./pages/Topic";
-import CreatePost from "./pages/CreatePost";
-import CreateStory from "./pages/CreateStory";
-import Admin from "./pages/Admin";
-import AdminPanel, { Users, Posts, StoriesList } from "./pages/AdminPanel";
-import "./static/css/Responsive.css";
+import Topic from "./pages/Discussion/Topic";
+import CreatePost from "./pages/Discussion/CreatePost";
+import CreateStory from "./pages/Stories/CreateStory";
+import Admin from "./pages/Admin/Admin";
+import AdminPanel, { Users, Posts, StoriesList } from "./pages/Admin/AdminPanel";
+import "./static/themes/Responsive.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import { UserContextProvider } from "./UserContext";
-import UpdatePost from "./pages/UpdatePost";
-import ManageProfile from "./pages/ManageProfile";
-import IqTest from './pages/components/IQTest';
-import QuizInstructions from './pages/components/quiz/quizinstruction';
-import QuizSummary from './pages/components/quiz/QuizSummary';
-import Easy from './pages/components/quiz/easy';
-import Mode from './pages/components/quiz/mode';
-import Hard from './pages/components/quiz/hard';
-import Medium from './pages/components/quiz/medium';
+import UpdatePost from "./pages/Discussion/UpdateTopic";
+import ManageProfile from "./pages/User-Profile/ManageProfile";
+import IqTest from './pages/IQTester/Modes';
+import QuizInstructions from './pages/IQTester/QuizInstructions';
+import QuizSummary from './pages/IQTester/QuizSummary';
+import Easy from './pages/IQTester/Easy';
+import Mode from './pages/IQTester/Modes';
+import Hard from './pages/IQTester/Hard';
+import Medium from './pages/IQTester/Medium';
 if (getCookie("active-theme") === "") {
   setCookie("active-theme", "Original")
 }
 // setCookie("active-theme", "Original")
-require(`./static/css/${getCookie("active-theme")}.css`);
+require(`./static/themes/${getCookie("active-theme")}.css`);
 
 export default function App() {
   return (
