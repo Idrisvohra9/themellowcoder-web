@@ -40,6 +40,7 @@ html,
 body {
   height: 100%;
   width: 100%;
+  overflow-x: hidden;
 }
 
 * {
@@ -290,8 +291,41 @@ form {
   display: flex;
   border-right: 2px ridge var(--secondaryClr);
   box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.5);
+  animation-name: slide-in;
+  animation-duration:1s;
+  animation-timing-function: ease;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
 }
 
+.sidebar.slide {
+  animation-name: slide-out;
+  animation-duration:1s;
+  animation-timing-function: ease;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+}
+
+@keyframes slide-out {
+  0% {
+    display: flex;
+    left: -116px;
+  }
+
+  100% {
+    left: 0px;
+  }
+}
+@keyframes slide-in {
+  0% {
+    display: flex;
+    left: 0;
+  }
+
+  100% {
+    left: -116px;
+  }
+}
 .sidebarIcon {
   font-size: 17px;
   font-weight: bold;

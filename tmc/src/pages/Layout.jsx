@@ -6,7 +6,7 @@ import starFallSound from "../static/Other/stars-falling.mp3";
 import CookieConsent from "../components/CookieConsent";
 import { getCookie } from "../tools/cookies";
 import LoginModal from "../components/Modals";
-import axios from "axios";
+// import axios from "axios";
 import { UserContext } from "../UserContext";
 import UserDisplayPic from "../components/UserDisplayPic";
 
@@ -18,8 +18,8 @@ export default function Layout() {
   const navbar = useRef();
   const starfall = useRef();
   const [online, setOnline] = useState(navigator.onLine);
-  let pos = -116;
-  var i = 0;
+  // let pos = -116;
+  // var i = 0;
   let toTop = useRef();
 
   function scrollFunction() {
@@ -77,32 +77,33 @@ export default function Layout() {
     }
   }
   function slideBar() {
-    i++;
+    // i++;
     const click = new Audio(clickSound);
     click.play();
-    let id = null;
-    if (i % 2 === 0) {
-      pos = 0;
-      id = setInterval(frameOut, 1);
-    } else {
-      id = setInterval(frameIn, 1);
-    }
-    function frameIn() {
-      if (pos === 0) {
-        clearInterval(id);
-      } else {
-        pos += 2;
-        sidebar.current.style.left = pos + "px";
-      }
-    }
-    function frameOut() {
-      if (pos === -116) {
-        clearInterval(id);
-      } else {
-        pos -= 2;
-        sidebar.current.style.left = pos + "px";
-      }
-    }
+    sidebar.current.classList.toggle("slide");
+    // let id = null;
+    // if (i % 2 === 0) {
+    //   pos = 0;
+    //   id = setInterval(frameOut, 1);
+    // } else {
+    //   id = setInterval(frameIn, 1);
+    // }
+    // function frameIn() {
+    //   if (pos === 0) {
+    //     clearInterval(id);
+    //   } else {
+    //     pos += 2;
+    //     sidebar.current.style.left = pos + "px";
+    //   }
+    // }
+    // function frameOut() {
+    //   if (pos === -116) {
+    //     clearInterval(id);
+    //   } else {
+    //     pos -= 2;
+    //     sidebar.current.style.left = pos + "px";
+    //   }
+    // }
   }
   function handleOnlineStatusChange() {
     setOnline(navigator.onLine);

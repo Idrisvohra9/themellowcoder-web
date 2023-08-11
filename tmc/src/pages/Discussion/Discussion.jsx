@@ -144,8 +144,8 @@ export default function Discussion() {
         </div>
 
         <hr />
-        <div className="d-flex flex-row w-100 h-100">
-          <div className="posts-area pe-3">
+        <div className="row">
+          <div className="col-lg-10 col-sm-12">
             {!posts.length ? (
               <div className="post-loader">
                 <div className="wrapper">
@@ -166,7 +166,9 @@ export default function Discussion() {
             </div>
           </div>
           <MusicToast />
-          <div className="ads"></div>
+          <div className="col-lg-2 col-sm-12">
+            {/* <h1>Ads</h1> */}
+          </div>
         </div>
       </div>
       <Footer />

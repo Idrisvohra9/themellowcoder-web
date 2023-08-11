@@ -27,13 +27,14 @@ export default function Stories() {
     setStoryId(id);
   }
   function filterByType(type) {
-    return (
-      stories
-        .filter((story) => story?.type === type)
-        .map((story) => (
-          <StoryCard {...story} key={story._id} sendId={getId} />
-        )) || "No Stories :("
-    );
+    const filteredStories = stories.filter((story) => story.type === type);
+    if (filteredStories.length > 0) {
+      return filteredStories.map((story) => (
+        <StoryCard {...story} key={story._id} sendId={getId} />
+      ));
+    } else {
+      return <div className="d-flex justify-content-center w-100">No Stories :(</div>;
+    }
   }
   return (
     <div className="mainContent">
