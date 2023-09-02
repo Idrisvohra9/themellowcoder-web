@@ -5,7 +5,7 @@ import useLoader from "../Hooks/useLoader";
 export default function Home() {
   useLoader();
   return (
-    <div className="mainContent">
+    <div className="">
       <div className="d-flex justify-content-center mt-5 flex-column align-items-center mb-5">
         <h1>themellowcoder or The Mellow Coder</h1>
         <b className="w-75 text-center">

@@ -1,40 +1,40 @@
 import React, { useState, useRef } from "react";
 import useLoader from "../../Hooks/useLoader";
 import Helmet from "react-helmet";
-import { Configuration, OpenAIApi } from "openai";
+import {  OpenAIApi } from "openai";
 import { isLoggedIn } from "../../tools/cookies";
 
 export default function OctoAI() {
   useLoader();
-  const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
-  const openai = new OpenAIApi(configuration);
+  // const configuration = new Configuration({
+  //   apiKey: process.env.OPENAI_API_KEY,
+  // });
+  // const openai = new OpenAIApi(configuration);
   const [prompt, setPrompt] = useState("");
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
   const input = useRef();
-  const handleSend = async () => {
-    setLoading(true);
-    console.log("Sent");
-    try {
-      const completion = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: prompt,
-        temperature: 0.5,
-        max_tokens: 100,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.REACT_APP_OPENAI_SECRET_KEY}`,
-        },
-      });
-      setResult(completion.data.choices[0].text);
-      setPrompt("");
-    } catch (error) {
-      console.log(error.message);
-    }
-    setLoading(false);
-  };
+  // const handleSend = async () => {
+    // setLoading(true);
+    // console.log("Sent");
+    // try {
+    //   const completion = await openai.createCompletion({
+    //     model: "text-davinci-003",
+    //     prompt: prompt,
+    //     temperature: 0.5,
+    //     max_tokens: 100,
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ${process.env.REACT_APP_OPENAI_SECRET_KEY}`,
+    //     },
+    //   });
+    //   setResult(completion.data.choices[0].text);
+    //   setPrompt("");
+    // } catch (error) {
+    //   console.log(error.message);
+    // }
+    // setLoading(false);
+  // };
 
   function inputFocus(e) {
     if (e.ctrlKey && e.key === "i") {
@@ -43,12 +43,12 @@ export default function OctoAI() {
   }
   function enterSend(e) {
     if (e.key === "Enter") {
-      handleSend();
+      // handleSend();
     }
   }
   document.body.addEventListener("keydown", inputFocus);
   return (
-    <div className="mainContent OctoAI">
+    <div className=" OctoAI">
       <Helmet>
         <title>themellowcoder - OctoAI</title>
       </Helmet>
@@ -145,7 +145,7 @@ export default function OctoAI() {
                 onKeyDown={enterSend}
                 ref={input}
               />
-              <button className="btn btn-primary ms-2" onClick={handleSend}>
+              {/* <button className="btn btn-primary ms-2" onClick={handleSend}>
                 <svg viewBox="0 0 24 24" fill="aliceblue">
                   <g
                     stroke="#292D32"
@@ -156,7 +156,7 @@ export default function OctoAI() {
                     <path d="M9.51 4.23l8.56 4.28c3.84 1.92 3.84 5.06 0 6.98l-8.56 4.28c-5.76 2.88-8.11.52-5.23-5.23l.87-1.73c.22-.44.22-1.17 0-1.61l-.87-1.74C1.4 3.71 3.76 1.35 9.51 4.23zM5.44 12h5.4" />
                   </g>
                 </svg>
-              </button>
+              </button> */}
             </div>
           </div>
         ) : (

@@ -41,6 +41,7 @@ body {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 * {
@@ -176,6 +177,11 @@ form {
 }
 
 /* Index contents: */
+.collapse.navbar-collapse.show {
+  background-color: var(--primaryClr);
+  border-radius: 6px;
+}
+
 .navbar ul {
   list-style: none;
   padding: 0;
@@ -271,9 +277,6 @@ form {
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.456);
 }
 
-/* .navbar-collapse{
-  background-color: var(--primaryClr);
-} */
 .sidebar {
   background-color: var(--primaryClr);
   background-image: url("../Images/blob3.svg");
@@ -285,14 +288,15 @@ form {
   z-index: 3;
   left: -116px;
   transition: left 0.3s ease-in-out;
-  max-width: 8%;
-  min-width: 8%;
+  /* max-width: 8%;
+  min-width: 8%; */
+  width: 8%;
   height: 100%;
   display: flex;
   border-right: 2px ridge var(--secondaryClr);
   box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.5);
   animation-name: slide-in;
-  animation-duration:1s;
+  animation-duration: 1s;
   animation-timing-function: ease;
   animation-direction: normal;
   animation-fill-mode: forwards;
@@ -300,7 +304,7 @@ form {
 
 .sidebar.slide {
   animation-name: slide-out;
-  animation-duration:1s;
+  animation-duration: 1s;
   animation-timing-function: ease;
   animation-direction: normal;
   animation-fill-mode: forwards;
@@ -316,6 +320,7 @@ form {
     left: 0px;
   }
 }
+
 @keyframes slide-in {
   0% {
     display: flex;
@@ -326,6 +331,7 @@ form {
     left: -116px;
   }
 }
+
 .sidebarIcon {
   font-size: 17px;
   font-weight: bold;
@@ -552,7 +558,24 @@ span.stars:nth-child(10) {
 .mainContent {
   width: 100vw;
   height: max-content;
-  transition: margin-left 0.3s ease-in-out;
+}
+
+.mainContent.adjusted {
+  animation-name: adjustContent;
+  animation-duration: 1s;
+  animation-timing-function: ease;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+}
+
+@keyframes adjustContent {
+  0% {
+    margin-left: 0;
+  }
+
+  100% {
+    margin-left: 104px;
+  }
 }
 
 .dropdown-item.active {
@@ -839,14 +862,14 @@ footer a {
   justify-content: space-around;
 }
 
-.side-btns a.mainlinks {
+.side-btns .mainlinks {
   display: inline-flex;
   border-radius: 0 20px 20px 0;
   justify-content: center;
   align-items: center;
   width: 105px;
   height: 50px;
-  transition: background 0.2s, width 0.2s, box-shadow 0.2s;
+  transition: all 0.2s;
   transition-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
   cursor: pointer;
 }
@@ -880,6 +903,7 @@ svg.btns {
   display: none;
   margin-left: 5px;
   text-align: left;
+  white-space: nowrap;
 }
 
 svg.arrow {

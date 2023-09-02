@@ -31,7 +31,7 @@ export default function Explore() {
     }
   }
   return (
-    <div className="mainContent explore pt-4 explore-header-bg">
+    <div className=" explore pt-4 explore-header-bg">
       <div className="container mt-4 mb-2">
         <h1>Explore</h1>
         <input

@@ -17,7 +17,7 @@ export default function PlannedCode() {
   return (
     <>
       <Head title={id}></Head>
-      <div className="mainContent">
+      <div className="">
         
       </div>
     </>

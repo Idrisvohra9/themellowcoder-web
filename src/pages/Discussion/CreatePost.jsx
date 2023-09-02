@@ -75,7 +75,7 @@ export default function CreatePost() {
     return <NoPage />;
   } else {
     return (
-      <div className="mainContent bg-dark text-light p-4 createPost">
+      <div className=" bg-dark text-light p-4 createPost">
         <ScatterBlobs />
         <div
           className="toast post-warning custom align-items-center text-bg-danger border-0"

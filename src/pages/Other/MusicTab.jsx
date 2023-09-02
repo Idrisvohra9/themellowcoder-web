@@ -254,7 +254,7 @@ export default function MusicTab() {
   }, [loadMusic, musicIndex, playingSong]);
 
   return (
-    <div className="mainContent musicTab">
+    <div className=" musicTab">
       <div className="wrapper" ref={wrapper}>
         <div className="top-bar">
           <i className="material-icons">expand_more</i>

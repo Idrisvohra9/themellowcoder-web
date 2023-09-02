@@ -46,7 +46,7 @@ export default function AdminPanel() {
     );
   } else {
     return (
-      <div className="mainContent bg-danger p-2 d-flex justify-content-center align-items-center">
+      <div className=" bg-danger p-2 d-flex justify-content-center align-items-center">
         <h2>Sorry, You are not authorised for this page.</h2>
       </div>
     );

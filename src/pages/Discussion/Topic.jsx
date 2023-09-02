@@ -133,7 +133,7 @@ export default function Topic() {
     return <NoPage />;
   } else {
     return (
-      <div className="mainContent">
+      <div className="">
         <Head title={postData.title} />
         <DeleteModal delFunc={deletePost} />
         <UserListModal

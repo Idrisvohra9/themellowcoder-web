@@ -46,7 +46,7 @@ export default function Profile() {
   }, []);
   if (!userData) {
     return (
-      <div className="mainContent dark">
+      <div className=" dark">
         <div className="ms-3 me-3 d-flex justify-content-center align-items-center h-100 flex-column">
           <img
             src={grumpy}
@@ -64,7 +64,7 @@ export default function Profile() {
   } else {
     return (
       <>
-        <div className="mainContent">
+        <div className="">
           <UserListModal
             heading="Friends"
             type="friends"

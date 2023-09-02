@@ -6,7 +6,7 @@ import ScrollSpy from "react-ui-scrollspy";
 export default function About() {
   useLoader();
   return (
-    <div className="mainContent inAbout mt-2">
+    <div className=" inAbout mt-2">
       <div id="octo">
         <header>
           <div className="logo-container">

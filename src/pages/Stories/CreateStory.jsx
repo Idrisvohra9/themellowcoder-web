@@ -67,7 +67,7 @@ export default function CreateStory() {
   } else {
     return (
       <div>
-        <div className="mainContent bg-dark text-light p-4 createPost h-100">
+        <div className=" bg-dark text-light p-4 createPost h-100">
           <ScatterBlobs />
           <div className="container rounded-2 border border-2 border-light border-opacity-25 p-3">
             <div

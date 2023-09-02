@@ -37,7 +37,7 @@ export default function Stories() {
     }
   }
   return (
-    <div className="mainContent">
+    <div className="">
       <DeleteModal delFunc={delStory} />
       <div className="mt-2 ms-3 me-3">
         <div className="story-header-bg">

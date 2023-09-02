@@ -242,7 +242,7 @@ export default function SignUp() {
     in1.addEventListener("input", splitNumber);
   });
   return (
-    <div className="mainContent">
+    <div className="">
       <div className="gradient-bg">
         <div className="container">
           <div className="d-flex w-100 flex-shrink-1 pt-4">

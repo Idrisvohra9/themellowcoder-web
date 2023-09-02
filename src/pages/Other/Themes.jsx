@@ -5,7 +5,7 @@ import Footer from "../../components/Footer";
 export default function Themes() {
   useLoader();
   return (
-    <div className="mainContent">
+    <div className="">
       <div className="mt-2 ms-3 me-3">
         <div className="d-fex justify-content-between align-items-center">
           <h1>Available Themes</h1>

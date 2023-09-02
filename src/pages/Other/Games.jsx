@@ -22,7 +22,7 @@ export default function Games() {
     },
   ];
   return (
-    <div className="mainContent">
+    <div className="">
       <div className="gradient-bg pt-5">
         <div className="container my-5">
           <div className="row justify-content-center">

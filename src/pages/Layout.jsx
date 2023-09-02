@@ -9,43 +9,16 @@ import LoginModal from "../components/Modals";
 // import axios from "axios";
 import { UserContext } from "../UserContext";
 import UserDisplayPic from "../components/UserDisplayPic";
+import ScrollToTop from "../components/ScrollToTop";
 
 export default function Layout() {
   // const dispatch = useDispatch({type: "FETCH_SPECIFIC"});
   // const activeUser = useSelector((store)=> store.userReducer);
   const { setUserData, userData } = useContext(UserContext);
   const sidebar = useRef();
-  const navbar = useRef();
   const starfall = useRef();
   const [online, setOnline] = useState(navigator.onLine);
-  // let pos = -116;
-  // var i = 0;
-  let toTop = useRef();
 
-  function scrollFunction() {
-    if (
-      document.body.scrollTop > 20 ||
-      document.documentElement.scrollTop > 20
-    ) {
-      toTop.current.style.display = "block";
-    } else {
-      toTop.current.style.display = "none";
-    }
-  }
-  window.onload = function () {
-    // toTop.current.style.display = "";
-    toTop.current.onclick = topFunction;
-    window.onscroll = function () {
-      scrollFunction();
-    };
-  };
-  // When the user clicks on the button, scroll to the top of the document
-  function topFunction() {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: "smooth",
-    });
-  }
   function showCookieConsent() {
     // Checks for the user consent and does'nt ask again.
     if (getCookie("cookie-consent") === "false") {
@@ -55,16 +28,6 @@ export default function Layout() {
       return "";
     }
   }
-  var prevScrollpos = window.pageYOffset;
-  window.onscroll = function () {
-    var currentScrollPos = window.pageYOffset;
-    if (prevScrollpos > currentScrollPos) {
-      navbar.current.style.top = "0";
-    } else {
-      navbar.current.style.top = "-89px";
-    }
-    prevScrollpos = currentScrollPos;
-  };
 
   function startFallingStars() {
     const starSound = new Audio(starFallSound);
@@ -77,33 +40,11 @@ export default function Layout() {
     }
   }
   function slideBar() {
-    // i++;
     const click = new Audio(clickSound);
     click.play();
+    const content = document.querySelector(".mainContent");
     sidebar.current.classList.toggle("slide");
-    // let id = null;
-    // if (i % 2 === 0) {
-    //   pos = 0;
-    //   id = setInterval(frameOut, 1);
-    // } else {
-    //   id = setInterval(frameIn, 1);
-    // }
-    // function frameIn() {
-    //   if (pos === 0) {
-    //     clearInterval(id);
-    //   } else {
-    //     pos += 2;
-    //     sidebar.current.style.left = pos + "px";
-    //   }
-    // }
-    // function frameOut() {
-    //   if (pos === -116) {
-    //     clearInterval(id);
-    //   } else {
-    //     pos -= 2;
-    //     sidebar.current.style.left = pos + "px";
-    //   }
-    // }
+    content.classList.toggle("adjusted");
   }
   function handleOnlineStatusChange() {
     setOnline(navigator.onLine);
@@ -114,6 +55,7 @@ export default function Layout() {
         .then((response) => setUserData(response.data))
         .catch((error) => console.log(error));
     }
+    // Online/Offline Detection
     window.addEventListener("online", handleOnlineStatusChange);
     window.addEventListener("offline", handleOnlineStatusChange);
 
@@ -137,7 +79,7 @@ export default function Layout() {
         <span className="stars"></span>
         <span className="stars"></span>
       </section>
-      <nav className="navbar navbar-expand-lg" ref={navbar}>
+      <nav className="navbar navbar-expand-lg">
         <div className="container-fluid d-flex">
           <Logo />
           <button
@@ -232,7 +174,7 @@ export default function Layout() {
                   className="tab"
                 >
                   <div className="d-flex align-items-center justify-content-between">
-                    <UserDisplayPic dp={userData?.dp} className="dp"/>
+                    <UserDisplayPic dp={userData?.dp} className="dp" />
                     <div className="ms-1">{getCookie("username")}</div>
                   </div>
                   <div className="highlight"></div>
@@ -358,20 +300,12 @@ export default function Layout() {
           </NavLink>
         </div>
       </div>
-      <button className="scroll-to-top" ref={toTop}>
-        <svg
-          height="28"
-          width="28"
-          fill="white"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 511.867 511.867"
-        >
-          <path d="M508.827 350.027L263.493 104.373a10.955 10.955 0 00-15.147 0L3.12 350.027a10.623 10.623 0 000 15.04l42.24 42.347a10.955 10.955 0 0015.147 0L255.92 211.68l195.52 195.733a10.623 10.623 0 0015.04 0l42.347-42.347c4.053-4.159 4.053-10.879 0-15.039zM459.013 384.8l-195.52-195.733a10.623 10.623 0 00-15.04 0L52.933 384.8l-27.2-27.307L255.92 126.987l230.293 230.507-27.2 27.306z" />
-        </svg>
-      </button>
+      <ScrollToTop />
       {showCookieConsent()}
       <LoginModal />
-      <Outlet />
+      <div className="mainContent">
+        <Outlet />
+      </div>
     </>
   );
 }

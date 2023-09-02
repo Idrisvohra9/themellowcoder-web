@@ -48,7 +48,7 @@ export default function Discussion() {
     }
   }
   return (
-    <div className="mainContent discussion">
+    <div>
       <Head title="Discussion" />
       <div className="mt-2 ms-3 me-3">
         <div className="discussion-header-bg">
