@@ -56,7 +56,6 @@ body {
   text-decoration: none;
   color: var(--textClr);
   align-items: center;
-  transition: border .5s ease-out;
 }
 
 .logo:hover {

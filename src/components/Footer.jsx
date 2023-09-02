@@ -131,19 +131,19 @@ export default function Footer() {
             <h5>Links</h5>
             <ul className="list-unstyled">
               <li className="mb-2">
-                <Link to="">Learn Coding</Link>
+                <Link to="/">Learn Coding</Link>
               </li>
               <li className="mb-2">
                 <Link to="/About">About</Link>
               </li>
               <li className="mb-2">
-                <Link to="">Discussion</Link>
+                <Link to="/discuss">Discussion</Link>
               </li>
               <li className="mb-2">
-                <Link to="">Stories</Link>
+                <Link to="/stories">Stories</Link>
               </li>
               <li className="mb-2">
-                <Link to="">Themes</Link>
+                <Link to="/themes">Themes</Link>
               </li>
             </ul>
           </div>
@@ -151,13 +151,13 @@ export default function Footer() {
             <h5>References</h5>
             <ul className="list-unstyled">
               <li className="mb-2">
-                <Link to="">Team</Link>
+                <Link to="/About">Team</Link>
               </li>
               <li className="mb-2">
-                <Link to="">Privacy Policy</Link>
+                <Link to="/About">Privacy Policy</Link>
               </li>
               <li className="mb-2">
-                <Link to="">License</Link>
+                <Link to="/About">License</Link>
               </li>
             </ul>
           </div>
@@ -165,16 +165,16 @@ export default function Footer() {
             <h5>Guides</h5>
             <ul className="list-unstyled">
               <li className="mb-2">
-                <Link to="">How to start a discussion</Link>
+                <Link to="/About">How to start a discussion</Link>
               </li>
               <li className="mb-2">
-                <Link to="">How to create a story</Link>
+                <Link to="/About">How to create a story</Link>
               </li>
             </ul>
           </div>
         </div>
       </div>
-      <div className="d-flex justify-content-center text-muted mt-4">
+      <div className="d-flex justify-content-center text-light mt-4">
         All Rights and reseved by &copy;themellowcoder
       </div>
     </footer>
