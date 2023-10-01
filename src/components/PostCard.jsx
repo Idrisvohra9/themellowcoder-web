@@ -22,7 +22,7 @@ export function PostCard({ title, body, postedBy, tags, createdAt, slug }) {
           </Link>
           <div className="d-flex justify-content-start mb-2">
             {tags.map((tag, id) => (
-              <span className="post-tag" key={id}>
+              <span className="post-tag" key={id} >
                 {tag}
               </span>
             ))}

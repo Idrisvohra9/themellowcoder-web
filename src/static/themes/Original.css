@@ -30,7 +30,7 @@
   width: 100%;
   height: 100%;
   background-clip: padding-box;
-  background-position: 0 0;
+  background-position: 0 18.5%;
   background-attachment: fixed;
   background-repeat: no-repeat;
   overflow-x: hidden;
@@ -78,7 +78,7 @@ body {
 .logo img {
   width: 85px;
   height: 85px;
-  filter: contrast(8);
+  filter: contrast(9);
 }
 
 .header {
@@ -287,9 +287,9 @@ form {
   z-index: 3;
   left: -116px;
   transition: left 0.3s ease-in-out;
+  width: 8%;
   /* max-width: 8%;
   min-width: 8%; */
-  width: 8%;
   height: 100%;
   display: flex;
   border-right: 2px ridge var(--secondaryClr);
@@ -831,6 +831,7 @@ footer a {
 .input:focus,
 .input:hover {
   outline: none;
+  color: var(--primaryClr);
   background-color: #fff;
   border-color: rgba(234, 76, 137, 0.4);
   box-shadow: 0 0 0 4px rgb(234 76 137 / 10%);
@@ -856,6 +857,7 @@ footer a {
 .side-btns {
   margin-top: 90px;
   z-index: 0;
+  width: max-content;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -894,6 +896,8 @@ footer a {
 
 svg.btns {
   fill: var(--textClr);
+  width: 30px;
+  height: 30px;
 }
 
 .internal-txt {
@@ -1360,17 +1364,16 @@ button.load-more:hover::before {
   width: 100%;
 }
 
-.discussion h1 {
+h1 {
   display: flex;
   align-items: center;
 }
 
-.discussion h1 span::before {
+h1 span::before {
   content: "/";
   display: inline;
   color: var(--primaryClr);
   margin-left: 5px;
-
 }
 
 .posts-area {
@@ -1393,6 +1396,7 @@ button.load-more:hover::before {
 
 .search-btn {
   height: 40px;
+  cursor: pointer;
 }
 
 .addPost {
